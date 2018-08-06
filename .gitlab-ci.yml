@@ -33,3 +33,18 @@ performance:
   stage: performance
   script:
    - npm run perf
+
+pages:
+  stage: deploy
+  script:
+  - cd dashboard && yarn install && npm run build && cd ..
+  - mkdir .public
+  - cp -r dashboard/fonts .public
+  - cp dashboard/dashboard.* .public
+  - cp dashboard/index.html .public
+  - mv .public public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
