@@ -25,7 +25,6 @@
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "cli-table": "^0.3.1",
-    "codeclimate-test-reporter": "^0.5.0",
     "eslint": "5.1.0",
     "eslint-plugin-babel": "5.1.0",
     "eslint-plugin-import": "^2.9.0",

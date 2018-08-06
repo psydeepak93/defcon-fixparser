@@ -1,0 +1,13 @@
+image: node:10.6.0
+
+cache:
+  paths:
+  - node_modules/
+  - .yarn
+
+all_tests:
+  script:
+   - npm run eslint
+   - npm run build
+   - npm run perf
+   - npm test
