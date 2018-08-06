@@ -5,9 +5,31 @@ cache:
   - node_modules/
   - .yarn
 
-all_tests:
+before_script:
+  - yarn install
+
+stages:
+  - lint
+  - bundle
+  - test
+  - performance
+
+lint:
+  stage: lint
   script:
    - npm run eslint
+
+bundle:
+  stage: bundle
+  script:
    - npm run build
-   - npm run perf
+
+test:
+  stage: test
+  script:
    - npm test
+
+performance:
+  stage: performance
+  script:
+   - npm run perf
