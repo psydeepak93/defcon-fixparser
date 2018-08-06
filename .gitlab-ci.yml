@@ -13,6 +13,7 @@ stages:
   - bundle
   - test
   - performance
+  - deploy
 
 lint:
   stage: lint
