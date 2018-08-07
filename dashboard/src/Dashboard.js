@@ -65,7 +65,7 @@ export default class Dashboard extends Component {
             <div>
                 <div className="uk-section  uk-section-primary uk-section-small uk-light">
                     <div className="uk-container">
-                        <h3>FIXParser is <a href="https://github.com/logotype/fixparser" className="uk-link-muted">open-source</a> at Github</h3>
+                        <h3>FIXParser is <a href="https://gitlab.com/logotype/fixparser" className="uk-link-muted">open-source</a> at GitLab</h3>
                         <p className="uk-margin-remove">This is the ECMAScript framework for working with FIX protocol messages. Compliant with FIX 5.0 SP2.</p>
                         <select className="uk-select uk-margin-top uk-margin-bottom uk-dark" onChange={this.handleSelectChange} value={this.state.selectedValue}>
                             <option value="">Select example FIX message</option>
@@ -89,7 +89,7 @@ export default class Dashboard extends Component {
                 </div>
                 <div className="uk-section uk-section-secondary uk-light">
                     <div className="uk-container">
-                        <h3>FIXParser is <a href="https://github.com/logotype/fixparser" className="uk-link-muted">open-source</a> at Github</h3>
+                        <h3>FIXParser is <a href="https://gitlab.com/logotype/fixparser" className="uk-link-muted">open-source</a> at GitLab</h3>
                         <p>Copyright © 2018 logotype</p>
                         <p>
                             Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.

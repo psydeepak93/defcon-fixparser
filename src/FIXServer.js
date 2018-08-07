@@ -1,6 +1,6 @@
 /*
  * fixparser
- * https://github.com/logotype/fixparser.git
+ * https://gitlab.com/logotype/fixparser.git
  *
  * Copyright 2018 Victor Norgren
  * Released under the MIT license

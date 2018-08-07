@@ -7,7 +7,7 @@
   "browser": "./browser.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/logotype/fixparser.git"
+    "url": "https://gitlab.com/logotype/fixparser.git"
   },
   "scripts": {
     "eslint": "eslint *.babel.js src test prebuild",

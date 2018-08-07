@@ -8,7 +8,7 @@ module.exports = {
     output: {
         filename: '[name].js',
         path: path.join(__dirname),
-        publicPath: '/'
+        publicPath: ''
     },
     module: {
         rules: [
@@ -48,8 +48,8 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: './dashboard.css',
-        }),
+            filename: './dashboard.css'
+        })
     ],
     context: __dirname,
     devServer: {
