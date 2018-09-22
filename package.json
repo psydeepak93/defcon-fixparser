@@ -51,9 +51,10 @@
   "author": "Victor Norgren",
   "license": "MIT",
   "jest": {
-    "collectCoverage": false,
+    "collectCoverage": true,
     "collectCoverageFrom": [
-      "**/*.{js}",
+      "**/src/**/*.{js}",
+      "!**/dashboard/**",
       "!**/node_modules/**",
       "!**/src/spec/**"
     ],
