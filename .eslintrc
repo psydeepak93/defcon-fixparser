@@ -1,5 +1,4 @@
 {
-  "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module"
   },
@@ -273,7 +272,10 @@
   },
   "settings": {
     "import/extensions": [".js"],
-    "import/parser": "babel-eslint"
+    "import/parser": "babel-eslint",
+    "react": {
+      "version": "16.5"
+    }
   },
   "plugins": [
     "import",

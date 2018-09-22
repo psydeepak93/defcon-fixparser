@@ -49,7 +49,7 @@ export default class FIXParser extends EventEmitter {
                 new Field(Fields.MsgSeqNum, this.getNextTargetMsgSeqNum()),
                 new Field(Fields.SenderCompID, this.sender),
                 new Field(Fields.SendingTime, this.getTimestamp()),
-                new Field(Fields.TargetCompID, this.target),
+                new Field(Fields.TargetCompID, this.target)
             );
             this.send(heartBeat);
 

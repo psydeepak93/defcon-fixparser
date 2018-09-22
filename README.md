@@ -1,6 +1,6 @@
 # fixparser
 
-This is the ECMAScript framework for working with FIX protocol messages. Compliant with FIX 5.0 SP2.
+This is the Javascript framework for working with FIX protocol messages. Compliant with FIX 5.0 SP2.
 
 The Financial Information eXchange (FIX) protocol is an electronic communications protocol initiated in 1992 for international real-time exchange of information related to the securities transactions and markets.
 
@@ -111,7 +111,7 @@ Performance
 │ 200,000 iterations (same msg)   │ 162,470 msg/s │ 6.1550 μs    │ 0.0062 ms    │
 └─────────────────────────────────┴───────────────┴──────────────┴──────────────┘
 ```
-1.7 GHz Intel Core i7 (8 GB 1600 MHz DDR3), run with `npm run perf`.
+MacBook Air, 1.7 GHz Intel Core i7 (8 GB 1600 MHz DDR3), run with `npm run perf`.
 
 Message format
 --------------

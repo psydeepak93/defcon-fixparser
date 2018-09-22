@@ -27,7 +27,7 @@ describe('FIXEncoder', () => {
                 new Field(MsgSeqNum, fixParser.setNextTargetMsgSeqNum(703)),
                 new Field(SenderCompID, 'ABC'),
                 new Field(SendingTime, fixParser.getTimestamp(new Date(Date.UTC(2010, 0, 30, 10, 53, 40, 830)))),
-                new Field(TargetCompID, 'XYZ'),
+                new Field(TargetCompID, 'XYZ')
             );
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
         });
@@ -45,7 +45,7 @@ describe('FIXEncoder', () => {
                 new Field(RawDataLength, 4),
                 new Field(RawData, 1234),
                 new Field(EncryptMethod, 0),
-                new Field(HeartBtInt, 60),
+                new Field(HeartBtInt, 60)
             );
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
         });
@@ -65,7 +65,7 @@ describe('FIXEncoder', () => {
                 new Field(RawDataLength, 4),
                 new Field(RawData, 1234),
                 new Field(EncryptMethod, 0),
-                new Field(HeartBtInt, 60),
+                new Field(HeartBtInt, 60)
             );
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
         });
@@ -82,7 +82,7 @@ describe('FIXEncoder', () => {
                 new Field(RawDataLength, 4),
                 new Field(RawData, 1234),
                 new Field(EncryptMethod, 0),
-                new Field(HeartBtInt, 60),
+                new Field(HeartBtInt, 60)
             );
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
         });
@@ -99,7 +99,7 @@ describe('FIXEncoder', () => {
                 new Field(RawDataLength, 4),
                 new Field(RawData, 1234),
                 new Field(EncryptMethod, 0),
-                new Field(HeartBtInt, 60),
+                new Field(HeartBtInt, 60)
             );
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
         });
@@ -118,7 +118,7 @@ describe('FIXEncoder', () => {
                 new Field(RawDataLength, 4),
                 new Field(RawData, 1234),
                 new Field(EncryptMethod, 0),
-                new Field(HeartBtInt, 60),
+                new Field(HeartBtInt, 60)
             );
             const encodedMessage0 = message.encode().replace(/\x01/g, '|');
             const encodedMessage1 = message.encode();
@@ -138,7 +138,7 @@ describe('FIXEncoder', () => {
                 new Field(RawDataLength, 4),
                 new Field(RawData, 1234),
                 new Field(EncryptMethod, 0),
-                new Field(HeartBtInt, 60),
+                new Field(HeartBtInt, 60)
             );
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
             expect(fixParser.parse(message.encode())[0].string.replace(/\x01/g, '|')).toEqual(fixString);

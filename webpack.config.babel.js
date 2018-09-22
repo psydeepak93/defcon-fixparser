@@ -9,7 +9,7 @@ const nodeEnv = optimizeMinimize ? 'production' : 'development';
 const commonConfig = {
     module: {
         rules: [
-            { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ }
+            { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/, options: { babelrcRoots: ['.', '../'] } }
         ]
     },
     externals: [],
