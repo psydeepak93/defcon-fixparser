@@ -1,11 +1,12 @@
 {
   "name": "fixparser-dashboard",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Demo dashboard for fixparser",
   "main": "dashboard/build/dashboard.js",
   "scripts": {
     "start": "webpack-dev-server -d",
-    "build": "webpack -p --optimize-dedupe --optimize-minimize"
+    "build": "webpack -p --optimize-dedupe --optimize-minimize",
+    "server": "NODE_ENV=production node src/server.js"
   },
   "author": "",
   "license": "MIT",
@@ -29,6 +30,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "express": "^4.16.4",
     "moment": "^2.22.1",
     "uikit": "3.0.0-rc.19"
   }
