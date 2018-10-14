@@ -18,27 +18,27 @@ stages:
 lint:
   stage: lint
   script:
-   - npm run eslint
+   - yarn run eslint
 
 bundle:
   stage: bundle
   script:
-   - npm run build
+   - yarn run build
 
 test:
   stage: test
   script:
-   - npm test
+   - yarn test
 
 performance:
   stage: performance
   script:
-   - npm run perf
+   - yarn run perf
 
 pages:
   stage: deploy
   script:
-  - cd dashboard && yarn install && npm run build && cd ..
+  - cd dashboard && yarn install && yarn run build && cd ..
   - mkdir .public
   - cp -r dashboard/build/fonts .public
   - cp dashboard/build/dashboard.* .public
