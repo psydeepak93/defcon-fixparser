@@ -40,9 +40,9 @@ pages:
   script:
   - cd dashboard && yarn install && npm run build && cd ..
   - mkdir .public
-  - cp -r dashboard/fonts .public
-  - cp dashboard/dashboard.* .public
-  - cp dashboard/index.html .public
+  - cp -r dashboard/build/fonts .public
+  - cp dashboard/build/dashboard.* .public
+  - cp dashboard/build/index.html .public
   - mv .public public
   artifacts:
     paths:

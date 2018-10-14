@@ -1,5 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -7,8 +8,10 @@ module.exports = {
     },
     output: {
         filename: '[name].js',
-        path: path.join(__dirname),
-        publicPath: ''
+        path: path.join(__dirname, 'build'),
+        publicPath: '',
+        library: 'FIXParserDashboard',
+        libraryTarget: 'umd'
     },
     module: {
         rules: [
@@ -47,9 +50,8 @@ module.exports = {
         ]
     },
     plugins: [
-        new MiniCssExtractPlugin({
-            filename: './dashboard.css'
-        })
+        new MiniCssExtractPlugin({ filename: './dashboard.css' }),
+        new CopyWebpackPlugin([{ from: 'templates' }])
     ],
     context: __dirname,
     devServer: {
