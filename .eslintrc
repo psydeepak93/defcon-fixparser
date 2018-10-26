@@ -241,7 +241,6 @@
     "rest-spread-spacing": "warn",
     "sort-imports": "off",
     "symbol-description": "warn",
-    "template-curly-spacing": "warn",
     "yield-star-spacing": "warn",
 
     /* IMPORTS PLUGIN */

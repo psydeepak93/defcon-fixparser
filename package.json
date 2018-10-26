@@ -1,6 +1,6 @@
 {
   "name": "fixparser",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "FIX 5.0SP2 Parser",
   "main": "./fixparser.js",
   "module": "./src/FIXParser.js",
@@ -13,9 +13,11 @@
     "eslint": "eslint *.babel.js src test prebuild",
     "prebuild": "babel-node --max-old-space-size=4096 prebuild/index.js",
     "build": "webpack -p --optimize-dedupe --optimize-minimize",
-    "executor": "babel-node examples/example_executor.js",
     "example": "babel-node examples/example.js",
-    "server": "babel-node examples/example_server.js",
+    "server-tcp": "babel-node examples/example_server.js",
+    "server-websocket": "babel-node examples/example_websocketserver.js",
+    "client-tcp": "babel-node examples/example_executor.js",
+    "client-websocket": "babel-node examples/example_executor_websocketclient.js",
     "perf": "node perf/Perf-FIXParser.js",
     "test": "jest"
   },
@@ -27,16 +29,16 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "8",
+    "babel-eslint": "10.0.1",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
     "cli-table": "^0.3.1",
-    "eslint": "^5.7.0",
+    "eslint": "^5.8.0",
     "eslint-plugin-babel": "^5.2.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-react": "^7.11.1",
     "jest": "^23.6.0",
-    "webpack": "^4.20.2",
+    "webpack": "^4.23.1",
     "webpack-cli": "^3.1.2",
     "yargs": "^12.0.2"
   },
@@ -47,6 +49,7 @@
     "FIX Server",
     "FIX5.0SP2",
     "FIX",
+    "Websocket",
     "Financial Information eXchange"
   ],
   "author": "Victor Norgren",
@@ -62,5 +65,8 @@
     "coverageReporters": [
       "lcov"
     ]
+  },
+  "dependencies": {
+    "ws": "^6.1.0"
   }
 }

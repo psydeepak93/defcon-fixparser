@@ -4,6 +4,12 @@ This is the Javascript framework for working with FIX protocol messages. Complia
 
 The Financial Information eXchange (FIX) protocol is an electronic communications protocol initiated in 1992 for international real-time exchange of information related to the securities transactions and markets.
 
+FIXParser demo
+--------
+
+[FIXParser demo page](http://fixparser.sendercompid.com)
+
+
 Quick start
 -----------
 
@@ -77,16 +83,27 @@ fixServer.on('message', (message) => {
 });
 ```
 
-FIXParser demo
---------
+Connect over Webocket in a browser (as client):
 
-[FIXParser demo page](http://fixparser.sendercompid.com)
-
+```javascript
+import FIXParser from 'fixparser/browser';
+const fixParser = new FIXParser();
+fixParser.connect({ host: 'localhost', port: 9878, sender: 'BANZAI', target: 'EXEC', fixVersion: 'FIX.4.4' });
+fixParser.on('open', () => {
+    // Connection is open... 
+});
+fixParser.on('message', (message) => {
+    // Received FIX message
+});
+fixParser.on('close', () => {
+    // Disconnected...
+});
+```
 
 Features
 --------
 + Parse and create FIX messages
-+ Connect over TCP socket as client or server
++ Connect over TCP/Websocket socket as client or server
 + Fast, single-digit microsecond performance
 + Modern, written in ES6/ES2015/ES2016/ES2017
 + Validation (checksum and message length), includes FIX specification in parsed message

@@ -34,13 +34,26 @@ const nodeConfig = Object.assign({}, commonConfig, {
     target: 'node'
 });
 
-const serverConfig = Object.assign({}, commonConfig, {
+const serverTCPConfig = Object.assign({}, commonConfig, {
     entry: {
         'FIXParser': './src/FIXServer.js'
     },
     output: {
         path: path.join(__dirname),
         filename: 'server.js',
+        library: 'FIXParser',
+        libraryTarget: 'umd'
+    },
+    target: 'node'
+});
+
+const serverWebsocketConfig = Object.assign({}, commonConfig, {
+    entry: {
+        'FIXParser': './src/FIXWebSocketServer.js'
+    },
+    output: {
+        path: path.join(__dirname),
+        filename: 'websocket.js',
         library: 'FIXParser',
         libraryTarget: 'umd'
     },
@@ -60,4 +73,4 @@ const browserConfig = Object.assign({}, commonConfig, {
     target: 'web'
 });
 
-export default [ nodeConfig, serverConfig, browserConfig ];
+export default [ nodeConfig, serverTCPConfig, serverWebsocketConfig, browserConfig ];
