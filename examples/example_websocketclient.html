@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1,initial-scale=1" />
+    <meta name="description" content="FIX Parser, ECMAScript framework for working with FIX protocol messages." />
+    <title>FIX Parser</title>
+    <style>
+    </style>
+</head>
+<body>
+<h1>FIXParser</h1>
+<p>View the Console in Developer Tools</p>
+<script type="text/javascript" src="../browser.js"></script>
+<script>
+    const fixParser = new FIXParser.default();
+    const SENDER = 'BANZAI';
+    const TARGET = 'EXEC';
+    
+    function sendLogon() {
+        const logon = fixParser.createMessage(
+            new FIXParser.Field(FIXParser.Fields.MsgType, FIXParser.Messages.Logon),
+            new FIXParser.Field(FIXParser.Fields.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
+            new FIXParser.Field(FIXParser.Fields.SenderCompID, SENDER),
+            new FIXParser.Field(FIXParser.Fields.SendingTime, fixParser.getTimestamp()),
+            new FIXParser.Field(FIXParser.Fields.TargetCompID, TARGET),
+            new FIXParser.Field(FIXParser.Fields.ResetSeqNumFlag, 'Y'),
+            new FIXParser.Field(FIXParser.Fields.EncryptMethod, FIXParser.EncryptMethod.None),
+            new FIXParser.Field(FIXParser.Fields.HeartBtInt, 10)
+        );
+        const messages = fixParser.parse(logon.encode());
+        const output = `sending message ${messages[0].description}, ${messages[0].string}`;
+        console.log(output);
+        fixParser.send(logon);
+    }
+
+    fixParser.connect({ host: 'localhost', port: 9878, protocol: 'websocket', sender: SENDER, target: TARGET, fixVersion: 'FIX.4.4' });
+
+    fixParser.on('open', () => {
+        const output = 'Open';
+        console.log(output);
+
+        sendLogon();
+
+        setInterval(() => {
+            const order = fixParser.createMessage(
+                new FIXParser.Field(FIXParser.Fields.MsgType, FIXParser.Messages.NewOrderSingle),
+                new FIXParser.Field(FIXParser.Fields.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
+                new FIXParser.Field(FIXParser.Fields.SenderCompID, SENDER),
+                new FIXParser.Field(FIXParser.Fields.SendingTime, fixParser.getTimestamp()),
+                new FIXParser.Field(FIXParser.Fields.TargetCompID, TARGET),
+                new FIXParser.Field(FIXParser.Fields.ClOrdID, '11223344'),
+                new FIXParser.Field(FIXParser.Fields.HandlInst, FIXParser.HandlInst.AutomatedExecutionNoIntervention),
+                new FIXParser.Field(FIXParser.Fields.OrderQty, '123'),
+                new FIXParser.Field(FIXParser.Fields.TransactTime, fixParser.getTimestamp()),
+                new FIXParser.Field(FIXParser.Fields.OrdType, FIXParser.OrderTypes.Market),
+                new FIXParser.Field(FIXParser.Fields.Side, FIXParser.Side.Buy),
+                new FIXParser.Field(FIXParser.Fields.Symbol, '700.HK'),
+                new FIXParser.Field(FIXParser.Fields.TimeInForce, FIXParser.TimeInForce.Day)
+            );
+            const messages = fixParser.parse(order.encode());
+            const output = `sending message ${messages[0].description}, ${messages[0].string.replace(/\x01/g, '|')}`;
+            console.log(output);
+            fixParser.send(order);
+        }, 500);
+
+    });
+    fixParser.on('message', (message) => {
+        const output = `received message ${message.description}, ${message.string}`;
+        console.log(output);
+    });
+    fixParser.on('close', () => {
+        const output = 'Disconnected (please start server: npm run server-websocket)';
+        console.log(output);
+    });
+</script>
+</body>
+</html>

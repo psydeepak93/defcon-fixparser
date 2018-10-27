@@ -77,8 +77,8 @@ export default class FIXParserBrowser extends EventEmitter {
             this.stopHeartbeat();
         });
 
-        this.socket.addEventListener('message', (data) => {
-            const messages = this.fixParserBase.parse(data.toString());
+        this.socket.addEventListener('message', (event) => {
+            const messages = this.fixParserBase.parse(event.data);
             let i = 0;
             for (i; i < messages.length; i++) {
                 this.emit('message', messages[i]);

@@ -31,17 +31,15 @@ export default class FIXParserServerWebsocket extends FIXParserServerBase {
     }
 
     send(message) {
-        this.socket.broadcast = () => {
-            this.socket.clients.forEach((client) => {
-                if (client.readyState === WebSocket.OPEN) {
-                    if (message instanceof Message) {
-                        this.fixParser.setNextTargetMsgSeqNum(this.fixParser.getNextTargetMsgSeqNum() + 1);
-                        this.socket.send(message.encode());
-                    } else {
-                        console.error('FIXParserServerWebsocket: could not send message, message of wrong type');
-                    }
+        this.socket.clients.forEach((client) => {
+            if (client.readyState === WebSocket.OPEN) {
+                if (message instanceof Message) {
+                    this.fixParser.setNextTargetMsgSeqNum(this.fixParser.getNextTargetMsgSeqNum() + 1);
+                    client.send(message.encode());
+                } else {
+                    console.error('FIXParserServerWebsocket: could not send message, message of wrong type');
                 }
-            });
-        };
+            }
+        });
     }
 }

@@ -35,9 +35,9 @@ export default class FIXServer extends EventEmitter {
         this.socket = null;
         this.sender = null;
         this.target = null;
-        this.messageSequence = 1;
         this.heartBeatInterval = null;
         this.heartBeatIntervalId = null;
+        this.fixVersion = 'FIX.5.0SP2';
     }
 
     createServer(host = 'localhost', port = '9878', protocol = PROTOCOL_TCP) {
@@ -53,6 +53,26 @@ export default class FIXServer extends EventEmitter {
             console.error(`[${Date.now()}] FIXServer: create server, invalid protocol`);
         }
         console.log(`[${Date.now()}] FIXServer started at ${this.host}:${this.port}`);
+    }
+
+    getNextTargetMsgSeqNum() {
+        return this.fixParser.getNextTargetMsgSeqNum();
+    }
+
+    setNextTargetMsgSeqNum(nextMsgSeqNum) {
+        return this.fixParser.setNextTargetMsgSeqNum(nextMsgSeqNum);
+    }
+
+    getTimestamp(dateObject = new Date()) {
+        return this.fixParser.getTimestamp(dateObject);
+    }
+
+    createMessage(...fields) {
+        return this.fixParser.createMessage(...fields);
+    }
+
+    parse(data) {
+        return this.fixParser.parse(data);
     }
 
     send(message) {
