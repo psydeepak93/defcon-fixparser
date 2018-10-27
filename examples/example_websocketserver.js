@@ -1,7 +1,7 @@
-import FIXWebSocketServer from './../src/FIXWebSocketServer'; // from 'fixparser/websocketserver';
+import FIXServer from './../src/FIXServer'; // from 'fixparser/websocketserver';
 
-const fixServer = new FIXWebSocketServer();
-fixServer.createServer('localhost', 9878);
+const fixServer = new FIXServer();
+fixServer.createServer('localhost', 9878, 'websocket');
 
 fixServer.on('open', () => {
     console.log('Open');

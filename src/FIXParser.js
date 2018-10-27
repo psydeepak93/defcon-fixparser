@@ -5,14 +5,12 @@
  * Copyright 2018 Victor Norgren
  * Released under the MIT license
  */
-import { Socket } from 'net';
 import { EventEmitter } from 'events';
-
-import WebSocket from 'ws';
 
 import { timestamp } from './util/util';
 import FIXParserBase from './FIXParserBase';
-import FrameDecoder from './util/FrameDecoder';
+import FIXParserClientSocket from './handler/FIXParserClientSocket';
+import FIXParserClientWebsocket from './handler/FIXParserClientWebsocket';
 import Field from './../src/fields/Field';
 import Message from './message/Message';
 import * as Messages from './../src/constants/ConstantsMessage';
@@ -31,7 +29,7 @@ export default class FIXParser extends EventEmitter {
     constructor() {
         super();
         this.fixParserBase = new FIXParserBase();
-        this.socket = null;
+        this.clientHandler = null;
         this.host = null;
         this.port = null;
         this.sender = null;
@@ -42,101 +40,24 @@ export default class FIXParser extends EventEmitter {
         this.fixVersion = 'FIX.5.0SP2';
     }
 
-    stopHeartbeat() {
-        clearInterval(this.heartBeatIntervalId);
-    }
-
-    startHeartbeat() {
-        this.stopHeartbeat();
-        this.heartBeatIntervalId = setInterval(() => {
-            const heartBeat = this.createMessage(
-                new Field(Fields.MsgType, 0),
-                new Field(Fields.MsgSeqNum, this.getNextTargetMsgSeqNum()),
-                new Field(Fields.SenderCompID, this.sender),
-                new Field(Fields.SendingTime, this.getTimestamp()),
-                new Field(Fields.TargetCompID, this.target)
-            );
-            this.send(heartBeat);
-
-        }, this.heartBeatInterval);
-    }
-
-    connect({ host = 'localhost', port = '9878', protocol = PROTOCOL_TCP, sender = 'SENDER', target = 'TARGET', heartbeatIntervalMs = 60000, fixVersion = this.fixVersion } = {}) {
-        this.host = host;
-        this.port = port;
-        this.protocol = protocol;
-        this.sender = sender;
-        this.target = target;
-        this.heartBeatInterval = heartbeatIntervalMs;
-        this.fixVersion = fixVersion;
-
-        switch(this.protocol) {
+    connect({ host = 'localhost', port = '9878', protocol = PROTOCOL_TCP, sender = 'SENDER', target = 'TARGET', heartbeatIntervalMs = 30000, fixVersion = this.fixVersion } = {}) {
+        switch(protocol) {
             case PROTOCOL_TCP:
-                this.connectTCP();
+                this.clientHandler = new FIXParserClientSocket(this, this);
                 break;
             case PROTOCOL_WEBSOCKET:
-                this.connectWebsocket();
+                this.clientHandler = new FIXParserClientWebsocket(this, this);
                 break;
             default:
                 console.error('FIXParser: could not connect, no protocol specified');
         }
-    }
-
-    connectTCP() {
-        this.socket = new Socket();
-        this.socket.setEncoding('ascii');
-        this.socket
-            .pipe(new FrameDecoder())
-            .on('data', (data) => {
-                const messages = this.parse(data.toString());
-                let i = 0;
-                for (i; i < messages.length; i++) {
-                    this.emit('message', messages[i]);
-                }
-            });
-
-        this.socket.on('close', () => {
-            this.emit('close');
-            this.stopHeartbeat();
-        });
-
-        this.socket.on('error', (error) => {
-            this.emit('error', error);
-            this.stopHeartbeat();
-        });
-
-        this.socket.on('timeout', () => {
-            this.emit('timeout');
-            this.socket.end();
-            this.stopHeartbeat();
-        });
-
-        this.socket.connect(this.port, this.host, () => {
-            console.log('Connected', this.socket.readyState);
-            if (this.socket.readyState === 'open') {
-                this.emit('open');
-                this.startHeartbeat();
-            }
-        });
-    }
-
-    connectWebsocket() {
-        this.socket = new WebSocket(`ws://${this.host}:${this.port}`);
-
-        this.socket.on('open', () => {
-            console.log('Connected');
-            this.emit('open');
-            this.startHeartbeat();
-        });
-
-        this.socket.on('message', (data) => {
-            console.log(data);
-        });
-
-        this.socket.on('close', () => {
-            this.emit('close');
-            this.stopHeartbeat();
-        });
+        this.clientHandler.host = host;
+        this.clientHandler.port = port;
+        this.clientHandler.sender = sender;
+        this.clientHandler.target = target;
+        this.clientHandler.heartBeatInterval = heartbeatIntervalMs;
+        this.clientHandler.fixVersion = fixVersion;
+        this.clientHandler.connect();
     }
 
     getNextTargetMsgSeqNum() {
@@ -161,39 +82,7 @@ export default class FIXParser extends EventEmitter {
     }
 
     send(message) {
-        if(this.protocol === PROTOCOL_TCP) {
-            this.sendTCP(message);
-        } else if (this.protocol === PROTOCOL_WEBSOCKET) {
-            this.sendWebsocket(message);
-        } else {
-            console.error('FIXParser: could not send message, no protocol specified for connection', message);
-        }
-    }
-
-    sendTCP(message) {
-        if (this.socket.readyState === 'open') {
-            if (message instanceof Message) {
-                this.setNextTargetMsgSeqNum(this.getNextTargetMsgSeqNum() + 1);
-                this.socket.write(message.encode());
-            } else {
-                console.error('FIXParser: could not send message, message of wrong type');
-            }
-        } else {
-            console.error('FIXParser: could not send message, socket not open', message);
-        }
-    }
-
-    sendWebsocket(message) {
-        if (this.socket.readyState === WebSocket.OPEN) {
-            if (message instanceof Message) {
-                this.setNextTargetMsgSeqNum(this.getNextTargetMsgSeqNum() + 1);
-                this.socket.send(message.encode());
-            } else {
-                console.error('FIXParser: could not send message, message of wrong type');
-            }
-        } else {
-            console.error('FIXParser: could not send message, socket not open', message);
-        }
+        this.clientHandler.send(message);
     }
 }
 

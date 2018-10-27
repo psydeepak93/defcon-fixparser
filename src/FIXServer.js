@@ -5,11 +5,11 @@
  * Copyright 2018 Victor Norgren
  * Released under the MIT license
  */
-import { createServer } from 'net';
 import { EventEmitter } from 'events';
 
 import FIXParser from './FIXParser';
-import FrameDecoder from './util/FrameDecoder';
+import FIXParserServerSocket from './handler/FIXParserServerSocket';
+import FIXParserServerWebsocket from './handler/FIXParserServerWebsocket';
 import Message from './message/Message';
 import Field from './../src/fields/Field';
 import * as Messages from './../src/constants/ConstantsMessage';
@@ -20,6 +20,9 @@ import * as HandlInst from './../src/constants/ConstantsHandlInst';
 import * as TimeInForce from './../src/constants/ConstantsTimeInForce';
 import * as EncryptMethod from './../src/constants/ConstantsEncryptMethod';
 
+const PROTOCOL_TCP = 'tcp';
+const PROTOCOL_WEBSOCKET = 'websocket';
+
 export default class FIXServer extends EventEmitter {
 
     constructor() {
@@ -27,6 +30,7 @@ export default class FIXServer extends EventEmitter {
         this.fixParser = new FIXParser();
         this.host = null;
         this.port = null;
+        this.serverHandler = null;
         this.server = null;
         this.socket = null;
         this.sender = null;
@@ -36,63 +40,23 @@ export default class FIXServer extends EventEmitter {
         this.heartBeatIntervalId = null;
     }
 
-    createServer(host = 'localhost', port = '9878') {
+    createServer(host = 'localhost', port = '9878', protocol = PROTOCOL_TCP) {
         this.host = host;
         this.port = port;
-        this.server = createServer((socket) => {
-            this.socket = socket;
-            this.socket
-                .pipe(new FrameDecoder())
-                .on('data', (data) => {
-                    const message = this.fixParser.parse(data.toString())[0];
-                    this.processMessage(message);
-                    this.emit('message', message);
-                });
+        this.protocol = protocol;
 
-            this.socket.on('open', () => {
-                this.emit('open');
-            });
-
-            this.socket.on('close', () => {
-                this.emit('close');
-            });
-        });
-
-        this.server.listen(this.port, this.host);
+        if(this.protocol === PROTOCOL_TCP) {
+            this.serverHandler = new FIXParserServerSocket(this, this.fixParser, this.host, this.port);
+        } else if(this.protocol === PROTOCOL_WEBSOCKET) {
+            this.serverHandler = new FIXParserServerWebsocket(this, this.fixParser, this.host, this.port);
+        } else {
+            console.error(`[${Date.now()}] FIXServer: create server, invalid protocol`);
+        }
         console.log(`[${Date.now()}] FIXServer started at ${this.host}:${this.port}`);
     }
 
-    processMessage(message) {
-        if(message.messageType === Messages.SequenceReset) {
-            const newSeqNo = (this.getField(Fields.NewSeqNo) || {}).value;
-            if(newSeqNo) {
-                console.log(`[${Date.now()}] FIXServer new sequence number ${newSeqNo}`);
-                this.setNextTargetMsgSeqNum(newSeqNo);
-            }
-        }
-        console.log(`[${Date.now()}] FIXServer received message ${message.description}`);
-    }
-
-    getNextTargetMsgSeqNum() {
-        return this.messageSequence;
-    }
-
-    setNextTargetMsgSeqNum(nextMsgSeqNum) {
-        this.messageSequence = parseInt(nextMsgSeqNum, 10);
-        return this.messageSequence;
-    }
-
     send(message) {
-        if(this.socket.readyState === 'open') {
-            if(message instanceof Message) {
-                this.setNextTargetMsgSeqNum(this.getNextTargetMsgSeqNum() + 1);
-                this.socket.write(message.encode());
-            } else {
-                console.error(`[${Date.now()}] FIXServer: could not send message: message of wrong type`);
-            }
-        } else {
-            console.error(`[${Date.now()}] FIXServer: could not send message, socket not open`);
-        }
+        this.serverHandler.send(message);
     }
 }
 

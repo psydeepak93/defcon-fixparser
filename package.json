@@ -1,6 +1,6 @@
 {
   "name": "fixparser",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "FIX 5.0SP2 Parser",
   "main": "./fixparser.js",
   "module": "./src/FIXParser.js",
@@ -14,10 +14,10 @@
     "prebuild": "babel-node --max-old-space-size=4096 prebuild/index.js",
     "build": "webpack -p --optimize-dedupe --optimize-minimize",
     "example": "babel-node examples/example.js",
-    "server-tcp": "babel-node examples/example_server.js",
+    "server-socket": "babel-node examples/example_server.js",
+    "client-socket": "babel-node examples/example_client.js",
     "server-websocket": "babel-node examples/example_websocketserver.js",
-    "client-tcp": "babel-node examples/example_executor.js",
-    "client-websocket": "babel-node examples/example_executor_websocketclient.js",
+    "client-websocket": "babel-node examples/example_websocketclient.js",
     "perf": "node perf/Perf-FIXParser.js",
     "test": "jest"
   },

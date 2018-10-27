@@ -60,7 +60,7 @@ Connect over TCP socket (as client):
 ```javascript
 import FIXParser from 'fixparser';
 const fixParser = new FIXParser();
-fixParser.connect({ host: 'localhost', port: 9878, sender: 'BANZAI', target: 'EXEC', fixVersion: 'FIX.4.4' });
+fixParser.connect({ host: 'localhost', port: 9878, protocol: 'tcp', sender: 'BANZAI', target: 'EXEC', fixVersion: 'FIX.4.4' });
 fixParser.on('open', () => {
     // Connection is open... 
 });
@@ -77,7 +77,7 @@ FIX Server:
 ```javascript
 import FIXServer from 'fixparser/server';
 const fixServer = new FIXServer();
-fixServer.createServer('localhost', 9878);
+fixServer.createServer('localhost', 9878, 'tcp');
 fixServer.on('message', (message) => {
     console.log('server received message', message.description, message.string);
 });
