@@ -100,7 +100,7 @@ export default class FIXParserBrowser extends EventEmitter {
     }
 
     createMessage(...fields) {
-        return new Message(...fields);
+        return new Message(this.fixVersion, ...fields);
     }
 
     parse(data) {
