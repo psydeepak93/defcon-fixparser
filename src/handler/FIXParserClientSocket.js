@@ -19,7 +19,7 @@ export default class FIXParserClientSocket extends FIXParserClientBase {
         this.socket
             .pipe(new FrameDecoder())
             .on('data', (data) => {
-                const messages = this.parse(data.toString());
+                const messages = this.fixParser.parse(data.toString());
                 let i = 0;
                 for (i; i < messages.length; i++) {
                     this.processMessage(messages[i]);
