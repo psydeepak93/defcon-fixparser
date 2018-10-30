@@ -1,4 +1,4 @@
-import { FIELDS } from './../spec/SpecFields';
+import { FIELDS } from './../../spec/SpecFields';
 import { Messages } from './../messages/Messages';
 import { Categories } from './categories/Categories';
 import { DataTypes } from './datatypes/Datatypes';

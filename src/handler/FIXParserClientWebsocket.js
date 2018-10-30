@@ -13,7 +13,11 @@ import Message from '../message/Message';
 export default class FIXParserClientWebsocket extends FIXParserClientBase {
 
     connect() {
-        this.socket = new WebSocket(`ws://${this.host}:${this.port}`);
+        const connectionString = (this.host.indexOf('ws://') === -1 && this.host.indexOf('wss://') === -1)
+            ? `ws://${this.host}:${this.port}`
+            : `${this.host}:${this.port}`;
+
+        this.socket = new WebSocket(connectionString);
 
         this.socket.on('open', () => {
             console.log('Connected');

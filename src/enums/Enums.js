@@ -1,4 +1,4 @@
-import { ENUMS } from './../spec/SpecEnums';
+import { ENUMS } from './../../spec/SpecEnums';
 import { EnumType } from './EnumType';
 
 export class Enums {

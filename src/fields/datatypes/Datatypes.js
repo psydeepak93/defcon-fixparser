@@ -1,4 +1,4 @@
-import { DATATYPES } from './../../spec/SpecDatatypes';
+import { DATATYPES } from './../../../spec/SpecDatatypes';
 import { FieldType } from './FieldType';
 
 export class DataTypes {

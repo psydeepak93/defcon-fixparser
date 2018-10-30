@@ -1,6 +1,6 @@
 {
   "name": "fixparser",
-  "version": "2.6.5",
+  "version": "2.6.7",
   "description": "FIX 5.0SP2 Parser",
   "main": "./fixparser.js",
   "module": "./src/FIXParser.js",
@@ -10,7 +10,7 @@
     "url": "https://gitlab.com/logotype/fixparser.git"
   },
   "scripts": {
-    "eslint": "eslint *.babel.js src test prebuild",
+    "eslint": "eslint *.babel.js spec src test prebuild",
     "prebuild": "babel-node --max-old-space-size=4096 prebuild/index.js",
     "build": "webpack -p --optimize-dedupe --optimize-minimize",
     "example": "babel-node examples/example.js",

@@ -1,4 +1,4 @@
-import { CATEGORIES } from './../../spec/SpecCategories';
+import { CATEGORIES } from './../../../spec/SpecCategories';
 import { CategoryType } from './CategoryType';
 
 export class Categories {

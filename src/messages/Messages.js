@@ -1,4 +1,4 @@
-import { MESSAGES } from './../spec/SpecMessages';
+import { MESSAGES } from './../../spec/SpecMessages';
 import { MessageContents } from './../messagecontents/MessageContents';
 
 export class Messages {

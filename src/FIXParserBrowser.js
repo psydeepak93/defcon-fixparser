@@ -58,12 +58,14 @@ export default class FIXParserBrowser extends EventEmitter {
         this.host = host;
         this.port = port;
         this.protocol = protocol;
+        this.connectionString = (this.host.indexOf('ws://') === -1 && this.host.indexOf('wss://') === -1)
+            ? `ws://${this.host}:${this.port}`
+            : `${this.host}:${this.port}`;
         this.sender = sender;
         this.target = target;
         this.heartBeatInterval = heartbeatIntervalMs;
         this.fixVersion = fixVersion;
-
-        this.socket = new WebSocket(`ws://${this.host}:${this.port}`);
+        this.socket = new WebSocket(this.connectionString);
 
         this.socket.addEventListener('open', (event) => {
             console.log(`Connected: ${event}, readyState: ${this.socket.readyState}`);

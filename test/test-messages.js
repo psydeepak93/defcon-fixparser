@@ -44,5 +44,6 @@ export const testMessages = [
     {'description':'IOI', 'detail': '', 'fix':'8=FIX.4.2|9=97|35=6|49=BKR|56=IM|34=14|52=20100204-09:18:42|23=115685|28=N|55=SPMI.MI|54=2|44=2200.75|27=S|25=H|10=248|', checksumValid: true, bodyLengthValid: true},
     {'description':'NewOrderSingle', 'detail': '', 'fix':'8=FIX.4.4|9=122|35=D|34=215|49=CLIENT12|52=20100225-19:41:57.316|56=B|1=Marcel|11=13346|21=1|40=2|44=5|54=1|59=0|60=20100225-19:39:52.020|10=072|', checksumValid: true, bodyLengthValid: true},
     {'description':'TradeCaptureReportRequest', 'detail': '', 'fix':'8=FIX.4.4|9=117|35=AD|34=2|49=A|50=1|52=20100219-14:33:32.258|56=B|57=M|263=1|568=1|569=0|580=1|75=20100218|60=20100218-00:00:00.000|10=202|', checksumValid: true, bodyLengthValid: true},
-    {'description':'Reject', 'detail': '', 'fix':'8=FIX.4.4|9=94|35=3|34=214|49=A|50=U1|52=20100304-09:42:23.130|56=AB|128=B1|45=176|58=txt|371=15|372=X|373=1|10=058|', checksumValid: true, bodyLengthValid: true}
+    {'description':'Reject', 'detail': '', 'fix':'8=FIX.4.4|9=94|35=3|34=214|49=A|50=U1|52=20100304-09:42:23.130|56=AB|128=B1|45=176|58=txt|371=15|372=X|373=1|10=058|', checksumValid: true, bodyLengthValid: true},
+    {'description':'MarketDataSnapshotFullRefresh', 'detail': '', 'fix':'8=FIX.4.4|9=140|35=W|34=39630|52=20181029-11:11:28.985|49=FXAGGR_RATES|56=u2071|55=EURUSD|268=2|269=0|270=1.14073|271=1400000|269=1|270=1.14074|271=2800000|10=092|', checksumValid: true, bodyLengthValid: true}
 ];

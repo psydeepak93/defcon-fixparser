@@ -1,4 +1,4 @@
-import { SECTIONS } from './../../spec/SpecSections';
+import { SECTIONS } from './../../../spec/SpecSections';
 import { SectionType } from './SectionType';
 
 export class Sections {

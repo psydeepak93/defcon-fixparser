@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import { MESSAGE_CONTENTS } from './../src/spec/SpecMessageContents';
+import { MESSAGE_CONTENTS } from './../spec/SpecMessageContents';
 import { groupBy } from './../src/util/util';
 import { Components } from './../src/components/Components';
 
