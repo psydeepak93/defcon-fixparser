@@ -55,6 +55,10 @@
   "author": "Victor Norgren",
   "license": "MIT",
   "jest": {
+    "globals": {
+      "__PACKAGE_VERSION__": true,
+      "__BUILD_TIME__": true
+    },
     "collectCoverage": true,
     "collectCoverageFrom": [
       "**/src/**/*.{js}",
