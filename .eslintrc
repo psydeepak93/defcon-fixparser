@@ -268,7 +268,9 @@
   },
   "globals": {
     "Promise": true,
-    "Set": true
+    "Set": true,
+    "__PACKAGE_VERSION__": true,
+    "__BUILD_TIME__": true
   },
   "settings": {
     "import/extensions": [".js"],

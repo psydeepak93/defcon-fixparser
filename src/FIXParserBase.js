@@ -13,6 +13,8 @@ import { SOH, RE_FIND, RE_ESCAPE, STRING_EQUALS } from './util/util';
 
 export default class FIXParserBase {
 
+    static version = { version: __PACKAGE_VERSION__, build: __BUILD_TIME__ };
+
     constructor() {
         this.message = null;
         this.messageTags = [];

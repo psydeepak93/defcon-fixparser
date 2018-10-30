@@ -3,6 +3,8 @@ import path from 'path';
 import webpack from 'webpack';
 import yargs from 'yargs';
 
+import pkg from './package';
+
 const { optimizeMinimize } = yargs.alias('p', 'optimize-minimize').argv;
 const nodeEnv = optimizeMinimize ? 'production' : 'development';
 
@@ -15,7 +17,9 @@ const commonConfig = {
     externals: [],
     plugins: [
         new webpack.DefinePlugin({
-            'process.env': { 'NODE_ENV': JSON.stringify(nodeEnv) }
+            'process.env': { 'NODE_ENV': JSON.stringify(nodeEnv) },
+            __PACKAGE_VERSION__: JSON.stringify(pkg.version),
+            __BUILD_TIME__: JSON.stringify(new Date().toISOString())
         })
     ],
     devtool: optimizeMinimize ? 'source-map' : false

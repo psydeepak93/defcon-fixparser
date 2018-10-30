@@ -1,6 +1,10 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+import path from 'path';
+
+import webpack from 'webpack';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+
+import pkg from './package';
 
 module.exports = {
     entry: {
@@ -51,7 +55,11 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({ filename: './dashboard.css' }),
-        new CopyWebpackPlugin([{ from: 'templates' }])
+        new CopyWebpackPlugin([{ from: 'templates' }]),
+        new webpack.DefinePlugin({
+            __PACKAGE_VERSION__: JSON.stringify(pkg.version),
+            __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+        })
     ],
     context: __dirname,
     devServer: {
