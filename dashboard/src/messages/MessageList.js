@@ -16,24 +16,35 @@ export default class MessageList extends Component {
     };
 
     _renderItems() {
-        if(this.props.messages.length > 0 && this.props.messages[0].data.length === 0) {
+        if (
+            this.props.messages.length > 0 &&
+            this.props.messages[0].data.length === 0
+        ) {
             return null;
         }
-        return this.props.messages.map((message, key) => <MessageListItem key={`message_${key}`} selected={this.props.selectedMessage === message} onSelectMessage={this.props.onSelectMessage} message={message} />);
+        return this.props.messages.map((message, key) => (
+            <MessageListItem
+                key={`message_${key}`}
+                selected={this.props.selectedMessage === message}
+                onSelectMessage={this.props.onSelectMessage}
+                message={message}
+            />
+        ));
     }
 
     render() {
         return (
             <table className="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle uk-background-muted">
                 <thead>
-                <tr>
-                    <td colSpan="5" className="no-padding">
-                        <div className="uk-alert-muted" uk-alert="true">
-                            <h3>Timeline</h3>
-                            Click on a list item below to see FIX message details.
-                        </div>
-                    </td>
-                </tr>
+                    <tr>
+                        <td colSpan="5" className="no-padding">
+                            <div className="uk-alert-muted" uk-alert="true">
+                                <h3>Timeline</h3>
+                                Click on a list item below to see FIX message
+                                details.
+                            </div>
+                        </td>
+                    </tr>
                 </thead>
                 <thead>
                     <tr>
@@ -45,9 +56,7 @@ export default class MessageList extends Component {
                         <th>Detail</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {this._renderItems()}
-                </tbody>
+                <tbody>{this._renderItems()}</tbody>
             </table>
         );
     }

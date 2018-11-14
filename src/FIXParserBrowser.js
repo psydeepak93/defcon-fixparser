@@ -20,7 +20,6 @@ import * as TimeInForce from './../src/constants/ConstantsTimeInForce';
 import * as EncryptMethod from './../src/constants/ConstantsEncryptMethod';
 
 export default class FIXParserBrowser extends EventEmitter {
-
     constructor() {
         super();
         this.fixParserBase = new FIXParserBase();
@@ -50,17 +49,26 @@ export default class FIXParserBrowser extends EventEmitter {
                 new Field(Fields.TargetCompID, this.target)
             );
             this.send(heartBeat);
-
         }, this.heartBeatInterval);
     }
 
-    connect({ host = 'localhost', port = '9878', protocol = 'websocket', sender = 'SENDER', target = 'TARGET', heartbeatIntervalMs = 60000, fixVersion = this.fixVersion } = {}) {
+    connect({
+        host = 'localhost',
+        port = '9878',
+        protocol = 'websocket',
+        sender = 'SENDER',
+        target = 'TARGET',
+        heartbeatIntervalMs = 60000,
+        fixVersion = this.fixVersion
+    } = {}) {
         this.host = host;
         this.port = port;
         this.protocol = protocol;
-        this.connectionString = (this.host.indexOf('ws://') === -1 && this.host.indexOf('wss://') === -1)
-            ? `ws://${this.host}:${this.port}`
-            : `${this.host}:${this.port}`;
+        this.connectionString =
+            this.host.indexOf('ws://') === -1 &&
+            this.host.indexOf('wss://') === -1
+                ? `ws://${this.host}:${this.port}`
+                : `${this.host}:${this.port}`;
         this.sender = sender;
         this.target = target;
         this.heartBeatInterval = heartbeatIntervalMs;
@@ -68,13 +76,19 @@ export default class FIXParserBrowser extends EventEmitter {
         this.socket = new WebSocket(this.connectionString);
 
         this.socket.addEventListener('open', (event) => {
-            console.log(`Connected: ${event}, readyState: ${this.socket.readyState}`);
+            console.log(
+                `Connected: ${event}, readyState: ${this.socket.readyState}`
+            );
             this.emit('open');
             this.startHeartbeat();
         });
 
         this.socket.addEventListener('close', (event) => {
-            console.log(`Connection closed: ${event}, readyState: ${this.socket.readyState}`);
+            console.log(
+                `Connection closed: ${event}, readyState: ${
+                    this.socket.readyState
+                }`
+            );
             this.emit('close');
             this.stopHeartbeat();
         });
@@ -115,10 +129,15 @@ export default class FIXParserBrowser extends EventEmitter {
                 this.setNextTargetMsgSeqNum(this.getNextTargetMsgSeqNum() + 1);
                 this.socket.send(message.encode());
             } else {
-                console.error('FIXParser: could not send message, message of wrong type');
+                console.error(
+                    'FIXParser: could not send message, message of wrong type'
+                );
             }
         } else {
-            console.error('FIXParser: could not send message, socket not open', message);
+            console.error(
+                'FIXParser: could not send message, socket not open',
+                message
+            );
         }
     }
 }

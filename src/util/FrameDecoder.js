@@ -15,7 +15,7 @@ export default class FrameDecoder extends Transform {
         callback();
     }
 
-    destroy(error) { // eslint-disable-line no-unused-vars
+    destroy() {
         this.data = null;
     }
 }

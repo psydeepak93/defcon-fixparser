@@ -22,8 +22,12 @@ const MARKER_BODYLENGTH = '\x02';
 const MARKER_CHECKSUM = '\x03';
 
 export const calculateBodyLength = (value) => {
-    const startLength = value.indexOf(TAG_MSGTYPE) === -1 ? 0 : value.indexOf(TAG_MSGTYPE),
-        endLength = value.indexOf(TAG_CHECKSUM) === -1 ? value.length : value.indexOf(TAG_CHECKSUM);
+    const startLength =
+            value.indexOf(TAG_MSGTYPE) === -1 ? 0 : value.indexOf(TAG_MSGTYPE),
+        endLength =
+            value.indexOf(TAG_CHECKSUM) === -1
+                ? value.length
+                : value.indexOf(TAG_CHECKSUM);
 
     return endLength - startLength;
 };
@@ -50,10 +54,10 @@ export const calculateChecksum = (value) => {
 };
 
 const calculatePosition = (spec, tag) => {
-    if(spec.tagText === 'StandardHeader' && parseInt(tag, 10) === 8) return 0;
-    if(spec.tagText === 'StandardHeader' && parseInt(tag, 10) === 9) return 1;
-    if(spec.tagText === 'StandardHeader' && parseInt(tag, 10) === 35) return 2;
-    if(spec.tagText === 'StandardTrailer') return 999999999;
+    if (spec.tagText === 'StandardHeader' && parseInt(tag, 10) === 8) return 0;
+    if (spec.tagText === 'StandardHeader' && parseInt(tag, 10) === 9) return 1;
+    if (spec.tagText === 'StandardHeader' && parseInt(tag, 10) === 35) return 2;
+    if (spec.tagText === 'StandardTrailer') return 999999999;
     return spec.position + 100;
 };
 
@@ -61,15 +65,16 @@ export const validateMessage = (message) => {
     let result = [];
 
     const messageDataCloned = JSON.parse(JSON.stringify(message.data));
-    const messageContentsCloned = JSON.parse(JSON.stringify(message.messageContents));
+    const messageContentsCloned = JSON.parse(
+        JSON.stringify(message.messageContents)
+    );
 
     messageDataCloned.forEach((field, index) => {
-
         const spec = messageContentsCloned.find((item) => {
-            if(item.components.length > 0) {
+            if (item.components.length > 0) {
                 return item.components.find((subItem) => {
                     const found = String(subItem.tagText) === String(field.tag);
-                    if(found) {
+                    if (found) {
                         subItem.validated = true;
                     }
                     return found;
@@ -80,7 +85,7 @@ export const validateMessage = (message) => {
             }
         });
 
-        if(spec) {
+        if (spec) {
             result.push({
                 valid: true,
                 hasValue: true,
@@ -105,11 +110,11 @@ export const validateMessage = (message) => {
     messageContentsCloned
         .filter((item) => !item.validated)
         .forEach((spec) => {
-            if(spec.components.length > 0) {
+            if (spec.components.length > 0) {
                 spec.components
                     .filter((subItem) => !subItem.validated)
                     .forEach((subSpec) => {
-                        if(!subSpec.validated) {
+                        if (!subSpec.validated) {
                             result.push({
                                 valid: !(subSpec.reqd === '1'),
                                 hasValue: false,
@@ -117,11 +122,14 @@ export const validateMessage = (message) => {
                                 spec: subSpec,
                                 reqd: subSpec.reqd,
                                 tagText: String(subSpec.tagText),
-                                position: calculatePosition(subSpec, subSpec.tagText)
+                                position: calculatePosition(
+                                    subSpec,
+                                    subSpec.tagText
+                                )
                             });
                         }
                     });
-            } else if(!spec.validated) {
+            } else if (!spec.validated) {
                 result.push({
                     valid: !(spec.reqd === '1'),
                     hasValue: false,
@@ -134,13 +142,16 @@ export const validateMessage = (message) => {
             }
         });
 
-    result = result.sort((a, b) => ((parseInt(a.position, 10) < parseInt(b.position, 10)) ? -1 : 1));
+    result = result.sort((a, b) => {
+        const sort =
+            parseInt(a.position, 10) < parseInt(b.position, 10) ? -1 : 1;
+        return sort;
+    });
 
     return result;
 };
 
 export default class Message {
-
     static pad(value, size) {
         const paddedString = `00${value}`;
         return paddedString.substr(paddedString.length - size);
@@ -166,7 +177,7 @@ export default class Message {
 
     setField(field) {
         const index = this.data.findIndex((item) => item.tag === field.tag);
-        if(index > -1) {
+        if (index > -1) {
             this.data[index] = field;
         }
     }
@@ -188,11 +199,11 @@ export default class Message {
     }
 
     getEnum(tag, value) {
-        if(!this.getField(MsgType) || !this.getField(MsgType).tag) {
+        if (!this.getField(MsgType) || !this.getField(MsgType).tag) {
             return null;
         }
 
-        if(!this.getField(MsgType) || !this.getField(MsgType).value) {
+        if (!this.getField(MsgType) || !this.getField(MsgType).value) {
             return null;
         }
 
@@ -200,44 +211,72 @@ export default class Message {
         return enums.getEnum(tag, value);
     }
 
-    getBriefDescription() { // eslint-disable-line complexity
+    getBriefDescription() {
         let returnValue = '';
         let side = ((this.getField(Side) || {}).enumeration || {}).symbolicName;
         side = side ? side.replace('Sell', 'SL').toUpperCase() : null;
 
-        if(this.getField(LeavesQty)) {
+        if (this.getField(LeavesQty)) {
             let quantity = null;
 
-            if(this.getField(ContraTradeQty)) {
+            if (this.getField(ContraTradeQty)) {
                 quantity = (this.getField(ContraTradeQty) || {}).value;
             } else {
                 quantity = (this.getField(OrderQty) || {}).value;
             }
             const leavesQuantity = (this.getField(LeavesQty) || {}).value;
             const lastPrice = (this.getField(LastPx) || {}).value;
-            returnValue = nonEmpty `${quantity} @${lastPrice || String(lastPrice) === '0' ? lastPrice.toFixed(2) : null} ${this.getField(LeavesQty).name.replace('LeavesQty', 'LvsQty')} ${leavesQuantity}`;
-
-        } else if(this.getField(OrderQty)) {
+            returnValue = nonEmpty`${quantity} @${
+                lastPrice || String(lastPrice) === '0'
+                    ? lastPrice.toFixed(2)
+                    : null
+            } ${this.getField(LeavesQty).name.replace(
+                'LeavesQty',
+                'LvsQty'
+            )} ${leavesQuantity}`;
+        } else if (this.getField(OrderQty)) {
             const orderQuantity = (this.getField(OrderQty) || {}).value;
             const symbol = (this.getField(Symbol) || {}).value;
-            const orderType = ((this.getField(OrdType) || {}).enumeration || {}).symbolicName;
-            const timeInForce = ((this.getField(TimeInForce) || {}).enumeration || {}).symbolicName;
+            const orderType = ((this.getField(OrdType) || {}).enumeration || {})
+                .symbolicName;
+            const timeInForce = (
+                (this.getField(TimeInForce) || {}).enumeration || {}
+            ).symbolicName;
 
-            if(this.getField(Price)) {
+            if (this.getField(Price)) {
                 let price = (this.getField(Price) || {}).value;
-                if(price && price >= 1) {
+                if (price && price >= 1) {
                     price = price.toFixed(2);
-                } else if(price && price < 1) {
+                } else if (price && price < 1) {
                     price = String(price).replace('0.', '.');
                 }
-                returnValue = nonEmpty `${side} ${orderQuantity} ${symbol ? symbol.toUpperCase() : null} ${orderType ? orderType.replace('Market', 'MKT').replace('Limit', 'LMT').toUpperCase() : null} @${price} ${timeInForce ? timeInForce.toUpperCase() : null}`;
+                returnValue = nonEmpty`${side} ${orderQuantity} ${
+                    symbol ? symbol.toUpperCase() : null
+                } ${
+                    orderType
+                        ? orderType
+                              .replace('Market', 'MKT')
+                              .replace('Limit', 'LMT')
+                              .toUpperCase()
+                        : null
+                } @${price} ${timeInForce ? timeInForce.toUpperCase() : null}`;
             } else {
-                returnValue = nonEmpty `${side} ${orderQuantity} ${symbol ? symbol.toUpperCase() : null} ${orderType ? orderType.replace('Market', 'MKT').replace('Limit', 'LMT').toUpperCase() : null} ${timeInForce ? timeInForce.toUpperCase() : null}`;
+                returnValue = nonEmpty`${side} ${orderQuantity} ${
+                    symbol ? symbol.toUpperCase() : null
+                } ${
+                    orderType
+                        ? orderType
+                              .replace('Market', 'MKT')
+                              .replace('Limit', 'LMT')
+                              .toUpperCase()
+                        : null
+                } ${timeInForce ? timeInForce.toUpperCase() : null}`;
             }
         } else {
             const messageType = this.getField(MsgType);
-            if(messageType && messageType.tag && messageType.value) {
-                return (this.getEnum(messageType.tag, messageType.value) || {}).SymbolicName;
+            if (messageType && messageType.tag && messageType.value) {
+                return (this.getEnum(messageType.tag, messageType.value) || {})
+                    .SymbolicName;
             } else {
                 return null;
             }
@@ -261,8 +300,14 @@ export default class Message {
     }
 
     validateBodyLength(value) {
-        const startLength = this.string.indexOf(TAG_MSGTYPE) === -1 ? 0 : this.string.indexOf(TAG_MSGTYPE),
-            endLength = this.string.indexOf(TAG_CHECKSUM) === -1 ? this.string.length : this.string.indexOf(TAG_CHECKSUM),
+        const startLength =
+                this.string.indexOf(TAG_MSGTYPE) === -1
+                    ? 0
+                    : this.string.indexOf(TAG_MSGTYPE),
+            endLength =
+                this.string.indexOf(TAG_CHECKSUM) === -1
+                    ? this.string.length
+                    : this.string.indexOf(TAG_CHECKSUM),
             bodyLength = endLength - startLength;
 
         this.bodyLengthValue = value >> 0;
@@ -272,7 +317,10 @@ export default class Message {
     }
 
     validateChecksum(value) {
-        const length = this.string.indexOf(TAG_CHECKSUM) === -1 ? this.string.length : this.string.indexOf(TAG_CHECKSUM),
+        const length =
+                this.string.indexOf(TAG_CHECKSUM) === -1
+                    ? this.string.length
+                    : this.string.indexOf(TAG_CHECKSUM),
             data = this.string.substring(0, length),
             calculatedChecksum = calculateChecksum(data);
 
@@ -287,7 +335,9 @@ export default class Message {
     }
 
     encode(separator = '\x01') {
-        const fields = this.data.map((field) => new Field(field.tag, field.value));
+        const fields = this.data.map(
+            (field) => new Field(field.tag, field.value)
+        );
         const data = [];
 
         let beginString = new Field(BeginString, this.fixVersion).toString();
@@ -303,14 +353,14 @@ export default class Message {
 
         // Check for body length
         index = fields.findIndex((field) => field.tag === BodyLength);
-        if(index > -1) {
+        if (index > -1) {
             bodyLength = fields[index].toString();
             fields.splice(index, 1);
         }
 
         // Check for trailer
         index = fields.findIndex((field) => field.tag === CheckSum);
-        if(index > -1) {
+        if (index > -1) {
             checksum = fields[index].toString();
             fields.splice(index, 1);
         }
@@ -319,18 +369,25 @@ export default class Message {
         data.push(bodyLength);
 
         // Add other fields
-        fields
-            .forEach((field) => {
-                data.push(field.toString());
-            });
+        fields.forEach((field) => {
+            data.push(field.toString());
+        });
 
         data.push(checksum);
 
         let fixMessage = `${data.join(separator)}${separator}`;
-        fixMessage = fixMessage.replace(MARKER_BODYLENGTH, calculateBodyLength(fixMessage));
+        fixMessage = fixMessage.replace(
+            MARKER_BODYLENGTH,
+            calculateBodyLength(fixMessage)
+        );
 
-        const length = fixMessage.indexOf(TAG_CHECKSUM) === -1 ? fixMessage.length : fixMessage.indexOf(TAG_CHECKSUM);
-        const calculatedChecksum = calculateChecksum(fixMessage.substring(0, length));
+        const length =
+            fixMessage.indexOf(TAG_CHECKSUM) === -1
+                ? fixMessage.length
+                : fixMessage.indexOf(TAG_CHECKSUM);
+        const calculatedChecksum = calculateChecksum(
+            fixMessage.substring(0, length)
+        );
         fixMessage = fixMessage.replace(MARKER_CHECKSUM, calculatedChecksum);
 
         return fixMessage;

@@ -13,10 +13,13 @@ export class Messages {
 
     processMessage(message, field) {
         const messageType = this.cacheMap.get(field.value);
-        if(messageType) {
+        if (messageType) {
             message.setDescription(messageType.Name);
             message.setMessageType(messageType.MsgType);
-            this.messageContents.processMessageContents(message, messageType.ComponentID);
+            this.messageContents.processMessageContents(
+                message,
+                messageType.ComponentID
+            );
         }
     }
 }

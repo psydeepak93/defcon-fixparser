@@ -11,11 +11,12 @@ import FIXParserClientBase from './FIXParserClientBase';
 import Message from '../message/Message';
 
 export default class FIXParserClientWebsocket extends FIXParserClientBase {
-
     connect() {
-        const connectionString = (this.host.indexOf('ws://') === -1 && this.host.indexOf('wss://') === -1)
-            ? `ws://${this.host}:${this.port}`
-            : `${this.host}:${this.port}`;
+        const connectionString =
+            this.host.indexOf('ws://') === -1 &&
+            this.host.indexOf('wss://') === -1
+                ? `ws://${this.host}:${this.port}`
+                : `${this.host}:${this.port}`;
 
         this.socket = new WebSocket(connectionString);
 
@@ -43,13 +44,20 @@ export default class FIXParserClientWebsocket extends FIXParserClientBase {
     send(message) {
         if (this.socket.readyState === WebSocket.OPEN) {
             if (message instanceof Message) {
-                this.fixParser.setNextTargetMsgSeqNum(this.fixParser.getNextTargetMsgSeqNum() + 1);
+                this.fixParser.setNextTargetMsgSeqNum(
+                    this.fixParser.getNextTargetMsgSeqNum() + 1
+                );
                 this.socket.send(message.encode());
             } else {
-                console.error('FIXParser: could not send message, message of wrong type');
+                console.error(
+                    'FIXParser: could not send message, message of wrong type'
+                );
             }
         } else {
-            console.error('FIXParser: could not send message, socket not open', message);
+            console.error(
+                'FIXParser: could not send message, socket not open',
+                message
+            );
         }
     }
 }

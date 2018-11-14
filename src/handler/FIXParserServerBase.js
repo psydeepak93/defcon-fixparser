@@ -11,7 +11,6 @@ import * as Messages from './../constants/ConstantsMessage';
 import * as Fields from './../constants/ConstantsField';
 
 export default class FIXParserServerBase extends EventEmitter {
-
     constructor(eventEmitter, parser, host, port) {
         super();
         this.eventEmitter = eventEmitter;
@@ -28,13 +27,18 @@ export default class FIXParserServerBase extends EventEmitter {
     }
 
     processMessage(message) {
-        if(message.messageType === Messages.SequenceReset) {
-            const newSeqNo = (this.fixParser.getField(Fields.NewSeqNo) || {}).value;
-            if(newSeqNo) {
-                console.log(`[${Date.now()}] FIXServer new sequence number ${newSeqNo}`);
+        if (message.messageType === Messages.SequenceReset) {
+            const newSeqNo = (this.fixParser.getField(Fields.NewSeqNo) || {})
+                .value;
+            if (newSeqNo) {
+                console.log(
+                    `[${Date.now()}] FIXServer new sequence number ${newSeqNo}`
+                );
                 this.fixParser.setNextTargetMsgSeqNum(newSeqNo);
             }
         }
-        console.log(`[${Date.now()}] FIXServer received message ${message.description}`);
+        console.log(
+            `[${Date.now()}] FIXServer received message ${message.description}`
+        );
     }
 }

@@ -53,7 +53,7 @@
     "array-callback-return": "warn",
     "block-scoped-var": "warn",
     "class-methods-use-this": "off",
-    "complexity": "warn",
+    "complexity": ["error", { "max": 40 }],
     "consistent-return": "warn",
     "curly": ["error", "multi-line"],
     "default-case": "warn",

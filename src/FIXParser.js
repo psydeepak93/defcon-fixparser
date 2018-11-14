@@ -25,7 +25,6 @@ const PROTOCOL_TCP = 'tcp';
 const PROTOCOL_WEBSOCKET = 'websocket';
 
 export default class FIXParser extends EventEmitter {
-
     constructor() {
         super();
         this.fixParserBase = new FIXParserBase();
@@ -40,8 +39,16 @@ export default class FIXParser extends EventEmitter {
         this.fixVersion = 'FIX.5.0SP2';
     }
 
-    connect({ host = 'localhost', port = '9878', protocol = PROTOCOL_TCP, sender = 'SENDER', target = 'TARGET', heartbeatIntervalMs = 30000, fixVersion = this.fixVersion } = {}) {
-        switch(protocol) {
+    connect({
+        host = 'localhost',
+        port = '9878',
+        protocol = PROTOCOL_TCP,
+        sender = 'SENDER',
+        target = 'TARGET',
+        heartbeatIntervalMs = 30000,
+        fixVersion = this.fixVersion
+    } = {}) {
+        switch (protocol) {
             case PROTOCOL_TCP:
                 this.clientHandler = new FIXParserClientSocket(this, this);
                 break;
@@ -49,7 +56,9 @@ export default class FIXParser extends EventEmitter {
                 this.clientHandler = new FIXParserClientWebsocket(this, this);
                 break;
             default:
-                console.error('FIXParser: could not connect, no protocol specified');
+                console.error(
+                    'FIXParser: could not connect, no protocol specified'
+                );
         }
         this.clientHandler.host = host;
         this.clientHandler.port = port;

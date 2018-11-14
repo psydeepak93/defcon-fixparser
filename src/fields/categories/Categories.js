@@ -14,7 +14,7 @@ export class Categories {
     processCategory(field, baseCategory) {
         this.categoryType.reset();
         const categoryData = this.cacheMap.get(String(baseCategory));
-        if(categoryData) {
+        if (categoryData) {
             this.categoryType.setCategory(categoryData);
             field.setCategory(this.categoryType);
         }

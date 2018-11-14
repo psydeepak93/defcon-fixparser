@@ -56,22 +56,26 @@ export class DataTypes {
     processDatatype(field, type) {
         this.fieldType.reset();
         const dataType = this.cacheMap.get(type);
-        if(dataType) {
+        if (dataType) {
             this.fieldType.setType(dataType);
             field.setType(this.fieldType);
-            if(type === 'int' ||
+            if (
+                type === 'int' ||
                 type === 'Length' ||
                 type === 'TagNum' ||
                 type === 'SeqNum' ||
                 type === 'NumInGroup' ||
-                type === 'DayOfMonth') {
+                type === 'DayOfMonth'
+            ) {
                 field.setValue(field.value >> 0);
-            } else if(type === 'float' ||
+            } else if (
+                type === 'float' ||
                 type === 'Qty' ||
                 type === 'Price' ||
                 type === 'PriceOffset' ||
                 type === 'Amt' ||
-                type === 'Percentage') {
+                type === 'Percentage'
+            ) {
                 field.setValue(parseFloat(field.value));
             }
         }

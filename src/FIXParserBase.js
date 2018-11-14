@@ -12,7 +12,6 @@ import Message from './message/Message';
 import { SOH, RE_FIND, RE_ESCAPE, STRING_EQUALS } from './util/util';
 
 export default class FIXParserBase {
-
     static version = { version: __PACKAGE_VERSION__, build: __BUILD_TIME__ };
 
     constructor() {
@@ -26,8 +25,11 @@ export default class FIXParserBase {
 
     processMessage() {
         const matches = RE_FIND.exec(this.messageString);
-        if(matches && matches.length === 2) {
-            const stringData = this.messageString.replace(new RegExp(matches[1].replace(RE_ESCAPE, '\\$&'), 'g'), SOH);
+        if (matches && matches.length === 2) {
+            const stringData = this.messageString.replace(
+                new RegExp(matches[1].replace(RE_ESCAPE, '\\$&'), 'g'),
+                SOH
+            );
             this.message.setString(stringData);
             this.messageTags = stringData.split(SOH);
         } else {
@@ -37,10 +39,13 @@ export default class FIXParserBase {
     }
 
     processFields() {
-        let tag = null, value = null, i = 0, equalsOperator = '', field = null;
+        let tag = null,
+            value = null,
+            i = 0,
+            equalsOperator = '',
+            field = null;
 
         for (i; i < this.messageTags.length - 1; i++) {
-
             equalsOperator = this.messageTags[i].indexOf(STRING_EQUALS);
 
             tag = this.messageTags[i].substring(0, equalsOperator);
@@ -51,9 +56,9 @@ export default class FIXParserBase {
             this.fields.processField(this.message, field);
             this.enums.processEnum(field);
 
-            if(field.tag === 9) {
+            if (field.tag === 9) {
                 this.message.validateBodyLength(value);
-            } else if(field.tag === 10) {
+            } else if (field.tag === 10) {
                 this.message.validateChecksum(value);
             }
 
@@ -67,10 +72,10 @@ export default class FIXParserBase {
         const messageStrings = data ? data.split(this.reBeginString) : [];
         const messages = [];
 
-        for(i; i < messageStrings.length; i++) {
+        for (i; i < messageStrings.length; i++) {
             this.message = new Message();
             this.messageString = messageStrings[i];
-            if(this.messageString.indexOf(SOH) > -1) {
+            if (this.messageString.indexOf(SOH) > -1) {
                 // SOH separator
                 this.message.setString(this.messageString);
                 this.messageTags = this.messageString.split(SOH);
@@ -78,7 +83,7 @@ export default class FIXParserBase {
                 this.processMessage();
             }
 
-            if(this.message) {
+            if (this.message) {
                 this.processFields();
                 messages.push(this.message);
             }

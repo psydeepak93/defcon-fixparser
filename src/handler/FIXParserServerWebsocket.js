@@ -11,7 +11,6 @@ import FIXParserServerBase from './FIXParserServerBase';
 import Message from './../message/Message';
 
 export default class FIXParserServerWebsocket extends FIXParserServerBase {
-
     createServer() {
         this.socket = new WebSocket.Server({
             host: this.host,
@@ -34,10 +33,14 @@ export default class FIXParserServerWebsocket extends FIXParserServerBase {
         this.socket.clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) {
                 if (message instanceof Message) {
-                    this.fixParser.setNextTargetMsgSeqNum(this.fixParser.getNextTargetMsgSeqNum() + 1);
+                    this.fixParser.setNextTargetMsgSeqNum(
+                        this.fixParser.getNextTargetMsgSeqNum() + 1
+                    );
                     client.send(message.encode());
                 } else {
-                    console.error('FIXParserServerWebsocket: could not send message, message of wrong type');
+                    console.error(
+                        'FIXParserServerWebsocket: could not send message, message of wrong type'
+                    );
                 }
             }
         });

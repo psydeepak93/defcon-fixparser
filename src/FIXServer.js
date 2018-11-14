@@ -24,7 +24,6 @@ const PROTOCOL_TCP = 'tcp';
 const PROTOCOL_WEBSOCKET = 'websocket';
 
 export default class FIXServer extends EventEmitter {
-
     constructor() {
         super();
         this.fixParser = new FIXParser();
@@ -45,14 +44,28 @@ export default class FIXServer extends EventEmitter {
         this.port = port;
         this.protocol = protocol;
 
-        if(this.protocol === PROTOCOL_TCP) {
-            this.serverHandler = new FIXParserServerSocket(this, this.fixParser, this.host, this.port);
-        } else if(this.protocol === PROTOCOL_WEBSOCKET) {
-            this.serverHandler = new FIXParserServerWebsocket(this, this.fixParser, this.host, this.port);
+        if (this.protocol === PROTOCOL_TCP) {
+            this.serverHandler = new FIXParserServerSocket(
+                this,
+                this.fixParser,
+                this.host,
+                this.port
+            );
+        } else if (this.protocol === PROTOCOL_WEBSOCKET) {
+            this.serverHandler = new FIXParserServerWebsocket(
+                this,
+                this.fixParser,
+                this.host,
+                this.port
+            );
         } else {
-            console.error(`[${Date.now()}] FIXServer: create server, invalid protocol`);
+            console.error(
+                `[${Date.now()}] FIXServer: create server, invalid protocol`
+            );
         }
-        console.log(`[${Date.now()}] FIXServer started at ${this.host}:${this.port}`);
+        console.log(
+            `[${Date.now()}] FIXServer started at ${this.host}:${this.port}`
+        );
     }
 
     getNextTargetMsgSeqNum() {

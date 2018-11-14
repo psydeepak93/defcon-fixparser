@@ -19,16 +19,18 @@ export class Fields {
 
     getField(field) {
         const data = this.cacheMap.get(field.tag);
-        if(data) {
-
+        if (data) {
             field.setName(data.Name);
             field.setDescription(data.Description);
 
-            if(data.BaseCategory) {
+            if (data.BaseCategory) {
                 this.categories.processCategory(field, data.BaseCategory);
 
-                if(field.category.sectionID) {
-                    this.sections.processSection(field, field.category.sectionID);
+                if (field.category.sectionID) {
+                    this.sections.processSection(
+                        field,
+                        field.category.sectionID
+                    );
                 }
             }
 
@@ -41,20 +43,22 @@ export class Fields {
 
     processField(message, field) {
         const data = this.cacheMap.get(field.tag);
-        if(data) {
-
-            if(field.tag === 35) {
+        if (data) {
+            if (field.tag === 35) {
                 this.messages.processMessage(message, field);
             }
 
             field.setName(data.Name);
             field.setDescription(data.Description);
 
-            if(data.BaseCategory) {
+            if (data.BaseCategory) {
                 this.categories.processCategory(field, data.BaseCategory);
 
-                if(field.category.sectionID) {
-                    this.sections.processSection(field, field.category.sectionID);
+                if (field.category.sectionID) {
+                    this.sections.processSection(
+                        field,
+                        field.category.sectionID
+                    );
                 }
             }
 

@@ -28,36 +28,67 @@ export default class MessageListItem extends Component {
     }
 
     renderDetail() {
-        let side = ((this.props.message.getField(Side) || {}).enumeration || {}).symbolicName;
+        let side = ((this.props.message.getField(Side) || {}).enumeration || {})
+            .symbolicName;
         side = side ? side.replace('Sell', 'SL').toUpperCase() : null;
         return (
             <td>
                 {this.props.message.getBriefDescription()}
                 <br />
-                {side ? <span className={classNames({ 'uk-badge': true, buy: side.toLowerCase().indexOf('buy') > -1, sell: side.toLowerCase().indexOf('sl') > -1 })}>{side}</span> : null}
+                {side ? (
+                    <span
+                        className={classNames({
+                            'uk-badge': true,
+                            buy: side.toLowerCase().indexOf('buy') > -1,
+                            sell: side.toLowerCase().indexOf('sl') > -1
+                        })}
+                    >
+                        {side}
+                    </span>
+                ) : null}
             </td>
         );
     }
 
     render() {
-        if(!this.props.message) {
+        if (!this.props.message) {
             return null;
         }
 
         let messageDescription = null;
         const messageType = this.props.message.getField(MsgType);
-        if(messageType && messageType.tag && messageType.value) {
-            messageDescription = getValue(this.props.message.getEnum(messageType.tag, messageType.value), 'Description');
+        if (messageType && messageType.tag && messageType.value) {
+            messageDescription = getValue(
+                this.props.message.getEnum(messageType.tag, messageType.value),
+                'Description'
+            );
         }
         const styleObject = {
             cursor: 'pointer'
         };
         return (
-            <tr onClick={this.onClickListItem} style={styleObject} className={classNames({ 'selected-row': this.props.selected })}>
-                <td>{moment(getValue(this.props.message.getField(Fields.SendingTime)), 'YYYYMMDD-HH:mm:ss').format('HH:mm:ss')}</td>
-                <td className="uk-text-truncate">{getValue(this.props.message.getField(Fields.SenderCompID))}</td>
-                <td className="uk-text-truncate">{getValue(this.props.message.getField(Fields.TargetCompID))}</td>
-                <td className="uk-text-truncate">{getValue(this.props.message.getField(Fields.ClOrdID))}</td>
+            <tr
+                onClick={this.onClickListItem}
+                style={styleObject}
+                className={classNames({ 'selected-row': this.props.selected })}
+            >
+                <td>
+                    {moment(
+                        getValue(
+                            this.props.message.getField(Fields.SendingTime)
+                        ),
+                        'YYYYMMDD-HH:mm:ss'
+                    ).format('HH:mm:ss')}
+                </td>
+                <td className="uk-text-truncate">
+                    {getValue(this.props.message.getField(Fields.SenderCompID))}
+                </td>
+                <td className="uk-text-truncate">
+                    {getValue(this.props.message.getField(Fields.TargetCompID))}
+                </td>
+                <td className="uk-text-truncate">
+                    {getValue(this.props.message.getField(Fields.ClOrdID))}
+                </td>
                 <td>{messageDescription}</td>
                 {this.renderDetail()}
             </tr>

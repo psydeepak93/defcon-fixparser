@@ -14,7 +14,7 @@ export class Sections {
     processSection(item, sectionId) {
         this.sectionType.reset();
         const sectionData = this.cacheMap.get(String(sectionId));
-        if(sectionData) {
+        if (sectionData) {
             this.sectionType.setSection(sectionData);
             item.setSection(this.sectionType);
         }

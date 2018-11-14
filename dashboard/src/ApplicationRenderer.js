@@ -12,4 +12,4 @@ const container = document.createElement('application');
 container.className = 'application flexContainer flexColumn';
 document.body.appendChild(container);
 
-render( <Dashboard />, document.querySelector('application') );
+render(<Dashboard />, document.querySelector('application'));
