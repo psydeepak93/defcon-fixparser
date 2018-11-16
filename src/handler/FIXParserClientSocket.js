@@ -52,6 +52,10 @@ export default class FIXParserClientSocket extends FIXParserClientBase {
             }
         );
     }
+    
+    close() {
+        this.socket.close();
+    }
 
     send(message) {
         if (this.socket.readyState === 'open') {

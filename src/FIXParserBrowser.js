@@ -102,6 +102,10 @@ export default class FIXParserBrowser extends EventEmitter {
         });
     }
 
+    close() {
+        this.socket.close();
+    }
+
     getNextTargetMsgSeqNum() {
         return this.messageSequence;
     }

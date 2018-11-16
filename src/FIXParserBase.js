@@ -12,7 +12,7 @@ import Message from './message/Message';
 import { SOH, RE_FIND, RE_ESCAPE, STRING_EQUALS } from './util/util';
 
 export default class FIXParserBase {
-    static version = { version: __PACKAGE_VERSION__, build: __BUILD_TIME__ };
+    static version = { version: process.env.__PACKAGE_VERSION__, build: process.env.__BUILD_TIME__ };
 
     constructor() {
         this.message = null;

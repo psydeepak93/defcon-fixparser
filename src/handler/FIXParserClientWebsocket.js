@@ -41,6 +41,10 @@ export default class FIXParserClientWebsocket extends FIXParserClientBase {
         });
     }
 
+    close() {
+        this.socket.close();
+    }
+
     send(message) {
         if (this.socket.readyState === WebSocket.OPEN) {
             if (message instanceof Message) {
