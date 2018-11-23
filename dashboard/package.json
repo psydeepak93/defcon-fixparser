@@ -1,6 +1,6 @@
 {
   "name": "fixparser-dashboard",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Demo dashboard for fixparser",
   "main": "dashboard/build/dashboard.js",
   "scripts": {
@@ -18,13 +18,13 @@
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^1.0.1",
     "file-loader": "^2.0.0",
-    "mini-css-extract-plugin": "^0.4.4",
+    "mini-css-extract-plugin": "^0.4.5",
     "node-sass": "^4.10.0",
     "prop-types": "^15.6.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "sass-loader": "^7.0.1",
-    "webpack": "^4.25.1",
+    "webpack": "^4.26.0",
     "webpack-cli": "3.1.2",
     "webpack-dev-server": "^3.1.10"
   },

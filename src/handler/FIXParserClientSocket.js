@@ -52,7 +52,7 @@ export default class FIXParserClientSocket extends FIXParserClientBase {
             }
         );
     }
-    
+
     close() {
         this.socket.close();
     }
