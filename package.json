@@ -1,6 +1,6 @@
 {
   "name": "fixparser",
-  "version": "2.7.2",
+  "version": "2.7.3",
   "description": "FIX 5.0SP2 Parser",
   "main": "./fixparser.js",
   "module": "./src/FIXParser.js",
@@ -32,17 +32,21 @@
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "10.0.1",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^24.0.0",
     "babel-loader": "^8.0.4",
     "cli-table": "^0.3.1",
     "eslint": "^5.9.0",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-react": "^7.11.1",
-    "jest": "^23.6.0",
+    "jest": "^24.0.0",
+    "terser": "3.14.1",
     "webpack": "^4.26.0",
     "webpack-cli": "^3.1.2",
     "yargs": "^12.0.5"
+  },
+  "resolutions": {
+    "terser": "3.14.1"
   },
   "keywords": [
     "FIX Protocol",
