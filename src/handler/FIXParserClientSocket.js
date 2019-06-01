@@ -40,17 +40,13 @@ export default class FIXParserClientSocket extends FIXParserClientBase {
             this.stopHeartbeat();
         });
 
-        this.socket.connect(
-            this.port,
-            this.host,
-            () => {
-                console.log('Connected', this.socket.readyState);
-                if (this.socket.readyState === 'open') {
-                    this.eventEmitter.emit('open');
-                    this.startHeartbeat();
-                }
+        this.socket.connect(this.port, this.host, () => {
+            console.log('Connected', this.socket.readyState);
+            if (this.socket.readyState === 'open') {
+                this.eventEmitter.emit('open');
+                this.startHeartbeat();
             }
-        );
+        });
     }
 
     close() {

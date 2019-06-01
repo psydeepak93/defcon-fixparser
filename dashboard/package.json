@@ -1,39 +1,41 @@
 {
   "name": "fixparser-dashboard",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "Demo dashboard for fixparser",
   "main": "dashboard/build/dashboard.js",
   "scripts": {
     "start": "webpack-dev-server -d",
     "build": "webpack -p --optimize-dedupe --optimize-minimize",
-    "server": "NODE_ENV=production node src/server.js"
+    "server": "NODE_ENV=production node src/server.js",
+    "upgrade-interactive": "npm-check --update"
   },
   "author": "Victor Norgren",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "@babel/preset-env": "^7.1.6",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.4",
-    "copy-webpack-plugin": "^5.0.0",
+    "babel-loader": "^8.0.6",
+    "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^2.1.0",
     "file-loader": "^3.0.1",
-    "mini-css-extract-plugin": "^0.5.0",
-    "node-sass": "^4.10.0",
+    "mini-css-extract-plugin": "^0.7.0",
+    "node-sass": "^4.12.0",
+    "npm-check": "^5.9.0",
     "prop-types": "^15.6.1",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "sass-loader": "^7.0.1",
-    "terser": "^3.16.1",
-    "webpack": "^4.26.0",
-    "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.1.10"
+    "terser": "^4.0.0",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.5.0"
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "express": "^4.16.4",
+    "express": "^4.17.1",
     "moment": "^2.22.1",
-    "uikit": "3.0.3"
+    "uikit": "^3.1.5"
   },
   "resolutions": {
     "terser": "3.14.1"
