@@ -12,12 +12,39 @@ import {
     RawDataLength,
     RawData,
     EncryptMethod,
-    HeartBtInt
+    HeartBtInt,
+    TestReqID
 } from './../src/constants/ConstantsField';
+import { TestRequest } from './../src/constants/ConstantsMessage';
 
 describe('FIXEncoder', () => {
     const fixParser = new FIXParser();
 
+    describe('#encode: tag ordering', () => {
+        const fixString = '8=FIX.5.0SP2|9=34|35=1|49=ABC|56=XYZ|34=1|112=reqId|10=106|';
+
+        it('should have encoded the FIX message in correct order 1', () => {
+            const message = fixParser.createMessage(
+                new Field(MsgType, TestRequest),
+                new Field(SenderCompID, 'ABC'),
+                new Field(TargetCompID, 'XYZ'),
+                new Field(MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
+                new Field(TestReqID, 'reqId'),
+            );
+            expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
+        });
+
+        it('should have encoded the FIX message in correct order 2', () => {
+            const message = fixParser.createMessage(
+                new Field(SenderCompID, 'ABC'),
+                new Field(TargetCompID, 'XYZ'),
+                new Field(MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
+                new Field(TestReqID, 'reqId'),
+                new Field(MsgType, TestRequest),
+            );
+            expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
+        });
+    });
     describe('#encode: Heartbeat', () => {
         const fixString = '8=FIX.5.0SP2|9=51|35=0|34=703|49=ABC|52=20100130-10:53:40.830|56=XYZ|10=205|';
 

@@ -2,7 +2,7 @@
  * fixparser
  * https://gitlab.com/logotype/fixparser.git
  *
- * Copyright 2018 Victor Norgren
+ * Copyright 2019 Victor Norgren
  * Released under the MIT license
  */
 import { Socket } from 'net';
@@ -50,7 +50,13 @@ export default class FIXParserClientSocket extends FIXParserClientBase {
     }
 
     close() {
-        this.socket.close();
+        if (this.socket && this.socket.readyState === 'open') {
+            this.socket.close();
+        } else {
+            console.error(
+                'FIXParserClientSocket: could not close socket, connection not open'
+            );
+        }
     }
 
     send(message) {

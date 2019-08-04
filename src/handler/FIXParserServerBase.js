@@ -2,7 +2,7 @@
  * fixparser
  * https://gitlab.com/logotype/fixparser.git
  *
- * Copyright 2018 Victor Norgren
+ * Copyright 2019 Victor Norgren
  * Released under the MIT license
  */
 import { EventEmitter } from 'events';

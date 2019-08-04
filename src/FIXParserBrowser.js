@@ -2,7 +2,7 @@
  * fixparser
  * https://gitlab.com/logotype/fixparser.git
  *
- * Copyright 2018 Victor Norgren
+ * Copyright 2019 Victor Norgren
  * Released under the MIT license
  */
 import { EventEmitter } from 'events';
@@ -85,9 +85,7 @@ export default class FIXParserBrowser extends EventEmitter {
 
         this.socket.addEventListener('close', (event) => {
             console.log(
-                `Connection closed: ${event}, readyState: ${
-                    this.socket.readyState
-                }`
+                `Connection closed: ${event}, readyState: ${this.socket.readyState}`
             );
             this.emit('close');
             this.stopHeartbeat();
