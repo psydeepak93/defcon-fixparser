@@ -5,7 +5,7 @@ cache:
   - node_modules/
 
 before_script:
-  - yarn install
+  - npm install
 
 stages:
   - lint
@@ -17,27 +17,27 @@ stages:
 lint:
   stage: lint
   script:
-   - yarn run eslint
+   - npm run eslint
 
 bundle:
   stage: bundle
   script:
-   - yarn run build
+   - npm run build
 
 test:
   stage: test
   script:
-   - yarn test
+   - npm test
 
 performance:
   stage: performance
   script:
-   - yarn run perf
+   - npm run perf
 
 pages:
   stage: deploy
   script:
-  - cd dashboard && yarn install && yarn run build && cd ..
+  - cd dashboard && npm install && npm run build && cd ..
   - mkdir .public
   - cp -r dashboard/build/fonts .public
   - cp dashboard/build/dashboard.* .public
