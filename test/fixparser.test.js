@@ -683,4 +683,12 @@ describe('FIXParser', () => {
         });
     });
 
+    describe('#parse: checksum validation', () => {
+        let messages = fixParser.parse('8=FIX.4.4|9=109|35=AN|49=ctrader.1546785|56=cServer|57=TRADE|50=1546785|34=2|52=20190109-10:48:02|710=140511|721=5305215|10=175|');
+console.log(messages);
+        it('should validate checksum correctly', () => {
+            expect(messages[0].checksumValid).toBe(false);
+        });
+    });
+
 });

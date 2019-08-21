@@ -23,11 +23,13 @@ const MARKER_CHECKSUM = '\x03';
 
 export const calculateBodyLength = (value) => {
     const startLength =
-            value.indexOf(TAG_MSGTYPE) === -1 ? 0 : value.indexOf(TAG_MSGTYPE),
+            value.indexOf(TAG_MSGTYPE) === -1
+                ? 0
+                : value.indexOf(TAG_MSGTYPE) + 1,
         endLength =
             value.indexOf(TAG_CHECKSUM) === -1
                 ? value.length
-                : value.indexOf(TAG_CHECKSUM);
+                : value.indexOf(TAG_CHECKSUM) + 1;
 
     return endLength - startLength;
 };
