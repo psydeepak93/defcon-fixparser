@@ -5,6 +5,8 @@ cache:
   - node_modules/
 
 before_script:
+  - node -v
+  - npm -v
   - npm install --ignore-scripts --no-optional
 
 stages:
