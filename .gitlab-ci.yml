@@ -1,11 +1,11 @@
-image: node:10.6.0
+image: node:latest
 
 cache:
   paths:
   - node_modules/
 
 before_script:
-  - npm install
+  - npm install --ignore-scripts --no-optional
 
 stages:
   - lint
@@ -37,7 +37,7 @@ performance:
 pages:
   stage: deploy
   script:
-  - cd dashboard && npm install && npm run build && cd ..
+  - cd dashboard && npm install --ignore-scripts --no-optional && npm run build && cd ..
   - mkdir .public
   - cp -r dashboard/build/fonts .public
   - cp dashboard/build/dashboard.* .public

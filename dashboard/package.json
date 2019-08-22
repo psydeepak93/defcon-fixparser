@@ -4,8 +4,8 @@
   "description": "Demo dashboard for fixparser",
   "main": "dashboard/build/dashboard.js",
   "scripts": {
-    "start": "webpack-dev-server -d",
-    "build": "webpack -p --optimize-dedupe --optimize-minimize",
+    "start": "webpack-dev-server -d --color",
+    "build": "webpack -p --optimize-dedupe --optimize-minimize --color",
     "server": "NODE_ENV=production node src/server.js",
     "upgrade-interactive": "npm-check --update"
   },

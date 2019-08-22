@@ -13,7 +13,7 @@
     "eslint": "eslint *.babel.js *.config.js spec src test prebuild",
     "prettier": "node_modules/prettier/bin-prettier.js \"**/*.js\" --write",
     "prebuild": "babel-node --max-old-space-size=4096 prebuild/index.js",
-    "build": "webpack -p --optimize-dedupe --optimize-minimize",
+    "build": "webpack -p --optimize-dedupe --optimize-minimize --color",
     "example": "babel-node examples/example.js",
     "example_ctrader": "babel-node examples/example_ctrader.js",
     "server-socket": "babel-node examples/example_server.js",
@@ -21,7 +21,7 @@
     "server-websocket": "babel-node examples/example_websocketserver.js",
     "client-websocket": "babel-node examples/example_websocketclient.js",
     "perf": "node perf/Perf-FIXParser.js",
-    "test": "jest",
+    "test": "jest --colors",
     "upgrade-interactive": "npm-check --update"
   },
   "devDependencies": {
