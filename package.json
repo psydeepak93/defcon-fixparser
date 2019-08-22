@@ -1,6 +1,6 @@
 {
   "name": "fixparser",
-  "version": "2.7.6",
+  "version": "2.8.0",
   "description": "FIX 5.0SP2 Parser",
   "main": "./fixparser.js",
   "module": "./src/FIXParser.js",
@@ -11,11 +11,11 @@
   },
   "scripts": {
     "eslint": "eslint *.babel.js *.config.js spec src test prebuild",
-    "prettier": "node_modules/prettier/bin-prettier.js \"src/**/*.js\" --write",
-    "prettier-dashboard": "node_modules/prettier/bin-prettier.js \"dashboard/src/**/*.js\" --write",
+    "prettier": "node_modules/prettier/bin-prettier.js \"**/*.js\" --write",
     "prebuild": "babel-node --max-old-space-size=4096 prebuild/index.js",
     "build": "webpack -p --optimize-dedupe --optimize-minimize",
     "example": "babel-node examples/example.js",
+    "example_ctrader": "babel-node examples/example_ctrader.js",
     "server-socket": "babel-node examples/example_server.js",
     "client-socket": "babel-node examples/example_client.js",
     "server-websocket": "babel-node examples/example_websocketserver.js",
@@ -33,20 +33,20 @@
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.2",
-    "babel-jest": "^24.8.0",
+    "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
     "cli-table": "^0.3.1",
-    "eslint": "^6.1.0",
+    "eslint": "^6.2.1",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-react": "^7.14.3",
-    "jest": "^24.8.0",
+    "jest": "^24.9.0",
     "npm-check": "^5.9.0",
     "prettier": "^1.18.2",
-    "terser": "^4.1.3",
-    "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6",
-    "yargs": "^13.3.0"
+    "terser": "^4.2.0",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7",
+    "yargs": "^14.0.0"
   },
   "resolutions": {
     "terser": "3.14.1"
@@ -80,6 +80,6 @@
     ]
   },
   "dependencies": {
-    "ws": "^7.1.1"
+    "ws": "^7.1.2"
   }
 }

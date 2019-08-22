@@ -165,10 +165,10 @@ export default class Message {
 
         // Add other tags
         fields.forEach((field) => {
-            if (field.tag !== MsgType) {
-                this.data.push(field);
-            } else {
+            if (field.tag === MsgType) {
                 this.data.splice(0, 0, field);
+            } else {
+                this.data.push(field);
             }
         });
     }

@@ -11,16 +11,21 @@ const nodeEnv = optimizeMinimize ? 'production' : 'development';
 const commonConfig = {
     module: {
         rules: [
-            { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/, options: { babelrcRoots: ['.', '../'] } }
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                options: { babelrcRoots: ['.', '../'] }
+            }
         ]
     },
     externals: [],
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                'NODE_ENV': JSON.stringify(nodeEnv),
-                '__PACKAGE_VERSION__': JSON.stringify(pkg.version),
-                '__BUILD_TIME__': JSON.stringify(new Date().toISOString())
+                NODE_ENV: JSON.stringify(nodeEnv),
+                __PACKAGE_VERSION__: JSON.stringify(pkg.version),
+                __BUILD_TIME__: JSON.stringify(new Date().toISOString())
             }
         })
     ],
@@ -29,7 +34,7 @@ const commonConfig = {
 
 const nodeConfig = Object.assign({}, commonConfig, {
     entry: {
-        'FIXParser': './src/FIXParser.js'
+        FIXParser: './src/FIXParser.js'
     },
     output: {
         path: path.join(__dirname),
@@ -42,7 +47,7 @@ const nodeConfig = Object.assign({}, commonConfig, {
 
 const serverConfig = Object.assign({}, commonConfig, {
     entry: {
-        'FIXParser': './src/FIXServer.js'
+        FIXParser: './src/FIXServer.js'
     },
     output: {
         path: path.join(__dirname),
@@ -55,7 +60,7 @@ const serverConfig = Object.assign({}, commonConfig, {
 
 const browserConfig = Object.assign({}, commonConfig, {
     entry: {
-        'FIXParser': './src/FIXParserBrowser.js'
+        FIXParser: './src/FIXParserBrowser.js'
     },
     output: {
         path: path.join(__dirname),
@@ -66,4 +71,4 @@ const browserConfig = Object.assign({}, commonConfig, {
     target: 'web'
 });
 
-export default [ nodeConfig, serverConfig, browserConfig ];
+export default [nodeConfig, serverConfig, browserConfig];

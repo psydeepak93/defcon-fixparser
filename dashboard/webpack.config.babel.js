@@ -58,7 +58,7 @@ module.exports = {
         new CopyWebpackPlugin([{ from: 'templates' }]),
         new webpack.DefinePlugin({
             __PACKAGE_VERSION__: JSON.stringify(pkg.version),
-            __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+            __BUILD_TIME__: JSON.stringify(new Date().toISOString())
         })
     ],
     context: __dirname,

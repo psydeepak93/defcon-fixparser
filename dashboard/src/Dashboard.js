@@ -147,7 +147,7 @@ export default class Dashboard extends Component {
                             </a>{' '}
                             at GitLab
                         </h3>
-                        <p>Copyright © 2018 logotype</p>
+                        <p>Copyright © 2019 logotype</p>
                         <p>
                             Permission is hereby granted, free of charge, to any
                             person obtaining a copy of this software and

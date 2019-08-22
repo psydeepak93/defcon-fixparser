@@ -29,7 +29,14 @@ function sendLogon() {
     fixParser.send(logon);
 }
 
-fixParser.connect({ host: 'localhost', port: 9878, protocol: 'websocket', sender: SENDER, target: TARGET, fixVersion: 'FIX.4.4' });
+fixParser.connect({
+    host: 'localhost',
+    port: 9878,
+    protocol: 'websocket',
+    sender: SENDER,
+    target: TARGET,
+    fixVersion: 'FIX.4.4'
+});
 
 fixParser.on('open', () => {
     console.log('Open');
@@ -44,7 +51,10 @@ fixParser.on('open', () => {
             new Field(Fields.SendingTime, fixParser.getTimestamp()),
             new Field(Fields.TargetCompID, TARGET),
             new Field(Fields.ClOrdID, '11223344'),
-            new Field(Fields.HandlInst, HandlInst.AutomatedExecutionNoIntervention),
+            new Field(
+                Fields.HandlInst,
+                HandlInst.AutomatedExecutionNoIntervention
+            ),
             new Field(Fields.OrderQty, '123'),
             new Field(Fields.TransactTime, fixParser.getTimestamp()),
             new Field(Fields.OrdType, OrderTypes.Market),
@@ -53,10 +63,13 @@ fixParser.on('open', () => {
             new Field(Fields.TimeInForce, TimeInForce.Day)
         );
         const messages = fixParser.parse(order.encode());
-        console.log('sending message', messages[0].description, messages[0].string.replace(/\x01/g, '|'));
+        console.log(
+            'sending message',
+            messages[0].description,
+            messages[0].string.replace(/\x01/g, '|')
+        );
         fixParser.send(order);
     }, 500);
-
 });
 fixParser.on('message', (message) => {
     console.log('received message', message.description, message.string);

@@ -1,6 +1,6 @@
 {
   "name": "fixparser-dashboard",
-  "version": "1.2.8",
+  "version": "1.3.0",
   "description": "Demo dashboard for fixparser",
   "main": "dashboard/build/dashboard.js",
   "scripts": {
@@ -17,19 +17,19 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
     "copy-webpack-plugin": "^5.0.4",
-    "css-loader": "^3.1.0",
-    "file-loader": "^4.1.0",
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
     "npm-check": "^5.9.0",
     "prop-types": "^15.6.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "sass-loader": "^7.0.1",
-    "terser": "^4.1.3",
-    "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.7.2"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "sass-loader": "^7.3.1",
+    "terser": "^4.2.0",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0"
   },
   "dependencies": {
     "classnames": "^2.2.5",

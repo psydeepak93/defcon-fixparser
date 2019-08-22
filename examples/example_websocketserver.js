@@ -15,7 +15,12 @@ fixServer.createServer('localhost', 9878, 'websocket');
 setInterval(() => {
     const order = fixServer.createMessage(
         new Field(Fields.MsgType, Messages.NewOrderSingle),
-        new Field(Fields.MsgSeqNum, fixServer.setNextTargetMsgSeqNum(fixServer.getNextTargetMsgSeqNum() + 1)),
+        new Field(
+            Fields.MsgSeqNum,
+            fixServer.setNextTargetMsgSeqNum(
+                fixServer.getNextTargetMsgSeqNum() + 1
+            )
+        ),
         new Field(Fields.SenderCompID, SENDER),
         new Field(Fields.SendingTime, fixServer.getTimestamp()),
         new Field(Fields.TargetCompID, TARGET),
@@ -29,7 +34,11 @@ setInterval(() => {
         new Field(Fields.TimeInForce, TimeInForce.Day)
     );
     const messages = fixServer.parse(order.encode());
-    console.log('sending message', messages[0].description, messages[0].string.replace(/\x01/g, '|'));
+    console.log(
+        'sending message',
+        messages[0].description,
+        messages[0].string.replace(/\x01/g, '|')
+    );
     fixServer.send(order);
 }, 100);
 
