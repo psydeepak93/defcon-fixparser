@@ -39,7 +39,7 @@ performance:
 pages:
   stage: deploy
   script:
-  - cd dashboard && npm install --ignore-scripts --no-optional && npm run build && cd ..
+  - cd dashboard && npm install --ignore-scripts --no-optional && npm rebuild node-sass && npm run build && cd ..
   - mkdir .public
   - cp -r dashboard/build/fonts .public
   - cp dashboard/build/dashboard.* .public
