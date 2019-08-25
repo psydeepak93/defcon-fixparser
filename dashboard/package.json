@@ -1,6 +1,6 @@
 {
   "name": "fixparser-dashboard",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Demo dashboard for fixparser",
   "main": "dashboard/build/dashboard.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "sass-loader": "^7.3.1",
-    "terser": "^4.2.0",
+    "terser": "^4.2.1",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.7",
     "webpack-dev-server": "^3.8.0"

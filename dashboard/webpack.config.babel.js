@@ -8,21 +8,21 @@ import pkg from './package';
 
 module.exports = {
     entry: {
-        dashboard: './src/ApplicationRenderer.js'
+        dashboard: './src/ApplicationRenderer.js',
     },
     output: {
         filename: '[name].js',
         path: path.join(__dirname, 'build'),
         publicPath: '',
         library: 'FIXParserDashboard',
-        libraryTarget: 'umd'
+        libraryTarget: 'umd',
     },
     module: {
         rules: [
             {
                 test: /\.js$/,
                 use: [{ loader: 'babel-loader' }],
-                exclude: /node_modules/
+                exclude: /node_modules/,
             },
             {
                 test: /\.(css|sass|scss)$/,
@@ -32,34 +32,34 @@ module.exports = {
                         loader: 'css-loader',
                         options: {
                             importLoaders: 2,
-                            sourceMap: true
-                        }
+                            sourceMap: true,
+                        },
                     },
                     {
                         loader: 'sass-loader',
                         options: {
-                            sourceMap: true
-                        }
-                    }
-                ]
+                            sourceMap: true,
+                        },
+                    },
+                ],
             },
             {
                 test: /\.jpg$|\.gif$|\.png$|\.mp4$|\.svg$|\.woff$|\.woff2$|\.ttf$|\.eot$|\.ico$/,
                 loader: 'file-loader',
                 options: {
-                    name: '[path][name].[ext]'
+                    name: '[path][name].[ext]',
                 },
-                exclude: /node_modules/
-            }
-        ]
+                exclude: /node_modules/,
+            },
+        ],
     },
     plugins: [
         new MiniCssExtractPlugin({ filename: './dashboard.css' }),
         new CopyWebpackPlugin([{ from: 'templates' }]),
         new webpack.DefinePlugin({
             __PACKAGE_VERSION__: JSON.stringify(pkg.version),
-            __BUILD_TIME__: JSON.stringify(new Date().toISOString())
-        })
+            __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+        }),
     ],
     context: __dirname,
     devServer: {
@@ -69,9 +69,9 @@ module.exports = {
         contentBase: __dirname,
         overlay: {
             warnings: false,
-            errors: true
+            errors: true,
         },
         quiet: false,
-        noInfo: false
-    }
+        noInfo: false,
+    },
 };

@@ -135,7 +135,7 @@
     "block-spacing": "warn",
     "brace-style": ["warn", "1tbs", { "allowSingleLine": true }],
     "camelcase": "off",
-    "comma-dangle": "warn",
+    "comma-dangle": "off",
     "comma-spacing": ["warn", {"before": false, "after": true}],
     "comma-style": ["warn", "last"],
     "computed-property-spacing": "warn",

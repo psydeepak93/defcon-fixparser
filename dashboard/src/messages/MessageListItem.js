@@ -4,18 +4,18 @@ import classNames from 'classnames';
 import moment from 'moment';
 
 import { getValue } from './../Dashboard';
-import { Fields } from './../../../src/FIXParserBrowser';
-import { Side, MsgType } from './../../../src/constants/ConstantsField';
+import { Fields } from '../../../src/FIXParserBrowser';
+import { Side, MsgType } from '../../../src/constants/ConstantsField';
 
 export default class MessageListItem extends Component {
     static propTypes = {
         message: PropTypes.object,
         onSelectMessage: PropTypes.func.isRequired,
-        selected: PropTypes.bool.isRequired
+        selected: PropTypes.bool.isRequired,
     };
     static defaultProps = {
         selected: false,
-        message: null
+        message: null,
     };
 
     constructor(props) {
@@ -40,7 +40,7 @@ export default class MessageListItem extends Component {
                         className={classNames({
                             'uk-badge': true,
                             buy: side.toLowerCase().indexOf('buy') > -1,
-                            sell: side.toLowerCase().indexOf('sl') > -1
+                            sell: side.toLowerCase().indexOf('sl') > -1,
                         })}
                     >
                         {side}
@@ -60,11 +60,11 @@ export default class MessageListItem extends Component {
         if (messageType && messageType.tag && messageType.value) {
             messageDescription = getValue(
                 this.props.message.getEnum(messageType.tag, messageType.value),
-                'Description'
+                'Description',
             );
         }
         const styleObject = {
-            cursor: 'pointer'
+            cursor: 'pointer',
         };
         return (
             <tr
@@ -75,9 +75,9 @@ export default class MessageListItem extends Component {
                 <td>
                     {moment(
                         getValue(
-                            this.props.message.getField(Fields.SendingTime)
+                            this.props.message.getField(Fields.SendingTime),
                         ),
-                        'YYYYMMDD-HH:mm:ss'
+                        'YYYYMMDD-HH:mm:ss',
                     ).format('HH:mm:ss')}
                 </td>
                 <td className="uk-text-truncate">

@@ -8,15 +8,15 @@ export default class MessageDetailListItem extends Component {
     static propTypes = {
         message: PropTypes.object,
         data: PropTypes.object,
-        field: PropTypes.object
+        field: PropTypes.object,
     };
     static defaultProps = {
         message: null,
         data: {},
         field: {
             tag: null,
-            enumeration: {}
-        }
+            enumeration: {},
+        },
     };
 
     renderAdditionalData(field) {
@@ -34,7 +34,7 @@ export default class MessageDetailListItem extends Component {
                         {getValue(field.category, 'categoryID')}.{' '}
                         {getValue(field.category, 'description')}
                     </td>
-                </tr>
+                </tr>,
             );
         }
         if (getValue(field.section, 'sectionID')) {
@@ -47,7 +47,7 @@ export default class MessageDetailListItem extends Component {
                         {getValue(field.section, 'sectionID')}.{' '}
                         {getValue(field.section, 'description')}
                     </td>
-                </tr>
+                </tr>,
             );
         }
         if (getValue(field.enumeration, 'elaboration')) {
@@ -60,7 +60,7 @@ export default class MessageDetailListItem extends Component {
                         {getValue(field.enumeration, 'elaboration')}.{' '}
                         {getValue(field.enumeration, 'description')}
                     </td>
-                </tr>
+                </tr>,
             );
         }
 
@@ -90,7 +90,7 @@ export default class MessageDetailListItem extends Component {
                     'table-border': true,
                     'validation-valid': this.props.data.valid,
                     'validation-invalid': !this.props.data.valid,
-                    'validation-not-required': this.props.data.reqd === '0'
+                    'validation-not-required': this.props.data.reqd === '0',
                 })}
             >
                 <td>{getValue(field, 'tag')}</td>
@@ -106,14 +106,14 @@ export default class MessageDetailListItem extends Component {
                     'uk-table-divider-remove': true,
                     'validation-valid': this.props.data.valid,
                     'validation-invalid': !this.props.data.valid,
-                    'validation-not-required': this.props.data.reqd === '0'
+                    'validation-not-required': this.props.data.reqd === '0',
                 })}
             >
                 <td colSpan={5} className="uk-text-muted">
                     {getValue(field, 'description')}
                     {this.renderAdditionalData(field)}
                 </td>
-            </tr>
+            </tr>,
         ];
     }
 }

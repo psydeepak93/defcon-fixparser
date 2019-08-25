@@ -1,7 +1,6 @@
 /build/**
 /coverage/**
 /prebuild/**
-/spec/**
 /**/build/**
 /browser.js
 /server.js

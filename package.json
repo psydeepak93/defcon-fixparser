@@ -1,9 +1,9 @@
 {
   "name": "fixparser",
-  "version": "2.8.0",
+  "version": "2.8.1",
   "description": "FIX 5.0SP2 Parser",
   "main": "./fixparser.js",
-  "module": "./src/FIXParser.js",
+  "module": "src/FIXParser.ts",
   "browser": "./browser.js",
   "repository": {
     "type": "git",
@@ -11,9 +11,10 @@
   },
   "scripts": {
     "eslint": "eslint *.babel.js *.config.js spec src test prebuild",
-    "prettier": "node_modules/prettier/bin-prettier.js \"**/*.js\" --write",
-    "prebuild": "babel-node --max-old-space-size=4096 prebuild/index.js",
-    "build": "webpack -p --optimize-dedupe --optimize-minimize --color",
+    "tslint": "tslint -c tslint.json '{spec,src}/**/*.ts' --fix",
+    "prettier": "node_modules/prettier/bin-prettier.js \"**/*.{js,ts}\" --write",
+    "prebuild": "babel-node --max-old-space-size=4096 prebuild/index.ts --extensions \\\".ts\\\"",
+    "build": "node --max_old_space_size=4096 ./node_modules/webpack/bin/webpack.js -p --optimize-dedupe --optimize-minimize --color",
     "example": "babel-node examples/example.js",
     "example_ctrader": "babel-node examples/example_ctrader.js",
     "server-socket": "babel-node examples/example_server.js",
@@ -29,21 +30,29 @@
     "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/plugin-transform-typescript": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.2",
+    "@types/ws": "^6.0.3",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
     "cli-table": "^0.3.1",
-    "eslint": "^6.2.1",
+    "eslint": "^6.2.2",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-react": "^7.14.3",
     "jest": "^24.9.0",
     "npm-check": "^5.9.0",
     "prettier": "^1.18.2",
-    "terser": "^4.2.0",
+    "terser": "^4.2.1",
+    "ts-loader": "^6.0.4",
+    "tslint": "^5.19.0",
+    "typescript": "^3.5.3",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.7",
     "yargs": "^14.0.0"
@@ -77,7 +86,11 @@
     ],
     "coverageReporters": [
       "lcov"
-    ]
+    ],
+    "roots": [
+      "<rootDir>/test"
+    ],
+    "preset": "ts-jest"
   },
   "dependencies": {
     "ws": "^7.1.2"

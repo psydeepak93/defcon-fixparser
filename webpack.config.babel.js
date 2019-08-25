@@ -12,63 +12,70 @@ const commonConfig = {
     module: {
         rules: [
             {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
+            {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/,
-                options: { babelrcRoots: ['.', '../'] }
-            }
-        ]
+                options: { babelrcRoots: ['.', '../'] },
+            },
+        ],
     },
-    externals: [],
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js', '.json'],
+    },
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify(nodeEnv),
                 __PACKAGE_VERSION__: JSON.stringify(pkg.version),
-                __BUILD_TIME__: JSON.stringify(new Date().toISOString())
-            }
-        })
+                __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+            },
+        }),
     ],
-    devtool: optimizeMinimize ? 'source-map' : false
+    devtool: optimizeMinimize ? 'inline-source-map' : false,
 };
 
 const nodeConfig = Object.assign({}, commonConfig, {
     entry: {
-        FIXParser: './src/FIXParser.js'
+        FIXParser: './src/FIXParser.ts',
     },
     output: {
         path: path.join(__dirname),
         filename: 'fixparser.js',
         library: 'FIXParser',
-        libraryTarget: 'umd'
+        libraryTarget: 'umd',
     },
-    target: 'node'
+    target: 'node',
 });
 
 const serverConfig = Object.assign({}, commonConfig, {
     entry: {
-        FIXParser: './src/FIXServer.js'
+        FIXParser: './src/FIXServer.ts',
     },
     output: {
         path: path.join(__dirname),
         filename: 'server.js',
         library: 'FIXParser',
-        libraryTarget: 'umd'
+        libraryTarget: 'umd',
     },
-    target: 'node'
+    target: 'node',
 });
 
 const browserConfig = Object.assign({}, commonConfig, {
     entry: {
-        FIXParser: './src/FIXParserBrowser.js'
+        FIXParser: './src/FIXParserBrowser.ts',
     },
     output: {
         path: path.join(__dirname),
         filename: 'browser.js',
         library: 'FIXParser',
-        libraryTarget: 'umd'
+        libraryTarget: 'umd',
     },
-    target: 'web'
+    target: 'web',
 });
 
 export default [nodeConfig, serverConfig, browserConfig];

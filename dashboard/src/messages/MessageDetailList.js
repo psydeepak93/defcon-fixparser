@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { MsgType } from './../../../src/constants/ConstantsField';
+import { MsgType } from '../../../src/constants/ConstantsField';
 import MessageDetailListItem from './MessageDetailListItem';
 import { getValue } from './../Dashboard';
-import Field from './../../../src/fields/Field';
+import Field from '../../../src/fields/Field';
 
 export default class MessageDetailList extends Component {
     static propTypes = {
         message: PropTypes.object,
-        parser: PropTypes.object.isRequired
+        parser: PropTypes.object.isRequired,
     };
     static defaultProps = {
-        message: null
+        message: null,
     };
 
     constructor(props) {
         super(props);
         this.state = {
-            requiredFieldsOnly: true
+            requiredFieldsOnly: true,
         };
         this._onChangeCheckbox = this._onChangeCheckbox.bind(this);
     }
@@ -32,7 +32,7 @@ export default class MessageDetailList extends Component {
                       item.spec.components.length > 0
                   ) {
                       item.spec.components = item.spec.components.filter(
-                          (subItem) => subItem.reqd === '1'
+                          (subItem) => subItem.reqd === '1',
                       );
                   }
                   return item.hasValue || item.reqd === '1';
@@ -74,13 +74,13 @@ export default class MessageDetailList extends Component {
         if (messageType && messageType.tag) {
             messageDescription = getValue(
                 this.props.message.getEnum(messageType.tag, messageType.value),
-                'Description'
+                'Description',
             );
         }
         if (messageType && messageType.value) {
             messageElaboration = getValue(
                 this.props.message.getEnum(messageType.tag, messageType.value),
-                'Elaboration'
+                'Elaboration',
             );
         }
         return (

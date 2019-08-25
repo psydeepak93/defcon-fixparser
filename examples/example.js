@@ -1,4 +1,4 @@
-import FIXParser from './../src/FIXParser'; // from 'fixparser';
+import FIXParser from '../src/FIXParser'; // from 'fixparser';
 
 const fixParser = new FIXParser(),
     string =

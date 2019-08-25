@@ -7,12 +7,12 @@ export default class MessageList extends Component {
     static propTypes = {
         messages: PropTypes.arrayOf(PropTypes.object),
         selectedMessage: PropTypes.object,
-        onSelectMessage: PropTypes.func.isRequired
+        onSelectMessage: PropTypes.func.isRequired,
     };
     static defaultProps = {
         messages: [],
         selectedMessage: null,
-        selectedRow: 0
+        selectedRow: 0,
     };
 
     _renderItems() {

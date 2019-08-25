@@ -1,5 +1,5 @@
-import FIXParser from './../src/FIXParser';
-import Field from './../src/fields/Field';
+import FIXParser from '../src/FIXParser';
+import Field from '../src/fields/Field';
 import {
     BeginString,
     BodyLength,
@@ -13,9 +13,9 @@ import {
     RawData,
     EncryptMethod,
     HeartBtInt,
-    TestReqID
-} from './../src/constants/ConstantsField';
-import { TestRequest } from './../src/constants/ConstantsMessage';
+    TestReqID,
+} from '../src/constants/ConstantsField';
+import { TestRequest } from '../src/constants/ConstantsMessage';
 
 describe('FIXEncoder', () => {
     const fixParser = new FIXParser();
@@ -30,7 +30,7 @@ describe('FIXEncoder', () => {
                 new Field(SenderCompID, 'ABC'),
                 new Field(TargetCompID, 'XYZ'),
                 new Field(MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
-                new Field(TestReqID, 'reqId')
+                new Field(TestReqID, 'reqId'),
             );
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
         });
@@ -41,7 +41,7 @@ describe('FIXEncoder', () => {
                 new Field(TargetCompID, 'XYZ'),
                 new Field(MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
                 new Field(TestReqID, 'reqId'),
-                new Field(MsgType, TestRequest)
+                new Field(MsgType, TestRequest),
             );
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
         });
@@ -58,10 +58,10 @@ describe('FIXEncoder', () => {
                 new Field(
                     SendingTime,
                     fixParser.getTimestamp(
-                        new Date(Date.UTC(2010, 0, 30, 10, 53, 40, 830))
-                    )
+                        new Date(Date.UTC(2010, 0, 30, 10, 53, 40, 830)),
+                    ),
                 ),
-                new Field(TargetCompID, 'XYZ')
+                new Field(TargetCompID, 'XYZ'),
             );
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
         });
@@ -78,14 +78,14 @@ describe('FIXEncoder', () => {
                 new Field(
                     SendingTime,
                     fixParser.getTimestamp(
-                        new Date(Date.UTC(2010, 0, 30, 10, 52, 40, 663))
-                    )
+                        new Date(Date.UTC(2010, 0, 30, 10, 52, 40, 663)),
+                    ),
                 ),
                 new Field(TargetCompID, 'XYZ'),
                 new Field(RawDataLength, 4),
                 new Field(RawData, 1234),
                 new Field(EncryptMethod, 0),
-                new Field(HeartBtInt, 60)
+                new Field(HeartBtInt, 60),
             );
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
         });
@@ -104,14 +104,14 @@ describe('FIXEncoder', () => {
                 new Field(
                     SendingTime,
                     fixParser.getTimestamp(
-                        new Date(Date.UTC(2010, 0, 30, 10, 52, 40, 663))
-                    )
+                        new Date(Date.UTC(2010, 0, 30, 10, 52, 40, 663)),
+                    ),
                 ),
                 new Field(TargetCompID, 'XYZ'),
                 new Field(RawDataLength, 4),
                 new Field(RawData, 1234),
                 new Field(EncryptMethod, 0),
-                new Field(HeartBtInt, 60)
+                new Field(HeartBtInt, 60),
             );
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
         });
@@ -126,15 +126,15 @@ describe('FIXEncoder', () => {
                 new Field(
                     SendingTime,
                     fixParser.getTimestamp(
-                        new Date(Date.UTC(2010, 0, 30, 10, 52, 40, 663))
-                    )
+                        new Date(Date.UTC(2010, 0, 30, 10, 52, 40, 663)),
+                    ),
                 ),
                 new Field(BodyLength, 123456),
                 new Field(TargetCompID, 'XYZ'),
                 new Field(RawDataLength, 4),
                 new Field(RawData, 1234),
                 new Field(EncryptMethod, 0),
-                new Field(HeartBtInt, 60)
+                new Field(HeartBtInt, 60),
             );
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
         });
@@ -150,14 +150,14 @@ describe('FIXEncoder', () => {
                 new Field(
                     SendingTime,
                     fixParser.getTimestamp(
-                        new Date(Date.UTC(2010, 0, 30, 10, 52, 40, 663))
-                    )
+                        new Date(Date.UTC(2010, 0, 30, 10, 52, 40, 663)),
+                    ),
                 ),
                 new Field(TargetCompID, 'XYZ'),
                 new Field(RawDataLength, 4),
                 new Field(RawData, 1234),
                 new Field(EncryptMethod, 0),
-                new Field(HeartBtInt, 60)
+                new Field(HeartBtInt, 60),
             );
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
         });
@@ -175,14 +175,14 @@ describe('FIXEncoder', () => {
                 new Field(
                     SendingTime,
                     fixParser.getTimestamp(
-                        new Date(Date.UTC(2010, 0, 30, 10, 52, 40, 663))
-                    )
+                        new Date(Date.UTC(2010, 0, 30, 10, 52, 40, 663)),
+                    ),
                 ),
                 new Field(TargetCompID, 'XYZ'),
                 new Field(RawDataLength, 4),
                 new Field(RawData, 1234),
                 new Field(EncryptMethod, 0),
-                new Field(HeartBtInt, 60)
+                new Field(HeartBtInt, 60),
             );
             const encodedMessage0 = message.encode().replace(/\x01/g, '|');
             const encodedMessage1 = message.encode();
@@ -201,20 +201,20 @@ describe('FIXEncoder', () => {
                 new Field(
                     SendingTime,
                     fixParser.getTimestamp(
-                        new Date(Date.UTC(2010, 0, 30, 10, 52, 40, 663))
-                    )
+                        new Date(Date.UTC(2010, 0, 30, 10, 52, 40, 663)),
+                    ),
                 ),
                 new Field(TargetCompID, 'XYZ'),
                 new Field(RawDataLength, 4),
                 new Field(RawData, 1234),
                 new Field(EncryptMethod, 0),
-                new Field(HeartBtInt, 60)
+                new Field(HeartBtInt, 60),
             );
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
             expect(
                 fixParser
                     .parse(message.encode())[0]
-                    .string.replace(/\x01/g, '|')
+                    .string.replace(/\x01/g, '|'),
             ).toEqual(fixString);
             message.encode('-');
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
@@ -226,28 +226,28 @@ describe('FIXEncoder', () => {
             expect(
                 fixParser
                     .parse(message.encode())[0]
-                    .string.replace(/\x01/g, '|')
+                    .string.replace(/\x01/g, '|'),
             ).toEqual(fixString);
             message.encode('/');
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
             expect(
                 fixParser
                     .parse(message.encode())[0]
-                    .string.replace(/\x01/g, '|')
+                    .string.replace(/\x01/g, '|'),
             ).toEqual(fixString);
             message.encode('_');
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
             expect(
                 fixParser
                     .parse(message.encode())[0]
-                    .string.replace(/\x01/g, '|')
+                    .string.replace(/\x01/g, '|'),
             ).toEqual(fixString);
             message.encode('*');
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);
             expect(
                 fixParser
                     .parse(message.encode())[0]
-                    .string.replace(/\x01/g, '|')
+                    .string.replace(/\x01/g, '|'),
             ).toEqual(fixString);
             message.encode('$');
             expect(message.encode().replace(/\x01/g, '|')).toEqual(fixString);

@@ -2,8 +2,8 @@ import FIXParser, {
     EncryptMethod,
     Field,
     Fields,
-    Messages
-} from './../src/FIXParser';
+    Messages,
+} from '../src/FIXParser';
 
 const fixParser = new FIXParser();
 
@@ -27,7 +27,7 @@ function sendLogon() {
         new Field(Fields.ResetSeqNumFlag, 'Y'),
         new Field(Fields.RawData, CTRADER_PASSWORD),
         new Field(Fields.EncryptMethod, EncryptMethod.None),
-        new Field(Fields.HeartBtInt, 10)
+        new Field(Fields.HeartBtInt, 10),
     );
     const messages = fixParser.parse(logon.encode());
     console.log('sending message', messages[0].description, messages[0].string);
@@ -52,13 +52,13 @@ function sendMarketDataRequest() {
         new Field(Fields.SubscriptionRequestType, 1),
         new Field(Fields.NoMDEntryTypes, 2),
         new Field(Fields.MDEntryType, 0),
-        new Field(Fields.MDEntryType, 1)
+        new Field(Fields.MDEntryType, 1),
     );
     const messages = fixParser.parse(quote.encode());
     console.log(
         'sending message',
         messages[0].description,
-        messages[0].string.replace(/\x01/g, '|')
+        messages[0].string.replace(/\x01/g, '|'),
     );
     fixParser.send(quote);
 }
@@ -69,7 +69,7 @@ fixParser.connect({
     protocol: 'tcp',
     sender: SENDER,
     target: TARGET,
-    fixVersion: 'FIX.4.4'
+    fixVersion: 'FIX.4.4',
 });
 
 fixParser.on('open', () => {
