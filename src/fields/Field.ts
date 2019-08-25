@@ -1,13 +1,14 @@
 import { EnumType } from '../enums/EnumType';
 import { CategoryType } from './categories/CategoryType';
 import { SectionType } from './sections/SectionType';
+import { FieldType } from './datatypes/FieldType';
 
 export default class Field {
     public tag: number;
     public value: any;
     public name: string | null = null;
     public description: string | null = null;
-    public type: string | null = null;
+    public type: FieldType | null = null;
     public category: CategoryType | null = null;
     public section: SectionType | null = null;
     public enumeration: EnumType | null = null;
@@ -41,7 +42,7 @@ export default class Field {
         this.description = description;
     }
 
-    public setType(type: string) {
+    public setType(type: FieldType | null) {
         this.type = type;
     }
 

@@ -6,7 +6,10 @@ import { MessageContents } from '../messagecontents/MessageContents';
 export class Messages {
     public messages: ISpecMessages[] = MESSAGES;
     public messageContents: MessageContents = new MessageContents();
-    public cacheMap: Map<string, ISpecMessages> = new Map<string, ISpecMessages>();
+    public cacheMap: Map<string, ISpecMessages> = new Map<
+        string,
+        ISpecMessages
+    >();
 
     constructor() {
         this.messages.forEach((message: ISpecMessages) => {

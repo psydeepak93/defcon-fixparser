@@ -13,6 +13,7 @@ import * as Fields from '../constants/ConstantsField';
 import * as Messages from '../constants/ConstantsMessage';
 import FIXParser from '../FIXParser';
 import Message from '../message/Message';
+import Timeout = NodeJS.Timeout;
 
 export default class FIXParserServerBase extends EventEmitter {
     public eventEmitter: EventEmitter | null = null;
@@ -25,7 +26,7 @@ export default class FIXParserServerBase extends EventEmitter {
     public sender: string | null = null;
     public target: string | null = null;
     public heartBeatInterval: number | undefined;
-    public heartBeatIntervalId: number | null = null;
+    public heartBeatIntervalId: Timeout | null = null;
 
     constructor(
         eventEmitter: EventEmitter,

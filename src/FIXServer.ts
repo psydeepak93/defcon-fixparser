@@ -21,6 +21,7 @@ import FIXParserServerBase from './handler/FIXParserServerBase';
 import FIXParserServerSocket from './handler/FIXParserServerSocket';
 import FIXParserServerWebsocket from './handler/FIXParserServerWebsocket';
 import Message from './message/Message';
+import Timeout = NodeJS.Timeout;
 
 const PROTOCOL_TCP = 'tcp';
 const PROTOCOL_WEBSOCKET = 'websocket';
@@ -36,7 +37,7 @@ export default class FIXServer extends EventEmitter {
     public sender: string | null = null;
     public target: string | null = null;
     public heartBeatInterval: number | undefined;
-    public heartBeatIntervalId: number | null = null;
+    public heartBeatIntervalId: Timeout | null = null;
     public fixVersion: string = 'FIX.5.0SP2';
 
     public createServer(

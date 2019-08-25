@@ -71,7 +71,7 @@ const calculatePosition = (spec: any, tag: number): number => {
 };
 
 export const validateMessage = (message: Message): any => {
-    let result = [];
+    let result: any[] = [];
 
     const messageDataCloned = JSON.parse(JSON.stringify(message.data));
     const messageContentsCloned = JSON.parse(
@@ -151,11 +151,9 @@ export const validateMessage = (message: Message): any => {
             }
         });
 
-    result = result.sort((a, b) => {
-        const sort =
-            parseInt(a.position, 10) < parseInt(b.position, 10) ? -1 : 1;
-        return sort;
-    });
+    result = result.sort((a, b) =>
+        parseInt(a.position, 10) < parseInt(b.position, 10) ? -1 : 1,
+    );
 
     return result;
 };
@@ -192,7 +190,7 @@ export default class Message {
         this.data.push(field);
     }
 
-    public getField(tag: number): Field {
+    public getField(tag: number): Field | undefined {
         return this.data.find((field: Field) => field.tag === tag);
     }
 
@@ -222,11 +220,11 @@ export default class Message {
     }
 
     public getEnum(tag: number, value) {
-        if (!this.getField(MsgType) || !this.getField(MsgType).tag) {
+        if (!this.getField(MsgType) || !this.getField(MsgType)!.tag) {
             return null;
         }
 
-        if (!this.getField(MsgType) || !this.getField(MsgType).value) {
+        if (!this.getField(MsgType) || !this.getField(MsgType)!.value) {
             return null;
         }
 
@@ -253,7 +251,7 @@ export default class Message {
                 lastPrice || String(lastPrice) === '0'
                     ? lastPrice.toFixed(2)
                     : null
-            } ${this.getField(LeavesQty).name.replace(
+            } ${this.getField(LeavesQty)!.name!.replace(
                 'LeavesQty',
                 'LvsQty',
             )} ${leavesQuantity}`;
