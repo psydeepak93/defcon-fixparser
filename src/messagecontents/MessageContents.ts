@@ -1,7 +1,7 @@
 import Message from '../message/Message';
-import prebuiltMap from './../../prebuild/built/MessageContents.prebuilt.json';
+import prebuiltMap from '../../prebuild/built/MessageContents.prebuilt.json';
 
-import { ISpecMessageContents } from './../../spec/SpecMessageContents';
+import { ISpecMessageContents } from '../../spec/SpecMessageContents';
 
 export class MessageContents {
     public cacheMap: Map<string, ISpecMessageContents[]> = new Map<

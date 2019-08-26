@@ -8,7 +8,7 @@
 import WebSocket from 'ws';
 
 import Message from '../message/Message';
-import FIXParserServerBase from './FIXParserServerBase';
+import FIXParserServerBase from 'FIXParserServerBase';
 
 export default class FIXParserServerWebsocket extends FIXParserServerBase {
     public socket: WebSocket.Server | null = null;

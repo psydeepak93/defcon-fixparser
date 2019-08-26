@@ -8,7 +8,7 @@
 import WebSocket from 'ws';
 
 import Message from '../message/Message';
-import FIXParserClientBase from './FIXParserClientBase';
+import FIXParserClientBase from 'FIXParserClientBase';
 
 export default class FIXParserClientWebsocket extends FIXParserClientBase {
     public connect() {

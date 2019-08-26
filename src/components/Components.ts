@@ -15,10 +15,10 @@ export class Components {
     }
 
     public find(componentId: string) {
-        return this.cacheMap.get(String(componentId));
+        return this.cacheMap.get(componentId);
     }
 
     public findByName(name: string) {
-        return this.cacheMapByName.get(String(name));
+        return this.cacheMapByName.get(name);
     }
 }

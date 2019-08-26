@@ -17,7 +17,7 @@ import {
 import { Enums } from '../enums/Enums';
 import Field from '../fields/Field';
 import { IMessageContents } from '../messagecontents/MessageContents';
-import { pad } from './../util/util';
+import { pad } from '../util/util';
 
 const TAG_CHECKSUM: string = '10=';
 const TAG_MSGTYPE: string = '35=';
@@ -38,7 +38,7 @@ export const calculateBodyLength = (value: string): number => {
 const nonEmpty = (parts: string[], ...args: string[]): string => {
     let res = parts[0];
     for (let i = 1; i < parts.length; i++) {
-        if (args[i - 1] || String(args[i - 1]) === '0') {
+        if (args[i - 1] || args[i - 1] === '0') {
             res += args[i - 1];
         }
         res += parts[i];
@@ -82,7 +82,7 @@ export const validateMessage = (message: Message): any => {
         const spec = messageContentsCloned.find((item) => {
             if (item.components.length > 0) {
                 return item.components.find((subItem) => {
-                    const found = String(subItem.tagText) === String(field.tag);
+                    const found = subItem.tagText === field.tag;
                     if (found) {
                         subItem.validated = true;
                     }
@@ -90,7 +90,7 @@ export const validateMessage = (message: Message): any => {
                 });
             } else {
                 item.validated = true;
-                return String(item.tagText) === String(field.tag);
+                return item.tagText === field.tag;
             }
         });
 
@@ -133,7 +133,7 @@ export const validateMessage = (message: Message): any => {
                                 ),
                                 reqd: subSpec.reqd,
                                 spec: subSpec,
-                                tagText: String(subSpec.tagText),
+                                tagText: subSpec.tagText,
                                 valid: !(subSpec.reqd === '1'),
                             });
                         }
@@ -145,7 +145,7 @@ export const validateMessage = (message: Message): any => {
                     position: calculatePosition(spec, spec.tagText),
                     reqd: spec.reqd,
                     spec,
-                    tagText: String(spec.tagText),
+                    tagText: spec.tagText,
                     valid: !(spec.reqd === '1'),
                 });
             }
@@ -248,9 +248,7 @@ export default class Message {
             const leavesQuantity = (this.getField(LeavesQty) || {}).value;
             const lastPrice = (this.getField(LastPx) || {}).value;
             returnValue = nonEmpty`${quantity} @${
-                lastPrice || String(lastPrice) === '0'
-                    ? lastPrice.toFixed(2)
-                    : null
+                lastPrice || lastPrice === '0' ? lastPrice.toFixed(2) : null
             } ${this.getField(LeavesQty)!.name!.replace(
                 'LeavesQty',
                 'LvsQty',
@@ -269,7 +267,7 @@ export default class Message {
                 if (price && price >= 1) {
                     price = price.toFixed(2);
                 } else if (price && price < 1) {
-                    price = String(price).replace('0.', '.');
+                    price = price.replace('0.', '.');
                 }
                 returnValue = nonEmpty`${side} ${orderQuantity} ${
                     symbol ? symbol.toUpperCase() : null

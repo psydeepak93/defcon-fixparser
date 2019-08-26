@@ -16,17 +16,17 @@ import Message from '../message/Message';
 import Timeout = NodeJS.Timeout;
 
 export default class FIXParserServerBase extends EventEmitter {
-    public eventEmitter: EventEmitter | null = null;
-    public fixParser: FIXParser = new FIXParser();
-    public host: string | null = null;
-    public port: number | null = null;
-    public serverHandler: FIXParserServerBase | null = null;
-    public server: Server | null = null;
-    public socket: WebSocket | WebSocket.Server | null = null;
-    public sender: string | null = null;
-    public target: string | null = null;
-    public heartBeatInterval: number | undefined;
-    public heartBeatIntervalId: Timeout | null = null;
+    eventEmitter: EventEmitter | null = null;
+    protected fixParser: FIXParser = new FIXParser();
+    host: string | null = null;
+    port: number | null = null;
+    serverHandler: FIXParserServerBase | null = null;
+    server: Server | null = null;
+    socket: WebSocket | WebSocket.Server | null = null;
+    sender: string | null = null;
+    target: string | null = null;
+    heartBeatInterval: number | undefined;
+    heartBeatIntervalId: Timeout | null = null;
 
     constructor(
         eventEmitter: EventEmitter,

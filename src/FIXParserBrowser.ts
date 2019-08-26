@@ -20,18 +20,18 @@ import Message from './message/Message';
 import { timestamp } from './util/util';
 
 export default class FIXParserBrowser extends EventEmitter {
-    public fixParserBase: FIXParserBase = new FIXParserBase();
-    public host: string | null = null;
-    public port: number | null = null;
-    public protocol: string | null = null;
-    public connectionString: string | null = null;
-    public socket: WebSocket | null = null;
-    public sender: string | null = null;
-    public target: string | null = null;
-    public messageSequence: number = 1;
-    public heartBeatInterval: number | undefined;
-    public heartBeatIntervalId: number | null = null;
-    public fixVersion: string = 'FIX.5.0SP2';
+    fixParserBase: FIXParserBase = new FIXParserBase();
+    host: string | null = null;
+    port: number | null = null;
+    protocol: string | null = null;
+    connectionString: string | null = null;
+    socket: WebSocket | null = null;
+    sender: string | null = null;
+    target: string | null = null;
+    messageSequence: number = 1;
+    heartBeatInterval: number | undefined;
+    heartBeatIntervalId: number | null = null;
+    fixVersion: string = 'FIX.5.0SP2';
 
     public stopHeartbeat() {
         clearInterval(this.heartBeatIntervalId!);

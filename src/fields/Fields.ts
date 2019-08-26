@@ -40,7 +40,7 @@ export class Fields {
             this.dataTypes.processDatatype(field, data.Type);
         } else {
             field.setType(null);
-            field.setValue(String(field.value));
+            field.setValue(field.value);
         }
     }
 
@@ -68,7 +68,7 @@ export class Fields {
             this.dataTypes.processDatatype(field, data.Type);
         } else {
             field.setType(null);
-            field.setValue(String(field.value));
+            field.setValue(field.value);
         }
     }
 }

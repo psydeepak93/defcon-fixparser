@@ -19,7 +19,7 @@ export class Categories {
     public processCategory(field: Field, baseCategory: string) {
         this.categoryType.reset();
         const categoryData: ISpecCategories | undefined = this.cacheMap.get(
-            String(baseCategory),
+            baseCategory,
         );
         if (categoryData) {
             this.categoryType.setCategory(categoryData);

@@ -9,7 +9,7 @@ import { createServer } from 'net';
 
 import Message from '../message/Message';
 import FrameDecoder from '../util/FrameDecoder';
-import FIXParserServerBase from './FIXParserServerBase';
+import FIXParserServerBase from 'FIXParserServerBase';
 
 export default class FIXParserServerSocket extends FIXParserServerBase {
     public createServer() {

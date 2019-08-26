@@ -19,7 +19,7 @@ export class Sections {
     public processSection(item: Field, sectionId: string) {
         this.sectionType.reset();
         const sectionData: ISpecSections | undefined = this.cacheMap.get(
-            String(sectionId),
+            sectionId,
         );
         if (sectionData) {
             this.sectionType.setSection(sectionData);

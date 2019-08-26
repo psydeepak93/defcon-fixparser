@@ -38,7 +38,7 @@
     "@types/node": "^12.7.2",
     "@types/ws": "^6.0.3",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.0.2",
+    "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
     "cli-table": "^0.3.1",

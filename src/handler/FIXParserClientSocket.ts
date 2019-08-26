@@ -9,7 +9,7 @@ import { Socket } from 'net';
 
 import Message from '../message/Message';
 import FrameDecoder from '../util/FrameDecoder';
-import FIXParserClientBase from './FIXParserClientBase';
+import FIXParserClientBase from 'FIXParserClientBase';
 
 export default class FIXParserClientSocket extends FIXParserClientBase {
     public connect() {
