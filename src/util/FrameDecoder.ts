@@ -3,7 +3,7 @@ import { Transform, TransformCallback, TransformOptions } from 'stream';
 export default class FrameDecoder extends Transform {
     public data: string | null;
 
-    constructor(opts: TransformOptions) {
+    constructor(opts?: TransformOptions) {
         super(opts);
         this.data = '';
     }

@@ -23,12 +23,14 @@ import Message from './message/Message';
 import { timestamp } from './util/util';
 import Timeout = NodeJS.Timeout;
 
-const PROTOCOL_TCP = 'tcp';
-const PROTOCOL_WEBSOCKET = 'websocket';
+type Protocol = 'tcp' | 'websocket';
 
 export default class FIXParser extends EventEmitter {
     public fixParserBase: FIXParserBase = new FIXParserBase();
-    public clientHandler: FIXParserClientBase | null = null;
+    public clientHandler:
+        | FIXParserClientSocket
+        | FIXParserClientWebsocket
+        | null = null;
     public host: string | null = null;
     public port: number | null = null;
     public sender: string | null = null;
@@ -39,17 +41,20 @@ export default class FIXParser extends EventEmitter {
     public fixVersion: string = 'FIX.5.0SP2';
 
     public connect({
-        host = 'localhost',
-        port = 9878,
-        protocol = PROTOCOL_TCP,
-        sender = 'SENDER',
-        target = 'TARGET',
-        heartbeatIntervalMs = 30000,
-        fixVersion = this.fixVersion,
+        string: host = 'localhost',
+        number: port = 9878,
+        Protocol: protocol = 'tcp',
+        string: sender = 'SENDER',
+        string: target = 'TARGET',
+        number: heartbeatIntervalMs = 30000,
+        string: fixVersion = this.fixVersion,
     } = {}) {
-        if (protocol === PROTOCOL_TCP) {
-            this.clientHandler = new FIXParserClientSocket(this, this);
-        } else if (protocol === PROTOCOL_WEBSOCKET) {
+        if (protocol === 'tcp') {
+            this.clientHandler = new FIXParserClientSocket(
+                this.eventEmitter,
+                this,
+            );
+        } else if (protocol === 'websocket') {
             this.clientHandler = new FIXParserClientWebsocket(this, this);
         }
         this.clientHandler!.host = host;

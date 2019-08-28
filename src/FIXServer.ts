@@ -31,7 +31,10 @@ export default class FIXServer extends EventEmitter {
     public host: string | null = null;
     public port: number | null = null;
     public protocol: string | null = null;
-    public serverHandler: FIXParserServerBase | null = null;
+    public serverHandler:
+        | FIXParserServerSocket
+        | FIXParserServerWebsocket
+        | null = null;
     public server: Server | null = null;
     public socket: WebSocket | null = null;
     public sender: string | null = null;

@@ -1,4 +1,4 @@
-export interface ISpecEnums {
+export type ISpecEnums = {
     Tag: string;
     Value: string;
     SymbolicName: string;
@@ -9,7 +9,7 @@ export interface ISpecEnums {
     AddedEP?: string;
     Deprecated?: string;
     Elaboration?: string;
-}
+};
 
 export const ENUMS: ISpecEnums[] = [
     {

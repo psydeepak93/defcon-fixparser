@@ -7,7 +7,7 @@
  */
 import { EventEmitter } from 'events';
 
-import { Server } from 'net';
+import { Server, Socket } from 'net';
 import WebSocket from 'ws';
 import * as Fields from '../constants/ConstantsField';
 import * as Messages from '../constants/ConstantsMessage';
@@ -22,7 +22,8 @@ export default class FIXParserServerBase extends EventEmitter {
     port: number | null = null;
     serverHandler: FIXParserServerBase | null = null;
     server: Server | null = null;
-    socket: WebSocket | WebSocket.Server | null = null;
+    socketWS: WebSocket | null = null;
+    socketNet: Socket | null = null;
     sender: string | null = null;
     target: string | null = null;
     heartBeatInterval: number | undefined;
@@ -44,7 +45,7 @@ export default class FIXParserServerBase extends EventEmitter {
 
     public processMessage(message: Message) {
         if (message.messageType === Messages.SequenceReset) {
-            const newSeqNo = (message.getField(Fields.NewSeqNo) || {}).value;
+            const newSeqNo = message.getField(Fields.NewSeqNo)!.value;
             if (newSeqNo) {
                 console.log(
                     `[${Date.now()}] FIXServer new sequence number ${newSeqNo}`,

@@ -16,7 +16,6 @@ import {
 } from '../constants/ConstantsField';
 import { Enums } from '../enums/Enums';
 import Field from '../fields/Field';
-import { IMessageContents } from '../messagecontents/MessageContents';
 import { pad } from '../util/util';
 
 const TAG_CHECKSUM: string = '10=';
@@ -35,7 +34,7 @@ export const calculateBodyLength = (value: string): number => {
     return endLength - startLength;
 };
 
-const nonEmpty = (parts: string[], ...args: string[]): string => {
+const nonEmpty = (parts: TemplateStringsArray, ...args: string[]): string => {
     let res = parts[0];
     for (let i = 1; i < parts.length; i++) {
         if (args[i - 1] || args[i - 1] === '0') {
@@ -117,8 +116,8 @@ export const validateMessage = (message: Message): any => {
     });
 
     messageContentsCloned
-        .filter((item: IMessageContents) => !item.validated)
-        .forEach((spec: IMessageContents) => {
+        .filter((item: any) => !item.validated)
+        .forEach((spec: any) => {
             if (spec.components.length > 0) {
                 spec.components
                     .filter((subItem) => !subItem.validated)
@@ -159,20 +158,21 @@ export const validateMessage = (message: Message): any => {
 };
 
 export default class Message {
-    public fixVersion: string = 'FIX.5.0SP2';
-    public data: Field[] = [];
-    public string: string = '';
-    public description: string = '';
-    public messageType: string = '';
-    public messageContents: ISpecMessageContents[] = [];
-    public bodyLengthValid: boolean = false;
-    public checksumValid: boolean = false;
-    public checksumValue: string | null = null;
-    public checksumExpected: string | null = null;
-    public bodyLengthValue: number | null = null;
-    public bodyLengthExpected: number | null = null;
+    static FIX_VERSION: string = 'FIX.5.0SP2';
+    fixVersion: string = 'FIX.5.0SP2';
+    data: Field[] = [];
+    string: string = '';
+    description: string = '';
+    messageType: string = '';
+    messageContents: ISpecMessageContents[] = [];
+    bodyLengthValid: boolean = false;
+    checksumValid: boolean = false;
+    checksumValue: string | null = null;
+    checksumExpected: string | null = null;
+    bodyLengthValue: number | null = null;
+    bodyLengthExpected: number | null = null;
 
-    constructor(fixVersion: string, ...fields: Field[]) {
+    constructor(fixVersion: string = Message.FIX_VERSION, ...fields: Field[]) {
         this.fixVersion = fixVersion;
         this.reset();
 
@@ -219,7 +219,7 @@ export default class Message {
         this.messageContents = messageContents;
     }
 
-    public getEnum(tag: number, value) {
+    public getEnum(tag: number, value: string) {
         if (!this.getField(MsgType) || !this.getField(MsgType)!.tag) {
             return null;
         }
@@ -229,7 +229,7 @@ export default class Message {
         }
 
         const enums = new Enums();
-        return enums.getEnum(tag, value);
+        return enums.getEnum(tag.toString(), value);
     }
 
     public getBriefDescription() {

@@ -14,19 +14,21 @@ import Field from '../fields/Field';
 import FIXParser from '../FIXParser';
 import Message from '../message/Message';
 import Timeout = NodeJS.Timeout;
+import WebSocket from 'ws';
 
 export default class FIXParserClientBase extends EventEmitter {
-    public eventEmitter: EventEmitter;
-    public fixParser: FIXParser;
-    public host: string | null = null;
-    public port: number | null = null;
-    public client = null;
-    public socket: Socket | null = null;
-    public sender: string | null = null;
-    public target: string | null = null;
-    public heartBeatInterval: number | undefined;
-    public heartBeatIntervalId: Timeout | null = null;
-    public fixVersion: string = 'FIX.5.0SP2';
+    protected eventEmitter: EventEmitter | null;
+    protected fixParser: FIXParser | null;
+    host: string | null = null;
+    port: number | null = null;
+    client = null;
+    protected socketTCP: Socket | null = null;
+    protected socketWS: WebSocket | null = null;
+    sender: string | null = null;
+    target: string | null = null;
+    heartBeatInterval: number | undefined;
+    heartBeatIntervalId: Timeout | null = null;
+    fixVersion: string = 'FIX.5.0SP2';
 
     constructor(eventEmitter: EventEmitter, parser: FIXParser) {
         super();
@@ -41,15 +43,15 @@ export default class FIXParserClientBase extends EventEmitter {
     public startHeartbeat() {
         this.stopHeartbeat();
         this.heartBeatIntervalId = setInterval(() => {
-            const heartBeat = this.fixParser.createMessage(
+            const heartBeat = this.fixParser!.createMessage(
                 new Field(8, this.fixVersion),
                 new Field(Fields.MsgType, 0),
                 new Field(
                     Fields.MsgSeqNum,
-                    this.fixParser.getNextTargetMsgSeqNum(),
+                    this.fixParser!.getNextTargetMsgSeqNum(),
                 ),
                 new Field(Fields.SenderCompID, this.sender),
-                new Field(Fields.SendingTime, this.fixParser.getTimestamp()),
+                new Field(Fields.SendingTime, this.fixParser!.getTimestamp()),
                 new Field(Fields.TargetCompID, this.target),
             );
             this.send(heartBeat);
@@ -58,12 +60,12 @@ export default class FIXParserClientBase extends EventEmitter {
 
     public processMessage(message: Message) {
         if (message.messageType === Messages.SequenceReset) {
-            const newSeqNo = (message.getField(Fields.NewSeqNo) || {}).value;
+            const newSeqNo = message.getField(Fields.NewSeqNo)!.value;
             if (newSeqNo) {
                 console.log(
                     `[${Date.now()}] FIXClient new sequence number ${newSeqNo}`,
                 );
-                this.fixParser.setNextTargetMsgSeqNum(newSeqNo);
+                this.fixParser!.setNextTargetMsgSeqNum(newSeqNo);
             }
         }
         console.log(

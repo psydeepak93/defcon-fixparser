@@ -9,49 +9,59 @@ import { Socket } from 'net';
 
 import Message from '../message/Message';
 import FrameDecoder from '../util/FrameDecoder';
-import FIXParserClientBase from 'FIXParserClientBase';
+import FIXParserClientBase from './FIXParserClientBase';
+import { EventEmitter } from 'events';
+import FIXParser from '../FIXParser';
 
 export default class FIXParserClientSocket extends FIXParserClientBase {
+    private connected: boolean = false;
+
+    constructor(eventEmitter: EventEmitter, parser: FIXParser) {
+        super(eventEmitter, parser);
+    }
+
     public connect() {
-        this.socket = new Socket();
-        this.socket!.setEncoding('ascii');
-        this.socket!.pipe(new FrameDecoder()).on('data', (data: any) => {
-            const messages: Message[] = this.fixParser.parse(data.toString());
+        this.socketTCP = new Socket();
+        this.socketTCP!.setEncoding('ascii');
+        this.socketTCP!.pipe(new FrameDecoder()).on('data', (data: any) => {
+            const messages: Message[] = this.fixParser!.parse(data.toString());
             let i = 0;
             for (i; i < messages.length; i++) {
                 this.processMessage(messages[i]);
-                this.eventEmitter.emit('message', messages[i]);
+                this.eventEmitter!.emit('message', messages[i]);
             }
         });
 
-        this.socket!.on('close', () => {
-            this.eventEmitter.emit('close');
+        this.socketTCP!.on('close', () => {
+            this.connected = false;
+            this.eventEmitter!.emit('close');
             this.stopHeartbeat();
         });
 
-        this.socket!.on('error', (error) => {
-            this.eventEmitter.emit('error', error);
+        this.socketTCP!.on('error', (error) => {
+            this.connected = false;
+            this.eventEmitter!.emit('error', error);
             this.stopHeartbeat();
         });
 
-        this.socket!.on('timeout', () => {
-            this.eventEmitter.emit('timeout');
-            this.socket!.end();
+        this.socketTCP!.on('timeout', () => {
+            this.connected = false;
+            this.eventEmitter!.emit('timeout');
+            this.socketTCP!.end();
             this.stopHeartbeat();
         });
 
-        this.socket!.connect(this.port!, this.host!, () => {
-            console.log('Connected', this.socket!.readyState);
-            if (this.socket!.readyState === 'open') {
-                this.eventEmitter.emit('open');
-                this.startHeartbeat();
-            }
+        this.socketTCP!.connect(this.port!, this.host!, () => {
+            this.connected = true;
+            console.log('Connected');
+            this.eventEmitter!.emit('open');
+            this.startHeartbeat();
         });
     }
 
     public close() {
-        if (this.socket && this.socket!.readyState === 'open') {
-            this.socket!.close();
+        if (this.socketTCP) {
+            this.socketTCP!.destroy();
         } else {
             console.error(
                 'FIXParserClientSocket: could not close socket, connection not open',
@@ -60,11 +70,11 @@ export default class FIXParserClientSocket extends FIXParserClientBase {
     }
 
     public send(message: Message) {
-        if (this.socket!.readyState === 'open') {
-            this.fixParser.setNextTargetMsgSeqNum(
-                this.fixParser.getNextTargetMsgSeqNum() + 1,
+        if (this.connected) {
+            this.fixParser!.setNextTargetMsgSeqNum(
+                this.fixParser!.getNextTargetMsgSeqNum() + 1,
             );
-            this.socket!.write(message.encode());
+            this.socketTCP!.write(message.encode());
         } else {
             console.error(
                 'FIXParserClientSocket: could not send message, socket not open',

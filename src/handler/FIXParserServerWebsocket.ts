@@ -8,12 +8,23 @@
 import WebSocket from 'ws';
 
 import Message from '../message/Message';
-import FIXParserServerBase from 'FIXParserServerBase';
+import FIXParserServerBase from './FIXParserServerBase';
+import { EventEmitter } from 'events';
+import FIXParser from '../FIXParser';
 
 export default class FIXParserServerWebsocket extends FIXParserServerBase {
     public socket: WebSocket.Server | null = null;
     public host: string | null = null;
     public port: number | null = null;
+
+    constructor(
+        eventEmitter: EventEmitter,
+        parser: FIXParser,
+        host: string,
+        port: number,
+    ) {
+        super(eventEmitter, parser, host, port);
+    }
 
     public createServer() {
         this.socket = new WebSocket.Server({
