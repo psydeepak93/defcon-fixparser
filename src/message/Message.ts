@@ -69,18 +69,49 @@ const calculatePosition = (spec: any, tag: number): number => {
     }
 };
 
+interface IMessageContents {
+    componentID: string;
+    tagText: string;
+    indent: string;
+    position: string;
+    reqd: string;
+    description?: string;
+    updated?: string;
+    updatedEP?: string;
+    added: string;
+    addedEP?: string;
+    issue?: string;
+    deprecated?: string;
+
+    // Dynamic types
+    components?: IMessageContent[];
+    validated?: boolean;
+}
+interface IMessageContent {
+    field: Field;
+    hasValue: boolean;
+    position: number;
+    reqd: string;
+    spec: any;
+    tagText: number;
+    valid: boolean;
+
+    // Dynamic types
+    validated?: boolean;
+}
+
 export const validateMessage = (message: Message): any => {
     let result: any[] = [];
 
-    const messageDataCloned = JSON.parse(JSON.stringify(message.data));
-    const messageContentsCloned = JSON.parse(
+    const messageDataCloned: Field[] = JSON.parse(JSON.stringify(message.data));
+    const messageContentsCloned: IMessageContents[] = JSON.parse(
         JSON.stringify(message.messageContents),
     );
 
     messageDataCloned.forEach((field: Field, index: number) => {
         const spec = messageContentsCloned.find((item) => {
-            if (item.components.length > 0) {
-                return item.components.find((subItem) => {
+            if (item.components!.length > 0) {
+                return item.components!.find((subItem) => {
                     const found = subItem.tagText === field.tag;
                     if (found) {
                         subItem.validated = true;
@@ -89,7 +120,7 @@ export const validateMessage = (message: Message): any => {
                 });
             } else {
                 item.validated = true;
-                return item.tagText === field.tag;
+                return Number(item.tagText) === field.tag;
             }
         });
 
@@ -120,8 +151,8 @@ export const validateMessage = (message: Message): any => {
         .forEach((spec: any) => {
             if (spec.components.length > 0) {
                 spec.components
-                    .filter((subItem) => !subItem.validated)
-                    .forEach((subSpec) => {
+                    .filter((subItem: IMessageContent) => !subItem.validated)
+                    .forEach((subSpec: IMessageContent) => {
                         if (!subSpec.validated) {
                             result.push({
                                 field: null,
@@ -234,19 +265,19 @@ export default class Message {
 
     public getBriefDescription() {
         let returnValue = '';
-        let side = ((this.getField(Side) || {}).enumeration || {}).symbolicName;
+        let side = this.getField(Side)!.enumeration!.symbolicName;
         side = side ? side.replace('Sell', 'SL').toUpperCase() : null;
 
         if (this.getField(LeavesQty)) {
             let quantity = null;
 
             if (this.getField(ContraTradeQty)) {
-                quantity = (this.getField(ContraTradeQty) || {}).value;
+                quantity = this.getField(ContraTradeQty)!.value;
             } else {
-                quantity = (this.getField(OrderQty) || {}).value;
+                quantity = this.getField(OrderQty)!.value;
             }
-            const leavesQuantity = (this.getField(LeavesQty) || {}).value;
-            const lastPrice = (this.getField(LastPx) || {}).value;
+            const leavesQuantity = this.getField(LeavesQty)!.value;
+            const lastPrice = this.getField(LastPx)!.value;
             returnValue = nonEmpty`${quantity} @${
                 lastPrice || lastPrice === '0' ? lastPrice.toFixed(2) : null
             } ${this.getField(LeavesQty)!.name!.replace(
@@ -254,22 +285,20 @@ export default class Message {
                 'LvsQty',
             )} ${leavesQuantity}`;
         } else if (this.getField(OrderQty)) {
-            const orderQuantity = (this.getField(OrderQty) || {}).value;
-            const symbol = (this.getField(Symbol) || {}).value;
-            const orderType = ((this.getField(OrdType) || {}).enumeration || {})
+            const orderQuantity = this.getField(OrderQty)!.value;
+            const symbol = this.getField(Symbol)!.value;
+            const orderType = this.getField(OrdType)!.enumeration!.symbolicName;
+            const timeInForce = this.getField(TimeInForce)!.enumeration!
                 .symbolicName;
-            const timeInForce = (
-                (this.getField(TimeInForce) || {}).enumeration || {}
-            ).symbolicName;
 
             if (this.getField(Price)) {
-                let price = (this.getField(Price) || {}).value;
+                let price = this.getField(Price)!.value;
                 if (price && price >= 1) {
                     price = price.toFixed(2);
                 } else if (price && price < 1) {
                     price = price.replace('0.', '.');
                 }
-                returnValue = nonEmpty`${side} ${orderQuantity} ${
+                returnValue = nonEmpty`${side || ''} ${orderQuantity} ${
                     symbol ? symbol.toUpperCase() : null
                 } ${
                     orderType
@@ -277,10 +306,10 @@ export default class Message {
                               .replace('Market', 'MKT')
                               .replace('Limit', 'LMT')
                               .toUpperCase()
-                        : null
-                } @${price} ${timeInForce ? timeInForce.toUpperCase() : null}`;
+                        : ''
+                } @${price} ${timeInForce ? timeInForce.toUpperCase() : ''}`;
             } else {
-                returnValue = nonEmpty`${side} ${orderQuantity} ${
+                returnValue = nonEmpty`${side || ''} ${orderQuantity} ${
                     symbol ? symbol.toUpperCase() : null
                 } ${
                     orderType
@@ -288,14 +317,14 @@ export default class Message {
                               .replace('Market', 'MKT')
                               .replace('Limit', 'LMT')
                               .toUpperCase()
-                        : null
-                } ${timeInForce ? timeInForce.toUpperCase() : null}`;
+                        : ''
+                } ${timeInForce ? timeInForce.toUpperCase() : ''}`;
             }
         } else {
             const messageType = this.getField(MsgType);
             if (messageType && messageType.tag && messageType.value) {
-                return (this.getEnum(messageType.tag, messageType.value) || {})
-                    .SymbolicName;
+                return this.getEnum(messageType.tag, messageType.value)!
+                    .SymbolicName!;
             } else {
                 return null;
             }
@@ -315,9 +344,9 @@ export default class Message {
                 : this.string.indexOf(TAG_CHECKSUM);
         const bodyLength: number = endLength - startLength;
 
-        this.bodyLengthValue = value >> 0;
+        this.bodyLengthValue = Number(value) >> 0;
         this.bodyLengthExpected = bodyLength;
-        this.bodyLengthValid = value >> 0 === bodyLength;
+        this.bodyLengthValid = Number(value) >> 0 === bodyLength;
         return this.bodyLengthValid;
     }
 

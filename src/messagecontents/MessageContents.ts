@@ -11,8 +11,8 @@ export class MessageContents {
     public validated: boolean = false;
 
     constructor() {
-        Object.entries(prebuiltMap).forEach((pair) =>
-            this.cacheMap.set(pair[0], pair[1] as ISpecMessageContents[]),
+        Object.entries(prebuiltMap).forEach(
+            (pair) => this.cacheMap.set(pair[0], pair[1] as any), // ISpecMessageContents[]
         );
     }
 

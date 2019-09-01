@@ -16,7 +16,7 @@ export class Fields {
 
     constructor() {
         this.fields.forEach((item: ISpecFields) => {
-            this.cacheMap.set(item.Tag >> 0, item);
+            this.cacheMap.set(Number(item.Tag) >> 0, item);
         });
     }
 

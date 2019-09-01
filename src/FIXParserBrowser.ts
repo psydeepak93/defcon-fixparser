@@ -152,4 +152,4 @@ export { EncryptMethod };
 /**
  * Export global to the window object.
  */
-global.FIXParser = FIXParserBrowser;
+(global as any).FIXParser = FIXParserBrowser;

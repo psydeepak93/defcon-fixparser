@@ -50,10 +50,7 @@ export default class FIXParser extends EventEmitter {
         string: fixVersion = this.fixVersion,
     } = {}) {
         if (protocol === 'tcp') {
-            this.clientHandler = new FIXParserClientSocket(
-                this.eventEmitter,
-                this,
-            );
+            this.clientHandler = new FIXParserClientSocket(this, this);
         } else if (protocol === 'websocket') {
             this.clientHandler = new FIXParserClientWebsocket(this, this);
         }
@@ -105,4 +102,4 @@ export { EncryptMethod };
 /**
  * Export global to the window object.
  */
-global.FIXParser = FIXParser;
+(global as any).FIXParser = FIXParser;
