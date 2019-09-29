@@ -1,17 +1,4 @@
-export type ISpecEnums = {
-    Tag: string;
-    Value: string;
-    SymbolicName: string;
-    Group: string;
-    Sort: string;
-    Description: string;
-    Added: string;
-    AddedEP?: string;
-    Deprecated?: string;
-    Elaboration?: string;
-};
-
-export const ENUMS: ISpecEnums[] = [
+export const ENUMS = [
     {
         Tag: '4',
         Value: 'B',

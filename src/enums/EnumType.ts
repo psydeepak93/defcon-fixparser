@@ -1,4 +1,4 @@
-import { ISpecEnums } from '../../spec/SpecEnums';
+import { ISpecEnums } from './Enums';
 
 export class EnumType {
     public tag: string | null = null;

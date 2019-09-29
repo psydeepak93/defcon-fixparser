@@ -7,10 +7,10 @@
  */
 import WebSocket from 'ws';
 
-import Message from '../message/Message';
-import FIXParserServerBase from './FIXParserServerBase';
 import { EventEmitter } from 'events';
 import FIXParser from '../FIXParser';
+import Message from '../message/Message';
+import FIXParserServerBase from './FIXParserServerBase';
 
 export default class FIXParserServerWebsocket extends FIXParserServerBase {
     public socket: WebSocket.Server | null = null;

@@ -7,10 +7,10 @@
  */
 import WebSocket from 'ws';
 
-import Message from '../message/Message';
-import FIXParserClientBase from './FIXParserClientBase';
 import { EventEmitter } from 'events';
 import FIXParser from '../FIXParser';
+import Message from '../message/Message';
+import FIXParserClientBase from './FIXParserClientBase';
 
 export default class FIXParserClientWebsocket extends FIXParserClientBase {
     constructor(eventEmitter: EventEmitter, parser: FIXParser) {

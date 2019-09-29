@@ -7,11 +7,11 @@
  */
 import { Socket } from 'net';
 
+import { EventEmitter } from 'events';
+import FIXParser from '../FIXParser';
 import Message from '../message/Message';
 import FrameDecoder from '../util/FrameDecoder';
 import FIXParserClientBase from './FIXParserClientBase';
-import { EventEmitter } from 'events';
-import FIXParser from '../FIXParser';
 
 export default class FIXParserClientSocket extends FIXParserClientBase {
     private connected: boolean = false;

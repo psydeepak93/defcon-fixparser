@@ -1,7 +1,7 @@
 import { EnumType } from '../enums/EnumType';
 import { CategoryType } from './categories/CategoryType';
-import { SectionType } from './sections/SectionType';
 import { FieldType } from './datatypes/FieldType';
+import { SectionType } from './sections/SectionType';
 
 export default class Field {
     public tag: number;

@@ -1,10 +1,24 @@
-import { FIELDS, ISpecFields } from '../../spec/SpecFields';
+import { FIELDS } from '../../spec/SpecFields';
 import Message from '../message/Message';
 import { Messages } from '../messages/Messages';
 import { Categories } from './categories/Categories';
 import { DataTypes } from './datatypes/Datatypes';
 import Field from './Field';
 import { Sections } from './sections/Sections';
+
+export interface ISpecFields {
+    Tag: string;
+    Name: string;
+    Type: string;
+    AbbrName: string;
+    NotReqXML: string;
+    Description: string;
+    Added: string;
+    AddedEP?: string;
+    Deprecated?: string;
+    BaseCategory?: string;
+    BaseCategoryAbbrName?: string;
+}
 
 export class Fields {
     public fields: ISpecFields[] = FIELDS;

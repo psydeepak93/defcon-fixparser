@@ -189,19 +189,19 @@ export const validateMessage = (message: Message): any => {
 };
 
 export default class Message {
-    static FIX_VERSION: string = 'FIX.5.0SP2';
-    fixVersion: string = 'FIX.5.0SP2';
-    data: Field[] = [];
-    string: string = '';
-    description: string = '';
-    messageType: string = '';
-    messageContents: ISpecMessageContents[] = [];
-    bodyLengthValid: boolean = false;
-    checksumValid: boolean = false;
-    checksumValue: string | null = null;
-    checksumExpected: string | null = null;
-    bodyLengthValue: number | null = null;
-    bodyLengthExpected: number | null = null;
+    public static FIX_VERSION: string = 'FIX.5.0SP2';
+    public fixVersion: string = 'FIX.5.0SP2';
+    public data: Field[] = [];
+    public string: string = '';
+    public description: string = '';
+    public messageType: string = '';
+    public messageContents: ISpecMessageContents[] = [];
+    public bodyLengthValid: boolean = false;
+    public checksumValid: boolean = false;
+    public checksumValue: string | null = null;
+    public checksumExpected: string | null = null;
+    public bodyLengthValue: number | null = null;
+    public bodyLengthExpected: number | null = null;
 
     constructor(fixVersion: string = Message.FIX_VERSION, ...fields: Field[]) {
         this.fixVersion = fixVersion;
@@ -264,11 +264,15 @@ export default class Message {
     }
 
     public getBriefDescription() {
-        let returnValue = '';
-        let side = this.getField(Side)!.enumeration!.symbolicName;
-        side = side ? side.replace('Sell', 'SL').toUpperCase() : null;
+        let returnValue: string = '';
+        const sideField: any = this.getField(Side)!;
+        let side: string = '';
+        if (sideField && sideField.enumeration!) {
+            side = sideField.enumeration!.symbolicName;
+            side = side ? side.replace('Sell', 'SL').toUpperCase() : null;
+        }
 
-        if (this.getField(LeavesQty)) {
+        if (this.getField(LeavesQty) !== undefined) {
             let quantity = null;
 
             if (this.getField(ContraTradeQty)) {
@@ -279,30 +283,37 @@ export default class Message {
             const leavesQuantity = this.getField(LeavesQty)!.value;
             const lastPrice = this.getField(LastPx)!.value;
             returnValue = nonEmpty`${quantity} @${
-                lastPrice || lastPrice === '0' ? lastPrice.toFixed(2) : null
+                lastPrice || lastPrice === '0' ? lastPrice.toFixed(2) : '0.00'
             } ${this.getField(LeavesQty)!.name!.replace(
                 'LeavesQty',
                 'LvsQty',
-            )} ${leavesQuantity}`;
+            )} ${parseInt(leavesQuantity, 10).toString()}`;
         } else if (this.getField(OrderQty)) {
             const orderQuantity = this.getField(OrderQty)!.value;
             const symbol = this.getField(Symbol)!.value;
-            const orderType = this.getField(OrdType)!.enumeration!.symbolicName;
-            const timeInForce = this.getField(TimeInForce)!.enumeration!
-                .symbolicName;
+            const orderType = this.getField(OrdType)!;
+            let symbolicName: string = '';
+            if (orderType && orderType.enumeration!) {
+                symbolicName = orderType.enumeration!.symbolicName;
+            }
+            const timeInForceField = this.getField(TimeInForce)!;
+            let timeInForce: any = null;
+            if (timeInForceField && timeInForceField.enumeration!) {
+                timeInForce = timeInForceField.enumeration!.symbolicName;
+            }
 
             if (this.getField(Price)) {
                 let price = this.getField(Price)!.value;
                 if (price && price >= 1) {
                     price = price.toFixed(2);
-                } else if (price && price < 1) {
-                    price = price.replace('0.', '.');
+                } else if (price !== undefined && price < 1) {
+                    price = price.toString().replace('0.', '.');
                 }
                 returnValue = nonEmpty`${side || ''} ${orderQuantity} ${
-                    symbol ? symbol.toUpperCase() : null
+                    symbol ? symbol.toUpperCase() : ''
                 } ${
-                    orderType
-                        ? orderType
+                    symbolicName
+                        ? symbolicName
                               .replace('Market', 'MKT')
                               .replace('Limit', 'LMT')
                               .toUpperCase()
@@ -310,10 +321,10 @@ export default class Message {
                 } @${price} ${timeInForce ? timeInForce.toUpperCase() : ''}`;
             } else {
                 returnValue = nonEmpty`${side || ''} ${orderQuantity} ${
-                    symbol ? symbol.toUpperCase() : null
+                    symbol ? symbol.toUpperCase() : ''
                 } ${
-                    orderType
-                        ? orderType
+                    symbolicName
+                        ? symbolicName
                               .replace('Market', 'MKT')
                               .replace('Limit', 'LMT')
                               .toUpperCase()

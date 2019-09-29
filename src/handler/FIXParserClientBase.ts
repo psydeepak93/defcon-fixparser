@@ -8,27 +8,26 @@
 import { EventEmitter } from 'events';
 
 import { Socket } from 'net';
+import WebSocket from 'ws';
 import * as Fields from '../constants/ConstantsField';
 import * as Messages from '../constants/ConstantsMessage';
 import Field from '../fields/Field';
 import FIXParser from '../FIXParser';
 import Message from '../message/Message';
-import Timeout = NodeJS.Timeout;
-import WebSocket from 'ws';
 
 export default class FIXParserClientBase extends EventEmitter {
+    public host: string | null = null;
+    public port: number | null = null;
+    public client = null;
+    public sender: string | null = null;
+    public target: string | null = null;
+    public heartBeatInterval: number | undefined;
+    public heartBeatIntervalId: any | null = null;
+    public fixVersion: string = 'FIX.5.0SP2';
     protected eventEmitter: EventEmitter | null;
     protected fixParser: FIXParser | null;
-    host: string | null = null;
-    port: number | null = null;
-    client = null;
     protected socketTCP: Socket | null = null;
     protected socketWS: WebSocket | null = null;
-    sender: string | null = null;
-    target: string | null = null;
-    heartBeatInterval: number | undefined;
-    heartBeatIntervalId: Timeout | null = null;
-    fixVersion: string = 'FIX.5.0SP2';
 
     constructor(eventEmitter: EventEmitter, parser: FIXParser) {
         super();

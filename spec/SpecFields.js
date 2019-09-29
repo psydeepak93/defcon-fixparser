@@ -1,18 +1,4 @@
-export interface ISpecFields {
-    Tag: string;
-    Name: string;
-    Type: string;
-    AbbrName: string;
-    NotReqXML: string;
-    Description: string;
-    Added: string;
-    AddedEP?: string;
-    Deprecated?: string;
-    BaseCategory?: string;
-    BaseCategoryAbbrName?: string;
-}
-
-export const FIELDS: ISpecFields[] = [
+export const FIELDS = [
     {
         Tag: '1',
         Name: 'Account',

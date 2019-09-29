@@ -1,5 +1,5 @@
-import Message from '../message/Message';
 import prebuiltMap from '../../prebuild/built/MessageContents.prebuilt.json';
+import Message from '../message/Message';
 
 import { ISpecMessageContents } from '../../spec/SpecMessageContents';
 

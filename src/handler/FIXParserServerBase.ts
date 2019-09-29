@@ -13,21 +13,20 @@ import * as Fields from '../constants/ConstantsField';
 import * as Messages from '../constants/ConstantsMessage';
 import FIXParser from '../FIXParser';
 import Message from '../message/Message';
-import Timeout = NodeJS.Timeout;
 
 export default class FIXParserServerBase extends EventEmitter {
-    eventEmitter: EventEmitter | null = null;
+    public eventEmitter: EventEmitter | null = null;
+    public host: string | null = null;
+    public port: number | null = null;
+    public serverHandler: FIXParserServerBase | null = null;
+    public server: Server | null = null;
+    public socketWS: WebSocket | null = null;
+    public socketNet: Socket | null = null;
+    public sender: string | null = null;
+    public target: string | null = null;
+    public heartBeatInterval: number | undefined;
+    public heartBeatIntervalId: any | null = null;
     protected fixParser: FIXParser = new FIXParser();
-    host: string | null = null;
-    port: number | null = null;
-    serverHandler: FIXParserServerBase | null = null;
-    server: Server | null = null;
-    socketWS: WebSocket | null = null;
-    socketNet: Socket | null = null;
-    sender: string | null = null;
-    target: string | null = null;
-    heartBeatInterval: number | undefined;
-    heartBeatIntervalId: Timeout | null = null;
 
     constructor(
         eventEmitter: EventEmitter,

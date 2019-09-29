@@ -17,12 +17,12 @@ export default class FIXParserBase {
         build: process.env.__BUILD_TIME__,
     };
 
-    message: Message | null = null;
-    messageTags: string[] = [];
-    messageString: string = '';
-    reBeginString: RegExp = new RegExp(/(?=8=FIX)/g);
-    fields: FieldsCache = new FieldsCache();
-    enums: EnumsCache = new EnumsCache();
+    public message: Message | null = null;
+    public messageTags: string[] = [];
+    public messageString: string = '';
+    public reBeginString: RegExp = new RegExp(/(?=8=FIX)/g);
+    public fields: FieldsCache = new FieldsCache();
+    public enums: EnumsCache = new EnumsCache();
 
     public processMessage() {
         const matches: RegExpExecArray | null = RE_FIND.exec(
