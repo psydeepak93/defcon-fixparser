@@ -18,7 +18,7 @@ const messageContentsById: any = groupBy(
 console.log('Building message content cache map...');
 messageContents.forEach((messageContent) => {
     const componentsById = messageContentsById[messageContent.ComponentID];
-    mappedComponents[messageContent.ComponentID] = componentsById.map(
+    mappedComponents[messageContent.ComponentID] = componentsById && componentsById.map ? componentsById.map(
         (component: ISpecMessageContents) => ({
             componentID: component.ComponentID,
             tagText: component.TagText,
@@ -52,7 +52,7 @@ messageContents.forEach((messageContent) => {
                       }))
                 : [],
         }),
-    );
+    ) : null;
 });
 
 const outputPath = 'prebuild/built/';

@@ -13,7 +13,7 @@
     "eslint": "eslint *.babel.js *.config.js spec src test prebuild",
     "tslint": "tslint -c tslint.json '{spec,src}/**/*.ts' --fix",
     "prettier": "node_modules/prettier/bin-prettier.js \"**/*.{js,ts}\" --write",
-    "prebuild": "babel-node --max-old-space-size=4096 prebuild/index.ts --extensions \\\".ts\\\"",
+    "prebuild": "babel-node --max-old-space-size=4096 prebuild/setup.js --extensions \\\".ts\\\"",
     "build": "node --max_old_space_size=4096 ./node_modules/webpack/bin/webpack.js -p --optimize-dedupe --optimize-minimize --color",
     "example": "babel-node examples/example.js",
     "example_ctrader": "babel-node examples/example_ctrader.js",
