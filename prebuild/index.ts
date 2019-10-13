@@ -10,15 +10,17 @@ import { groupBy } from '../src/util/util';
 const messageContents: ISpecMessageContents[] = MESSAGE_CONTENTS;
 const components: Components = new Components();
 const mappedComponents: any = {};
-const messageContentsById: any = groupBy(
-    messageContents,
-    (messageContent) => messageContent.ComponentID,
-);
+const messageContentsById: any = messageContents.reduce((groups, item: ISpecMessageContents) => {
+    const key: string = item.ComponentID;
+    groups[key] = groups[key] || [];
+    groups[key].push(item);
+    return groups;
+}, {});
 
 console.log('Building message content cache map...');
 messageContents.forEach((messageContent) => {
     const componentsById = messageContentsById[messageContent.ComponentID];
-    mappedComponents[messageContent.ComponentID] = componentsById && componentsById.map ? componentsById.map(
+    mappedComponents[messageContent.ComponentID] = componentsById.map(
         (component: ISpecMessageContents) => ({
             componentID: component.ComponentID,
             tagText: component.TagText,
@@ -52,7 +54,7 @@ messageContents.forEach((messageContent) => {
                       }))
                 : [],
         }),
-    ) : null;
+    );
 });
 
 const outputPath = 'prebuild/built/';
