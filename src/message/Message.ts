@@ -266,7 +266,7 @@ export default class Message {
     public getBriefDescription() {
         let returnValue: string = '';
         const sideField: any = this.getField(Side)!;
-        let side: string = '';
+        let side: string | null = '';
         if (sideField && sideField.enumeration!) {
             side = sideField.enumeration!.symbolicName;
             side = side ? side.replace('Sell', 'SL').toUpperCase() : null;
@@ -292,7 +292,7 @@ export default class Message {
             const orderQuantity = this.getField(OrderQty)!.value;
             const symbol = this.getField(Symbol)!.value;
             const orderType = this.getField(OrdType)!;
-            let symbolicName: string = '';
+            let symbolicName: string | null = '';
             if (orderType && orderType.enumeration!) {
                 symbolicName = orderType.enumeration!.symbolicName;
             }

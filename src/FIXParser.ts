@@ -16,7 +16,6 @@ import * as Side from './constants/ConstantsSide';
 import * as TimeInForce from './constants/ConstantsTimeInForce';
 import Field from './fields/Field';
 import FIXParserBase from './FIXParserBase';
-import FIXParserClientBase from './handler/FIXParserClientBase';
 import FIXParserClientSocket from './handler/FIXParserClientSocket';
 import FIXParserClientWebsocket from './handler/FIXParserClientWebsocket';
 import Message from './message/Message';

@@ -5,12 +5,11 @@ import {
     MESSAGE_CONTENTS,
 } from '../spec/SpecMessageContents';
 import { Components } from '../src/components/Components';
-import { groupBy } from '../src/util/util';
 
 const messageContents: ISpecMessageContents[] = MESSAGE_CONTENTS;
 const components: Components = new Components();
 const mappedComponents: any = {};
-const messageContentsById: any = messageContents.reduce((groups, item: ISpecMessageContents) => {
+const messageContentsById: any = messageContents.reduce((groups: any, item: ISpecMessageContents) => {
     const key: string = item.ComponentID;
     groups[key] = groups[key] || [];
     groups[key].push(item);
