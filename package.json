@@ -10,7 +10,6 @@
     "url": "https://gitlab.com/logotype/fixparser.git"
   },
   "scripts": {
-    "eslint": "eslint *.babel.js *.config.js spec src test prebuild",
     "tslint": "tslint -c tslint.json '{spec,src}/**/*.ts' --fix",
     "prettier": "node_modules/prettier/bin-prettier.js \"**/*.{js,ts}\" --write",
     "prebuild": "babel-node --max-old-space-size=4096 prebuild/setup.js --extensions \\\".ts\\\"",
@@ -36,11 +35,9 @@
     "@types/node": "^12.7.12",
     "@types/ws": "^6.0.3",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
     "cli-table": "^0.3.1",
-    "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "npm-check": "^5.9.0",
     "prettier": "^1.18.2",

@@ -19,7 +19,7 @@ stages:
 lint:
   stage: lint
   script:
-   - npm run eslint
+   - npm run tslint
 
 bundle:
   stage: bundle
