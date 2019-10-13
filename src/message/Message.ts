@@ -109,9 +109,9 @@ export const validateMessage = (message: Message): any => {
     );
 
     messageDataCloned.forEach((field: Field, index: number) => {
-        const spec = messageContentsCloned.find((item) => {
+        const spec = messageContentsCloned.find((item: any) => {
             if (item.components!.length > 0) {
-                return item.components!.find((subItem) => {
+                return item.components!.find((subItem: any) => {
                     const found = subItem.tagText === field.tag;
                     if (found) {
                         subItem.validated = true;

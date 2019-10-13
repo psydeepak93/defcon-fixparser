@@ -45,13 +45,20 @@ export default class FIXParserServerWebsocket extends FIXParserServerBase {
     }
 
     public send(message: Message) {
-        this.socket!.clients.forEach((client) => {
-            if (client.readyState === WebSocket.OPEN) {
-                this.fixParser.setNextTargetMsgSeqNum(
-                    this.fixParser.getNextTargetMsgSeqNum() + 1,
-                );
-                client.send(message.encode());
-            }
-        });
+        if (this.socket && this.socket!.clients) {
+            this.socket!.clients.forEach((client) => {
+                if (client.readyState === WebSocket.OPEN) {
+                    this.fixParser.setNextTargetMsgSeqNum(
+                        this.fixParser.getNextTargetMsgSeqNum() + 1,
+                    );
+                    client.send(message.encode());
+                }
+            });
+        } else {
+            console.error(
+                'FIXParser: could not send message, socket not connected',
+                message,
+            );
+        }
     }
 }

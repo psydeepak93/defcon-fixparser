@@ -1,4 +1,4 @@
-import { ENUMS } from '../../spec/SpecEnums';
+import { ENUMS, ISpecEnums } from '../../spec/SpecEnums';
 import Field from '../fields/Field';
 import { EnumType } from './EnumType';
 
@@ -6,13 +6,17 @@ export interface ISpecEnums {
     Tag: string;
     Value: string;
     SymbolicName: string;
-    Group: string;
+    Group?: string;
     Sort: string;
     Description: string;
-    Added: string;
-    AddedEP: string;
-    Deprecated: string;
-    Elaboration: string;
+    Added?: string;
+    AddedEP?: string;
+    Updated?: string;
+    UpdatedEP?: string;
+    Issue?: string;
+    Deprecated?: string;
+    DeprecatedEP?: string;
+    Elaboration?: string;
 }
 
 export class Enums {

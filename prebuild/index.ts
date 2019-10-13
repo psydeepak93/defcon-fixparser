@@ -9,12 +9,15 @@ import { Components } from '../src/components/Components';
 const messageContents: ISpecMessageContents[] = MESSAGE_CONTENTS;
 const components: Components = new Components();
 const mappedComponents: any = {};
-const messageContentsById: any = messageContents.reduce((groups: any, item: ISpecMessageContents) => {
-    const key: string = item.ComponentID;
-    groups[key] = groups[key] || [];
-    groups[key].push(item);
-    return groups;
-}, {});
+const messageContentsById: any = messageContents.reduce(
+    (groups: any, item: ISpecMessageContents) => {
+        const key: string = item.ComponentID;
+        groups[key] = groups[key] || [];
+        groups[key].push(item);
+        return groups;
+    },
+    {},
+);
 
 console.log('Building message content cache map...');
 messageContents.forEach((messageContent) => {

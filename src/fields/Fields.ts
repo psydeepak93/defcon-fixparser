@@ -10,14 +10,20 @@ export interface ISpecFields {
     Tag: string;
     Name: string;
     Type: string;
-    AbbrName: string;
+    AbbrName?: string;
     NotReqXML: string;
     Description: string;
     Added: string;
     AddedEP?: string;
-    Deprecated?: string;
+    Updated?: string;
+    UpdatedEP?: string;
+    UnionDataType?: string;
+    AssociatedDataTag?: string;
+    EnumDatatype?: string;
     BaseCategory?: string;
     BaseCategoryAbbrName?: string;
+    Issue?: string;
+    Deprecated?: string;
 }
 
 export class Fields {
@@ -46,7 +52,7 @@ export class Fields {
                 if (field.category!.sectionID) {
                     this.sections.processSection(
                         field,
-                        field.category!.sectionID,
+                        field.category!.sectionID!,
                     );
                 }
             }
@@ -74,7 +80,7 @@ export class Fields {
                 if (field.category!.sectionID) {
                     this.sections.processSection(
                         field,
-                        field.category!.sectionID,
+                        field.category!.sectionID!,
                     );
                 }
             }

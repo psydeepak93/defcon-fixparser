@@ -105,7 +105,7 @@ Features
 + Parse and create FIX messages
 + Connect over TCP/Websocket socket as client or server
 + Fast, single-digit microsecond performance
-+ Modern, written in ES6/ES2015/ES2016/ES2017
++ Modern, written in Typescript
 + Validation (checksum and message length), includes FIX specification in parsed message
 + Supports various separators/start of headers (e.g. 0x01, ^ and |)
 + Clean and lightweight code

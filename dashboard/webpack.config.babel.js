@@ -20,9 +20,15 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                use: [{ loader: 'babel-loader' }],
+                test: /\.tsx?$/,
+                use: 'ts-loader',
                 exclude: /node_modules/,
+            },
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                options: { babelrcRoots: ['.', '../'] },
             },
             {
                 test: /\.(css|sass|scss)$/,
@@ -52,6 +58,9 @@ module.exports = {
                 exclude: /node_modules/,
             },
         ],
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js', '.json'],
     },
     plugins: [
         new MiniCssExtractPlugin({ filename: './dashboard.css' }),
