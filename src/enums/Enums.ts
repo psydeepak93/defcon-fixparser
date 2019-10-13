@@ -1,4 +1,4 @@
-import { ENUMS, ISpecEnums } from '../../spec/SpecEnums';
+import { ENUMS } from '../../spec/SpecEnums';
 import Field from '../fields/Field';
 import { EnumType } from './EnumType';
 
