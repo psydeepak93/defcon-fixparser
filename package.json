@@ -1,6 +1,6 @@
 {
   "name": "fixparser",
-  "version": "2.9.1",
+  "version": "2.9.2",
   "description": "FIX 5.0SP2 Parser",
   "main": "./fixparser.js",
   "module": "src/FIXParser.ts",
@@ -85,6 +85,6 @@
     ]
   },
   "dependencies": {
-    "ws": "^7.1.2"
+    "ws": "^7.2.0"
   }
 }
