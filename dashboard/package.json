@@ -1,6 +1,6 @@
 {
   "name": "fixparser-dashboard",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Demo dashboard for fixparser",
   "main": "dashboard/build/dashboard.js",
   "scripts": {
@@ -12,30 +12,30 @@
   "author": "Victor Norgren",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/preset-react": "^7.6.3",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.5",
+    "@babel/preset-react": "^7.7.4",
     "babel-loader": "^8.0.6",
-    "copy-webpack-plugin": "^5.0.4",
-    "css-loader": "^3.2.0",
-    "file-loader": "^4.2.0",
+    "copy-webpack-plugin": "^5.0.5",
+    "css-loader": "^3.2.1",
+    "file-loader": "^5.0.2",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.13.0",
     "npm-check": "^5.9.0",
     "prop-types": "^15.6.1",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "sass-loader": "^8.0.0",
-    "terser": "^4.3.9",
+    "terser": "^4.4.2",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9",
+    "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
     "classnames": "^2.2.5",
     "express": "^4.17.1",
     "moment": "^2.22.1",
-    "uikit": "^3.2.2"
+    "uikit": "^3.2.4"
   },
   "resolutions": {
     "terser": "3.14.1"
