@@ -25,30 +25,30 @@
     "upgrade-interactive": "npm-check --update"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "@babel/node": "^7.7.4",
-    "@babel/plugin-proposal-class-properties": "^7.7.4",
-    "@babel/preset-env": "^7.7.5",
-    "@babel/preset-typescript": "^7.7.4",
-    "@babel/register": "^7.7.4",
-    "@types/jest": "^24.0.23",
-    "@types/node": "^12.12.14",
-    "@types/ws": "^6.0.4",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-typescript": "^7.8.3",
+    "@babel/register": "^7.8.3",
+    "@types/jest": "^25.1.1",
+    "@types/node": "^13.7.0",
+    "@types/ws": "^7.2.1",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^24.9.0",
+    "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.6",
     "cli-table": "^0.3.1",
-    "jest": "^24.9.0",
+    "jest": "^25.1.0",
     "npm-check": "^5.9.0",
     "prettier": "^1.19.1",
-    "terser": "^4.4.2",
+    "terser": "^4.6.3",
     "ts-loader": "^6.2.1",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.3",
-    "webpack": "^4.41.2",
+    "tslint": "^6.0.0",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
-    "yargs": "^15.0.2"
+    "yargs": "^15.1.0"
   },
   "resolutions": {
     "terser": "3.14.1"
@@ -85,6 +85,6 @@
     ]
   },
   "dependencies": {
-    "ws": "^7.2.0"
+    "ws": "^7.2.1"
   }
 }

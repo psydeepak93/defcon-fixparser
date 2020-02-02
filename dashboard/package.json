@@ -12,30 +12,30 @@
   "author": "Victor Norgren",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.7.5",
-    "@babel/preset-env": "^7.7.5",
-    "@babel/preset-react": "^7.7.4",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
     "babel-loader": "^8.0.6",
-    "copy-webpack-plugin": "^5.0.5",
-    "css-loader": "^3.2.1",
+    "copy-webpack-plugin": "^5.1.1",
+    "css-loader": "^3.4.2",
     "file-loader": "^5.0.2",
-    "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.13.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.13.1",
     "npm-check": "^5.9.0",
     "prop-types": "^15.6.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "sass-loader": "^8.0.0",
-    "terser": "^4.4.2",
-    "webpack": "^4.41.2",
+    "sass-loader": "^8.0.2",
+    "terser": "^4.6.3",
+    "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
+    "webpack-dev-server": "^3.10.2"
   },
   "dependencies": {
     "classnames": "^2.2.5",
     "express": "^4.17.1",
     "moment": "^2.22.1",
-    "uikit": "^3.2.4"
+    "uikit": "^3.3.0"
   },
   "resolutions": {
     "terser": "3.14.1"
