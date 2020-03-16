@@ -1,6 +1,6 @@
 {
-  "name": "fixparser",
-  "version": "2.9.5",
+  "name": "defcon-fixparser",
+  "version": "1.0.0",
   "description": "FIX 5.0SP2 Parser",
   "main": "./fixparser.js",
   "module": "src/FIXParser.ts",
@@ -63,7 +63,7 @@
     "Websocket",
     "Financial Information eXchange"
   ],
-  "author": "Victor Norgren",
+  "author": "Deepak Periasamy",
   "license": "MIT",
   "jest": {
     "globals": {

@@ -1,3 +1,9 @@
+# Thanking the creator
+
+Originally forked from : https://gitlab.com/logotype/fixparser
+Creator : Victor Norgren
+Repo : https://gitlab.com/logotype/fixparser
+
 # fixparser
 
 This is the Javascript framework for working with FIX protocol messages. Compliant with FIX 5.0 SP2.

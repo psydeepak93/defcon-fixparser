@@ -22,6 +22,15 @@ import Message from './message/Message';
 import { timestamp } from './util/util';
 
 type Protocol = 'tcp' | 'websocket';
+type Params = {
+    host: string,
+    port: number,
+    protocol: Protocol,
+    sender: string,
+    target: string,
+    heartbeatIntervalMs: number,
+    fixVersion: string
+}
 
 export default class FIXParser extends EventEmitter {
     public fixParserBase: FIXParserBase = new FIXParserBase();
@@ -38,26 +47,18 @@ export default class FIXParser extends EventEmitter {
     public heartBeatIntervalId: any | null = null;
     public fixVersion: string = 'FIX.5.0SP2';
 
-    public connect({
-        string: host = 'localhost',
-        number: port = 9878,
-        Protocol: protocol = 'tcp',
-        string: sender = 'SENDER',
-        string: target = 'TARGET',
-        number: heartbeatIntervalMs = 30000,
-        string: fixVersion = this.fixVersion,
-    } = {}) {
-        if (protocol === 'tcp') {
+    public connect(options: Params) {
+        if (options.protocol === 'tcp') {
             this.clientHandler = new FIXParserClientSocket(this, this);
-        } else if (protocol === 'websocket') {
+        } else if (options.protocol === 'websocket') {
             this.clientHandler = new FIXParserClientWebsocket(this, this);
         }
-        this.clientHandler!.host = host;
-        this.clientHandler!.port = port;
-        this.clientHandler!.sender = sender;
-        this.clientHandler!.target = target;
-        this.clientHandler!.heartBeatInterval = heartbeatIntervalMs;
-        this.clientHandler!.fixVersion = fixVersion;
+        this.clientHandler!.host = options.host;
+        this.clientHandler!.port = options.port;
+        this.clientHandler!.sender = options.sender;
+        this.clientHandler!.target = options.target;
+        this.clientHandler!.heartBeatInterval = options.heartbeatIntervalMs;
+        this.clientHandler!.fixVersion = options.fixVersion;
         this.clientHandler!.connect();
     }
 
