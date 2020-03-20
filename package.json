@@ -7,7 +7,7 @@
   "browser": "./browser.js",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/logotype/fixparser.git"
+    "url": "https://github.com/psydeepak93/defcon-fixparser.git"
   },
   "scripts": {
     "tslint": "tslint -c tslint.json '{spec,src}/**/*.ts' --fix",
