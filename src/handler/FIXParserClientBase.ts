@@ -39,7 +39,7 @@ export default class FIXParserClientBase extends EventEmitter {
         clearInterval(this.heartBeatIntervalId!);
     }
 
-    public startHeartbeat() {
+    public startHeartbeat(heartBeatInterval: number | undefined) {
         this.stopHeartbeat();
         this.heartBeatIntervalId = setInterval(() => {
             const heartBeat = this.fixParser!.createMessage(
@@ -54,7 +54,7 @@ export default class FIXParserClientBase extends EventEmitter {
                 new Field(Fields.TargetCompID, this.target),
             );
             this.send(heartBeat);
-        }, this.heartBeatInterval!);
+        }, heartBeatInterval!);
     }
 
     public processMessage(message: Message) {

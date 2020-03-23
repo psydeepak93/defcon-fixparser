@@ -15,6 +15,7 @@ import FIXParserClientBase from './FIXParserClientBase';
 
 export default class FIXParserClientSocket extends FIXParserClientBase {
     private connected: boolean = false;
+    public heartBeatInterval: number | undefined;
 
     constructor(eventEmitter: EventEmitter, parser: FIXParser) {
         super(eventEmitter, parser);
@@ -55,7 +56,8 @@ export default class FIXParserClientSocket extends FIXParserClientBase {
             this.connected = true;
             console.log('Connected');
             this.eventEmitter!.emit('open');
-            this.startHeartbeat();
+            this.heartBeatInterval ?
+                this.startHeartbeat(this.heartBeatInterval * 1000) : null;
         });
     }
 

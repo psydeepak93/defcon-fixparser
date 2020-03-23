@@ -24,7 +24,7 @@ Install with `npm install fixparser`.
 Parse a FIX message:
 
 ```javascript
-import FIXParser from 'fixparser';
+import FIXParser from 'defcon-fixparser';
 const fixParser = new FIXParser();
 console.log(fixParser.parse('8=FIX.4.2|9=51|35=0|34=703|49=ABC|52=20100130-10:53:40.830|56=XYZ|10=249|'));
 ```
@@ -41,7 +41,7 @@ import FIXParser, {
     HandlInst,
     TimeInForce,
     EncryptMethod
-} from 'fixparser';
+} from 'defcon-fixparser';
 const fixParser = new FIXParser();
 const order = fixParser.createMessage(
     new Field(Fields.MsgType, Messages.NewOrderSingle),
@@ -64,7 +64,7 @@ console.log(order.encode('|'));
 Connect over TCP socket (as client):
 
 ```javascript
-import FIXParser from 'fixparser';
+import FIXParser from 'defcon-fixparser';
 const fixParser = new FIXParser();
 fixParser.connect({ host: 'localhost', port: 9878, protocol: 'tcp', sender: 'BANZAI', target: 'EXEC', fixVersion: 'FIX.4.4' });
 fixParser.on('open', () => {
@@ -81,7 +81,7 @@ fixParser.on('close', () => {
 FIX Server:
 
 ```javascript
-import FIXServer from 'fixparser/server';
+import FIXServer from 'defcon-fixparser/server';
 const fixServer = new FIXServer();
 fixServer.createServer('localhost', 9878, 'tcp');
 fixServer.on('message', (message) => {
@@ -92,7 +92,7 @@ fixServer.on('message', (message) => {
 Connect over Webocket in a browser (as client):
 
 ```javascript
-import FIXParser from 'fixparser/browser';
+import FIXParser from 'defcon-fixparser/browser';
 const fixParser = new FIXParser();
 fixParser.connect({ host: 'localhost', port: 9878, sender: 'BANZAI', target: 'EXEC', fixVersion: 'FIX.4.4' });
 fixParser.on('open', () => {
@@ -115,7 +115,7 @@ Features
 + Validation (checksum and message length), includes FIX specification in parsed message
 + Supports various separators/start of headers (e.g. 0x01, ^ and |)
 + Clean and lightweight code
-+ Supports both node.js and browser environments (`import 'fixparser' from 'fixparser/browser';`)
++ Supports both node.js and browser environments (`import 'fixparser' from 'defcon-fixparser/browser';`)
 
 Performance
 -----------
