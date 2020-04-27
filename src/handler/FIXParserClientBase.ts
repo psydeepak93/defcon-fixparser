@@ -24,22 +24,23 @@ export default class FIXParserClientBase extends EventEmitter {
     public heartBeatInterval: number | undefined;
     public heartBeatIntervalId: any | null = null;
     public fixVersion: string = 'FIX.5.0SP2';
-    protected eventEmitter: EventEmitter | null;
-    protected fixParser: FIXParser | null;
-    protected socketTCP: Socket | null = null;
+    protected eventEmitter: EventEmitter;
+    protected fixParser: FIXParser;
+    protected socketTCP: Socket;
     protected socketWS: WebSocket | null = null;
 
     constructor(eventEmitter: EventEmitter, parser: FIXParser) {
         super();
         this.eventEmitter = eventEmitter;
         this.fixParser = parser;
+        this.socketTCP = new Socket();
     }
 
     public stopHeartbeat() {
         clearInterval(this.heartBeatIntervalId!);
     }
 
-    public startHeartbeat(heartBeatInterval: number | undefined) {
+    public startHeartbeat(heartBeatInterval:number) {
         this.stopHeartbeat();
         this.heartBeatIntervalId = setInterval(() => {
             const heartBeat = this.fixParser!.createMessage(
@@ -47,14 +48,14 @@ export default class FIXParserClientBase extends EventEmitter {
                 new Field(Fields.MsgType, 0),
                 new Field(
                     Fields.MsgSeqNum,
-                    this.fixParser!.getNextTargetMsgSeqNum(),
+                    this.fixParser.getNextTargetMsgSeqNum(),
                 ),
                 new Field(Fields.SenderCompID, this.sender),
-                new Field(Fields.SendingTime, this.fixParser!.getTimestamp()),
+                new Field(Fields.SendingTime, this.fixParser.getTimestamp()),
                 new Field(Fields.TargetCompID, this.target),
             );
             this.send(heartBeat);
-        }, heartBeatInterval!);
+        }, heartBeatInterval * 1000);
     }
 
     public processMessage(message: Message) {
@@ -64,7 +65,7 @@ export default class FIXParserClientBase extends EventEmitter {
                 console.log(
                     `[${Date.now()}] FIXClient new sequence number ${newSeqNo}`,
                 );
-                this.fixParser!.setNextTargetMsgSeqNum(newSeqNo);
+                this.fixParser.setNextTargetMsgSeqNum(newSeqNo);
             }
         }
         console.log(

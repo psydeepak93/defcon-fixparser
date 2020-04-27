@@ -30,14 +30,14 @@ export default class FIXParserBrowser extends EventEmitter {
     public target: string | null = null;
     public messageSequence: number = 1;
     public heartBeatInterval: number | undefined;
-    public heartBeatIntervalId: number | null = null;
+    public heartBeatIntervalId: any | null = null;
     public fixVersion: string = 'FIX.5.0SP2';
 
     public stopHeartbeat() {
         clearInterval(this.heartBeatIntervalId!);
     }
 
-    public startHeartbeat() {
+    public startHeartbeat(heartBeatInterval: number | undefined) {
         this.stopHeartbeat();
         this.heartBeatIntervalId = setInterval(() => {
             const heartBeat = this.createMessage(
@@ -48,7 +48,7 @@ export default class FIXParserBrowser extends EventEmitter {
                 new Field(Fields.TargetCompID, this.target),
             );
             this.send(heartBeat);
-        }, this.heartBeatInterval);
+        }, heartBeatInterval!);
     }
 
     public connect({
@@ -57,7 +57,7 @@ export default class FIXParserBrowser extends EventEmitter {
         protocol = 'websocket',
         sender = 'SENDER',
         target = 'TARGET',
-        heartbeatIntervalMs = 60000,
+        heartbeatInterval = 60000,
         fixVersion = this.fixVersion,
     } = {}) {
         this.host = host;
@@ -65,12 +65,12 @@ export default class FIXParserBrowser extends EventEmitter {
         this.protocol = protocol;
         this.connectionString =
             this.host.indexOf('ws://') === -1 &&
-            this.host.indexOf('wss://') === -1
+                this.host.indexOf('wss://') === -1
                 ? `ws://${this.host}:${this.port}`
                 : `${this.host}:${this.port}`;
         this.sender = sender;
         this.target = target;
-        this.heartBeatInterval = heartbeatIntervalMs;
+        this.heartBeatInterval = heartbeatInterval;
         this.fixVersion = fixVersion;
         this.socket = new WebSocket(this.connectionString);
 
@@ -79,13 +79,14 @@ export default class FIXParserBrowser extends EventEmitter {
                 `Connected: ${event}, readyState: ${this.socket!.readyState}`,
             );
             this.emit('open');
-            this.startHeartbeat();
+            this.heartBeatInterval ?
+                this.startHeartbeat(this.heartBeatInterval * 1000) : null;
         });
 
         this.socket!.addEventListener('close', (event) => {
             console.log(
                 `Connection closed: ${event}, readyState: ${
-                    this.socket!.readyState
+                this.socket!.readyState
                 }`,
             );
             this.emit('close');

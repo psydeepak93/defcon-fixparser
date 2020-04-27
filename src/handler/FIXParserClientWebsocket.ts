@@ -20,19 +20,20 @@ export default class FIXParserClientWebsocket extends FIXParserClientBase {
     public connect() {
         const connectionString =
             this.host!.indexOf('ws://') === -1 &&
-            this.host!.indexOf('wss://') === -1
+                this.host!.indexOf('wss://') === -1
                 ? `ws://${this.host}:${this.port}`
                 : `${this.host}:${this.port}`;
 
         this.socketWS = new WebSocket(connectionString);
 
-        this.socketWS!.on('open', () => {
+        this.socketWS.on('open', () => {
             console.log('Connected');
             this.eventEmitter!.emit('open');
-            this.startHeartbeat();
+            this.heartBeatInterval ?
+                this.startHeartbeat(this.heartBeatInterval) : null;
         });
 
-        this.socketWS!.on('message', (data) => {
+        this.socketWS.on('message', (data) => {
             const messages = this.fixParser!.parse(data.toString());
             let i = 0;
             for (i; i < messages.length; i++) {
@@ -41,7 +42,7 @@ export default class FIXParserClientWebsocket extends FIXParserClientBase {
             }
         });
 
-        this.socketWS!.on('close', () => {
+        this.socketWS.on('close', () => {
             this.eventEmitter!.emit('close');
             this.stopHeartbeat();
         });

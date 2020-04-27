@@ -1,6 +1,6 @@
 {
   "name": "defcon-fixparser",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "FIX 5.0SP2 Parser",
   "main": "./fixparser.js",
   "module": "src/FIXParser.ts",

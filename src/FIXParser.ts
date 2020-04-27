@@ -28,16 +28,13 @@ type Params = {
     protocol: Protocol,
     sender: string,
     target: string,
-    heartbeatIntervalMs: number,
+    heartbeatInterval: number,
     fixVersion: string
 }
 
 export default class FIXParser extends EventEmitter {
     public fixParserBase: FIXParserBase = new FIXParserBase();
-    public clientHandler:
-        | FIXParserClientSocket
-        | FIXParserClientWebsocket
-        | null = null;
+    public clientHandler!: FIXParserClientSocket | FIXParserClientWebsocket;
     public host: string | null = null;
     public port: number | null = null;
     public sender: string | null = null;
@@ -53,13 +50,13 @@ export default class FIXParser extends EventEmitter {
         } else if (options.protocol === 'websocket') {
             this.clientHandler = new FIXParserClientWebsocket(this, this);
         }
-        this.clientHandler!.host = options.host;
-        this.clientHandler!.port = options.port;
-        this.clientHandler!.sender = options.sender;
-        this.clientHandler!.target = options.target;
-        this.clientHandler!.heartBeatInterval = options.heartbeatIntervalMs;
-        this.clientHandler!.fixVersion = options.fixVersion;
-        this.clientHandler!.connect();
+        this.clientHandler.host = options.host;
+        this.clientHandler.port = options.port;
+        this.clientHandler.sender = options.sender;
+        this.clientHandler.target = options.target;
+        this.clientHandler.heartBeatInterval = options.heartbeatInterval;
+        this.clientHandler.fixVersion = options.fixVersion;
+        this.clientHandler.connect();
     }
 
     public getNextTargetMsgSeqNum() {
@@ -84,7 +81,7 @@ export default class FIXParser extends EventEmitter {
     }
 
     public send(message: Message) {
-        this.clientHandler!.send(message);
+        this.clientHandler.send(message);
     }
 }
 

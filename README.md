@@ -19,7 +19,7 @@ FIXParser demo
 Quick start
 -----------
 
-Install with `npm install fixparser`.
+Install with `npm install defcon-fixparser`.
 
 Parse a FIX message:
 
